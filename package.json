@@ -1,6 +1,8 @@
 {
-  "name": "joyreactor",
   "version": "0.0.0",
+  "name": "joyreactor",
+  "description": "JoyReactor alternative SPA client",  
+  "author": "IVAXOR",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
