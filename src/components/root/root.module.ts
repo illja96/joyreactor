@@ -10,6 +10,8 @@ import { RootFooterComponent } from "./root-footer/root-footer.component";
 import { RootNavComponent } from "./root-nav/root-nav.component";
 import { AuthModule } from "../auth/auth.module";
 import { HttpClientModule } from "@angular/common/http";
+import { FeedModule } from "../feed/feed.module";
+import { TopModule } from "../top/top.module";
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { HttpClientModule } from "@angular/common/http";
     BrowserModule,
     HttpClientModule,
     AuthModule,
+    FeedModule,
+    TopModule,
     RootRoutingModule
   ],
   providers: [
