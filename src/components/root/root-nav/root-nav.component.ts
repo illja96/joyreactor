@@ -11,11 +11,11 @@ export class RootNavComponent {
 
   constructor(private readonly authService: AuthService) {
     this.isAuthorized = false;
-    this.authService.getToken()
-      .subscribe(t => this.isAuthorized = t !== null);
+    this.authService.getProfile()
+      .subscribe(p => this.isAuthorized = p !== undefined);
   }
 
   public onLogoutClick(): void {
-    this.authService.removeToken();
+    this.authService.logout();
   }
 }
