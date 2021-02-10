@@ -12,6 +12,7 @@ import { AuthModule } from "../auth/auth.module";
 import { HttpClientModule } from "@angular/common/http";
 import { FeedModule } from "../feed/feed.module";
 import { TopModule } from "../top/top.module";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { TopModule } from "../top/top.module";
   imports: [
     BrowserModule,
     HttpClientModule,
+    ReactiveFormsModule,
     AuthModule,
     FeedModule,
     TopModule,

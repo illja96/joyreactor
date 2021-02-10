@@ -22,15 +22,28 @@ export class ParserService {
   }
 
   public parsePosts(queryResult: ApolloQueryResult<any>): JRPost[] {
-    const rawPosts = queryResult.data.posts as any[];
-    const posts = rawPosts.map(rp => this.parsePost(rp));
+    const rawPosts = queryResult.data.weekTopPosts as any[];
+
+    const posts = rawPosts
+      .map(rp => this.parsePost(rp))
+      .filter(p => p !== undefined);
 
     return posts;
   }
 
+  private parseId(encodedId: string): number {
+    const decodedId = atob(encodedId);
+    const rawId = decodedId.split(':')[1];
+    const id = Number.parseInt(rawId);
+
+    return id;
+  }
+
   private parseUser(rawUser: any): JRUser {
+    if (!rawUser) return undefined!;
+
     const user: JRUser = {
-      id: rawUser.id,
+      id: this.parseId(rawUser.id),
       username: rawUser.username
     };
 
@@ -38,8 +51,10 @@ export class ParserService {
   }
 
   private parsePost(rawPost: any): JRPost {
+    if (!rawPost) return undefined!;
+
     const post: JRPost = {
-      id: rawPost.id,
+      id: this.parseId(rawPost.id),
       text: rawPost.text,
       rating: Number.parseFloat(rawPost.rating),
       commentsCount: Number.parseInt(rawPost.commentsCount),
@@ -56,12 +71,18 @@ export class ParserService {
   }
 
   private parseAttributes(rawAttributes: any[]): JRAttribute[] {
-    return rawAttributes.map(ra => this.parseAttribute(ra));
+    if (!rawAttributes) return [];
+
+    return rawAttributes
+      .map(ra => this.parseAttribute(ra))
+      .filter(a => a !== undefined);
   }
 
   private parseAttribute(rawAttribute: any): JRAttribute {
+    if (!rawAttribute) return undefined!;
+
     const attribute: JRAttribute = {
-      id: rawAttribute.id,
+      id: this.parseId(rawAttribute.id),
       type: rawAttribute.type,
       insertId: rawAttribute.insertId,
       image: this.parseImage(rawAttribute.image)
@@ -71,8 +92,10 @@ export class ParserService {
   }
 
   private parseImage(rawImage: any): JRImage {
+    if (!rawImage) return undefined!;
+
     const image: JRImage = {
-      id: rawImage.id,
+      id: this.parseId(rawImage.id),
       width: Number.parseInt(rawImage.width),
       height: Number.parseInt(rawImage.height),
       comment: rawImage.comment,
@@ -84,12 +107,18 @@ export class ParserService {
   }
 
   private parseBlogs(rawBlogs: any[]): JRBlog[] {
-    return rawBlogs.map(rb => this.parseBlog(rb));
+    if (!rawBlogs) return [];
+
+    return rawBlogs
+      .map(rb => this.parseBlog(rb))
+      .filter(b => b !== undefined);
   }
 
   private parseBlog(rawBlog: any): JRBlog {
+    if (!rawBlog) return undefined!;
+
     const blog: JRBlog = {
-      id: rawBlog.id,
+      id: this.parseId(rawBlog.id),
       tag: rawBlog.tag,
       name: rawBlog.name,
       synonyms: rawBlog.synonyms
@@ -99,12 +128,18 @@ export class ParserService {
   }
 
   private parseComments(rawComments: any[]): JRComment[] {
-    return rawComments.map(rc => this.parseComment(rc));
+    if (!rawComments) return [];
+
+    return rawComments
+      .map(rc => this.parseComment(rc))
+      .filter(c => c !== undefined);
   }
 
   private parseComment(rawComment: any): JRComment {
+    if (!rawComment) return undefined!;
+
     const comment: JRComment = {
-      id: rawComment.id,
+      id: this.parseId(rawComment.id),
       text: rawComment.text,
       createdAt: new Date(rawComment.createdAt),
       parent: this.parseComment(rawComment.parent),

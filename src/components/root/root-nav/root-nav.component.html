@@ -20,21 +20,19 @@
         </div>
       </li>
 
-      <li class="nav-item dropdown">
-        <a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-          class="nav-link dropdown-toggle">
-          Топ
-        </a>
-        <div class="dropdown-menu">
-          <a routerLink="top/week" class="dropdown-item">Неделя</a>
-          <a routerLink="top/year" class="dropdown-item">Год</a>
-        </div>
+      <li class="nav-item">
+        <a routerLink="top" class="nav-link">Топ</a>
       </li>
     </ul>
 
-    <div class="my-2 my-lg-0">
-      <a *ngIf="!isAuthorized" routerLink="auth/login" class="btn btn-outline-info mr-sm-0" type="submit">Вход</a>
-      <button *ngIf="isAuthorized" (click)="onLogoutClick()" class="btn btn-outline-warning mr-sm-0">Выход</button>
-    </div>
+    <form [formGroup]="form" class="form-inline my-2 my-lg-0">
+      <a *ngIf="!isAuthorized" routerLink="auth/login" type="submit" class="btn btn-outline-info mr-sm-2">Вход</a>
+      <button *ngIf="isAuthorized" (click)="onLogoutClick()" class="btn btn-outline-warning mr-sm-2">Выход</button>
+
+      <div class="custom-control custom-switch">
+        <input id="nsfw" type="checkbox" formControlName="nsfw" class="custom-control-input" checked>
+        <label for="nsfw" class="custom-control-label">NSFW</label>
+      </div>
+    </form>
   </div>
 </nav>

@@ -1,3 +1,3 @@
 export interface JRNode {
-  id: string
+  id: number
 }

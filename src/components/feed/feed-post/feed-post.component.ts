@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from "@angular/core";
+import { JRPost } from "../../../models/joy-reactor/post.interface";
 
 @Component({
   selector: 'app-feed-post',
   templateUrl: './feed-post.component.html',
   styleUrls: ['./feed-post.component.css']
 })
-export class FeedPostComponent implements OnInit {
+export class FeedPostComponent {
+  @Input()
+  public post: JRPost;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
+    this.post = undefined!;
   }
-
 }

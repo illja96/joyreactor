@@ -12,6 +12,9 @@ import { FeedPostCommentsComponent } from "./feed-post-comments/feed-post-commen
   imports: [
     CommonModule,
     FeedRoutingModule
+  ],
+  exports: [
+    FeedPostComponent
   ]
 })
 export class FeedModule { }

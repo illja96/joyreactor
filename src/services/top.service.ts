@@ -22,14 +22,4 @@ export class TopService {
     return this.apollo.query<any>({ query: gqlTopConstants.week, variables: variables })
       .pipe(map(qr => this.parserService.parsePosts(qr)));
   }
-
-  public getByYear(year: number, nsfw: boolean): Observable<JRPost[]> {
-    const variables = {
-      year: year,
-      nsfw: nsfw
-    };
-
-    return this.apollo.query<any>({ query: gqlTopConstants.year, variables: variables })
-      .pipe(map(qr => this.parserService.parsePosts(qr)));
-  }
 }

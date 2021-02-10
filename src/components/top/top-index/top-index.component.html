@@ -1,1 +1,17 @@
-<p>top-index works!</p>
+<div class="container">
+  <div class="card border-secondary mb-3">
+    <div class="card-header">
+      Топ за {{ week }} неделю {{ year }} года
+    </div>
+  </div>
+
+  <div *ngIf="posts === undefined" class="row">
+    <div class="col-12 text-center">
+      <div role="status" class="spinner-border text-info" style="width: 3rem; height: 3rem;">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
+
+  <app-feed-post *ngFor="let post of posts" [post]="post"></app-feed-post>
+</div>
