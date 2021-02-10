@@ -1,17 +1,12 @@
-import { JRAttribute } from "./attribute.interface";
 import { JRContent } from "./content.interface";
-import { JRNode } from "./node.interface";
 import { JRPost } from "./post.interface";
 import { JRUser } from "./user.interface";
 
-export interface JRComment extends JRContent, JRNode {
-  id: string,
-  text: string,
+export interface JRComment extends JRContent {
   createdAt: Date,
-  parent: Comment | undefined,
+  parent: JRContent | undefined,
   post: JRPost,
   rating: number,
   level: number,
-  user: JRUser,
-  attributes: JRAttribute[]
+  user: JRUser
 }

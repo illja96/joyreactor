@@ -1,7 +1,7 @@
+import { JRNode } from "./node.interface";
 import { JRAttribute } from "./attribute.interface";
 
-export interface JRContent {
-  id: string,
+export interface JRContent extends JRNode {
   text: string,
-  att: JRAttribute
+  attributes: JRAttribute[]
 }

@@ -1,9 +1,3 @@
-import { JRAttributeType } from "./attribute-type.enum";
-import { JRImage } from "./image.interface";
+import { JRAttribute } from "./attribute.interface";
 
-export interface JRAttributePicture {
-  id: string,
-  type: JRAttributeType,
-  insertId: number | undefined,
-  image: JRImage
-}
+export interface JRAttributePicture extends JRAttribute {}

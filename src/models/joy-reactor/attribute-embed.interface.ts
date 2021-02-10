@@ -1,8 +1,8 @@
+import { JRAttribute } from "./attribute.interface";
 import { JRAttributeType } from "./attribute-type.enum";
 import { JRImage } from "./image.interface";
 
-export interface JRAttributeEmbed {
-  id: string,
+export interface JRAttributeEmbed extends JRAttribute {
   type: JRAttributeType,
   insertId: number | undefined,
   image: JRImage,
