@@ -8,6 +8,7 @@ import { InMemoryCache } from "@apollo/client/core";
 import { environment } from "../../environments/environment";
 import { RootFooterComponent } from "./root-footer/root-footer.component";
 import { RootNavComponent } from "./root-nav/root-nav.component";
+import { AuthModule } from "../auth/auth.module";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { RootNavComponent } from "./root-nav/root-nav.component";
   ],
   imports: [
     BrowserModule,
+    AuthModule,
     RootRoutingModule
   ],
   providers: [
