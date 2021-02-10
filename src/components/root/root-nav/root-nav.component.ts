@@ -14,4 +14,8 @@ export class RootNavComponent {
     this.authService.getToken()
       .subscribe(t => this.isAuthorized = t !== null);
   }
+
+  public onLogoutClick(): void {
+    this.authService.removeToken();
+  }
 }

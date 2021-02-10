@@ -38,7 +38,7 @@
 
     <div class="my-2 my-lg-0">
       <a *ngIf="!isAuthorized" routerLink="auth/login" class="btn btn-outline-info mr-sm-0" type="submit">Вход</a>
-      <button *ngIf="isAuthorized" class="btn btn-outline-warning mr-sm-0">Выход</button>
+      <button *ngIf="isAuthorized" (click)="onLogoutClick()" class="btn btn-outline-warning mr-sm-0">Выход</button>
     </div>
   </div>
 </nav>

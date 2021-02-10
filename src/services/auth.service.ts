@@ -38,6 +38,11 @@ export class AuthService {
     return this.tokenSubject;
   }
 
+  public removeToken(): void {
+    localStorage.removeItem('token');
+    this.tokenSubject.next(null);
+  }
+
   private getTokenDirectly(): string | null {
     return localStorage.getItem('token');
   }
