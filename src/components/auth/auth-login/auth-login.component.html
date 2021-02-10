@@ -1,21 +1,24 @@
 <div class="container">
   <div class="card">
     <div class="card-body">
-      <form>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <fieldset>
           <legend>Вход</legend>
 
           <div class="form-group">
             <label for="username">Логин</label>
-            <input type="text" class="form-control" id="username">
+            <input id="username" type="text" formControlName="username" required class="form-control"
+              [class.is-invalid]="username.invalid && (username.dirty || username.touched)">
           </div>
 
           <div class="form-group">
             <label for="password">Пароль</label>
-            <input type="password" class="form-control" id="password">
+            <input id="password" type="password" formControlName="password" required class="form-control"
+              [class.is-invalid]="password.invalid && (password.dirty || password.touched)">
+            <div *ngIf="password.errors?.badPassword" class="invalid-feedback">Неверный пароль</div>
           </div>
 
-          <button type="submit" class="btn btn-success btn-block">Войти</button>
+          <button type="submit" [disabled]="form.invalid" class="btn btn-success btn-block">Войти</button>
         </fieldset>
       </form>
     </div>

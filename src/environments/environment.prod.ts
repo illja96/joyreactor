@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  graphQlUri: 'https://api.joyreactor.cc'
+  graphQlUri: 'https://api.joyreactor.cc/graphql'
 };

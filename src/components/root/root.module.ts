@@ -9,6 +9,7 @@ import { environment } from "../../environments/environment";
 import { RootFooterComponent } from "./root-footer/root-footer.component";
 import { RootNavComponent } from "./root-nav/root-nav.component";
 import { AuthModule } from "../auth/auth.module";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AuthModule } from "../auth/auth.module";
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AuthModule,
     RootRoutingModule
   ],
@@ -29,7 +31,7 @@ import { AuthModule } from "../auth/auth.module";
         link: httpLink.create({ uri: environment.graphQlUri })
       }),
       deps: [HttpLink],
-    },
+    }
   ],
   bootstrap: [RootIndexComponent]
 })
