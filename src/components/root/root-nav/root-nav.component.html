@@ -1,37 +1,33 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-  <a routerLink="" class="navbar-brand">
-    JoyReactor
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
-    aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+  <a routerLink="" class="navbar-brand">JoyReactor</a>
+
+  <button type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarConavbarlor01"
+    aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarColor01">
+  <div id="navbar" class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home
-          <span class="sr-only">(current)</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
-      </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-          aria-expanded="false">Dropdown</a>
+        <a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+          class="nav-link dropdown-toggle">
+          Лента
+        </a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Separated link</a>
+          <a routerLink="feed/new" class="dropdown-item">Новое</a>
+          <a routerLink="feed/good" class="dropdown-item">Хорошее</a>
+          <a routerLink="feed/best" class="dropdown-item">Лучшее</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+          class="nav-link dropdown-toggle">
+          Топ
+        </a>
+        <div class="dropdown-menu">
+          <a routerLink="top/week" class="dropdown-item">Неделя</a>
+          <a routerLink="top/year" class="dropdown-item">Год</a>
         </div>
       </li>
     </ul>
