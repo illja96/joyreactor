@@ -1,7 +1,21 @@
 <div class="container">
   <div class="card border-secondary mb-3">
-    <div class="card-header">
-      Топ за {{ week }} неделю {{ year }} года
+    <div class="card-header text-center">
+      <h1>
+        Топ за {{ week }} неделю {{ year }} года
+      </h1>
+
+      <ul class="pagination pagination" style="justify-content: center;">
+        <li class="page-item" [class.disabled]="maxYear === year">
+          <a routerLink="/top/year/{{ maxYear }}" class="page-link">{{ maxYear }}</a>
+        </li>
+        <li *ngFor="let y of years" class="page-item" [class.disabled]="y === year">
+          <a routerLink="/top/year/{{ y }}" class="page-link">{{ y }}</a>
+        </li>
+        <li class="page-item" [class.disabled]="minYear === year">
+          <a routerLink="/top/year/{{ minYear }}" class="page-link">{{ minYear }}</a>
+        </li>
+      </ul>
     </div>
   </div>
 
@@ -14,4 +28,16 @@
   </div>
 
   <app-feed-post *ngFor="let post of posts" [post]="post"></app-feed-post>
+
+  <ul class="pagination pagination-sm" style="justify-content: center;">
+    <li class="page-item" [class.disabled]="maxWeek === week">
+      <a routerLink="/top/year/{{ year }}/week/{{ maxWeek }}" class="page-link">{{ maxWeek }}</a>
+    </li>
+    <li *ngFor="let w of weeks" class="page-item" [class.disabled]="w === week">
+      <a routerLink="/top/year/{{ year }}/week/{{ w }}" class="page-link">{{ w }}</a>
+    </li>
+    <li class="page-item" [class.disabled]="minWeek === week">
+      <a routerLink="/top/year/{{ year }}/week/{{ minWeek }}" class="page-link">{{ minWeek }}</a>
+    </li>
+  </ul>
 </div>

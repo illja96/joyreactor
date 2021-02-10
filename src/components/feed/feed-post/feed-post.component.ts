@@ -31,7 +31,7 @@ export class FeedPostComponent implements OnInit {
       const attributeHtml = document.createElement('img');
       attributeHtml.src = `http://img10.joyreactor.cc/pics/post/${attributeFileName}`;
 
-      const replaceTagRegex = `&attribute_insert_${i+1}&`;
+      const replaceTagRegex = `&attribute_insert_${i + 1}&`;
       const isHtmlContainsReplaceTag = this.bodyHtml.match(replaceTagRegex);
       if (isHtmlContainsReplaceTag) this.bodyHtml = this.bodyHtml.replace(replaceTagRegex, attributeHtml.outerHTML);
       else this.bodyHtml += attributeHtml.outerHTML;
@@ -46,6 +46,8 @@ export class FeedPostComponent implements OnInit {
       .map(b => b.tag)
       .map(t => t.replace(/[ ./?#]|\s/g, '-'))
       .forEach(t => nameParts.push(t));
+
+    if (nameParts.length === 0) nameParts.push('picture');
 
     nameParts.push(attribute.id);
 
