@@ -2,18 +2,18 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpLink } from "apollo-angular/http";
 import { APOLLO_OPTIONS } from "apollo-angular";
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
+import { RootRoutingModule } from "./root.routing";
+import { RootIndexComponent } from "./index/root-index.component"
 import { InMemoryCache } from "@apollo/client/core";
-import { environment } from "../environments/environment";
+import { environment } from "../../environments/environment";
 
 @NgModule({
   declarations: [
-    AppComponent
+    RootIndexComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    RootRoutingModule
   ],
   providers: [
     {
@@ -25,6 +25,6 @@ import { environment } from "../environments/environment";
       deps: [HttpLink],
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [RootIndexComponent]
 })
-export class AppModule { }
+export class RootModule { }
