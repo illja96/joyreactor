@@ -3,13 +3,17 @@ import { BrowserModule } from "@angular/platform-browser";
 import { HttpLink } from "apollo-angular/http";
 import { APOLLO_OPTIONS } from "apollo-angular";
 import { RootRoutingModule } from "./root.routing";
-import { RootIndexComponent } from "./index/root-index.component"
+import { RootIndexComponent } from "./root-index/root-index.component"
 import { InMemoryCache } from "@apollo/client/core";
 import { environment } from "../../environments/environment";
+import { RootFooterComponent } from "./root-footer/root-footer.component";
+import { RootNavComponent } from "./root-nav/root-nav.component";
 
 @NgModule({
   declarations: [
-    RootIndexComponent
+    RootFooterComponent,
+    RootIndexComponent,
+    RootNavComponent
   ],
   imports: [
     BrowserModule,
