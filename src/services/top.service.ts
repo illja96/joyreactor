@@ -12,7 +12,7 @@ export class TopService {
     private readonly apollo: Apollo,
     private readonly parserService: ParserService) { }
 
-  public getByWeek(year: number, week: number, nsfw: boolean): Observable<JRPost[]> {
+  public getByWeek(year: number, week: number, nsfw: boolean): Observable<JRPost[]> {    
     const variables = {
       year: year,
       week: week,

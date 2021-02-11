@@ -1,0 +1,35 @@
+<ul class="pagination pagination" style="justify-content: center;">
+  <li class="page-item" [class.active]="maxYear === year">
+    <a routerLink="/top/year/{{ maxYear }}" class="page-link">{{ maxYear }}</a>
+  </li>
+  <li *ngIf="years[0] + 1 !== maxYear" class="page-item disabled">
+    <a class="page-link">...</a>
+  </li>
+  <li *ngFor="let y of years" class="page-item" [class.active]="y === year">
+    <a routerLink="/top/year/{{ y }}" class="page-link">{{ y }}</a>
+  </li>
+  <li *ngIf="years[years.length - 1] - 1 != minYear" class="page-item disabled">
+    <a class="page-link">...</a>
+  </li>
+  <li class="page-item" [class.active]="minYear === year">
+    <a routerLink="/top/year/{{ minYear }}" class="page-link">{{ minYear }}</a>
+  </li>
+</ul>
+
+<ul class="pagination pagination-sm" style="justify-content: center;">
+  <li class="page-item" [class.active]="maxWeek === week">
+    <a routerLink="/top/year/{{ year }}/week/{{ maxWeek }}" class="page-link">{{ maxWeek }}</a>
+  </li>
+  <li *ngIf="weeks[0] + 1 !== maxWeek" class="page-item disabled">
+    <a class="page-link">...</a>
+  </li>
+  <li *ngFor="let w of weeks" class="page-item" [class.active]="w === week">
+    <a routerLink="/top/year/{{ year }}/week/{{ w }}" class="page-link">{{ w }}</a>
+  </li>
+  <li *ngIf="weeks[weeks.length - 1] - 1 != minWeek" class="page-item disabled">
+    <a class="page-link">...</a>
+  </li>
+  <li class="page-item" [class.active]="minWeek === week">
+    <a routerLink="/top/year/{{ year }}/week/{{ minWeek }}" class="page-link">{{ minWeek }}</a>
+  </li>
+</ul>

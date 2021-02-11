@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { switchMap, tap } from "rxjs/operators";
+import { filter, map, skip, switchMap, tap } from "rxjs/operators";
 import { SettingsService } from "../../../services/settings.service";
 import { JRPost } from "../../../models/joy-reactor/post.interface";
 import { TopService } from "../../../services/top.service";
@@ -12,15 +12,15 @@ import { DateHelper } from "../../../helpers/date.helper";
   styleUrls: ['./top-index.component.css']
 })
 export class TopIndexComponent implements OnInit {
-  public readonly maxYear: number;
-  public readonly minYear: number;
-  public readonly years: number[];
+  public maxYear: number;
   public year: number;
+  public minYear: number;
+  public years: number[];
 
   public maxWeek: number;
+  public week: number;
   public minWeek: number;
   public weeks: number[];
-  public week: number;
 
   public posts: JRPost[];
 
@@ -29,43 +29,109 @@ export class TopIndexComponent implements OnInit {
     private readonly router: Router,
     private readonly topService: TopService,
     private readonly settingsService: SettingsService) {
+    this.maxYear = undefined!;
     this.year = undefined!;
-    this.maxYear = new Date().getFullYear();
-    this.minYear = 2009;
-    this.years = [];
-    for (let y = this.maxYear - 1; y > this.minYear; y--) this.years.push(y);
+    this.minYear = undefined!;
+    this.years = undefined!;
 
-    this.week = undefined!;
     this.maxWeek = undefined!;
-    this.weeks = [];
+    this.week = undefined!;
     this.minWeek = undefined!;
+    this.weeks = undefined!;
 
     this.posts = undefined!;
   }
 
   public ngOnInit(): void {
-    const rawYear = this.route.snapshot.paramMap.get('year');
-    if (rawYear === null) {
-      this.router.navigateByUrl(`/top/year/${this.maxYear}`);
-      return;
-    }
-    this.year = Number.parseInt(rawYear);
+    const yearWeekChangeObservable = this.route.paramMap
+      .pipe(
+        tap(() => this.posts = undefined!),
+        map(pm => {
+          const rawYear = pm.get('year');
+          const rawWeek = pm.get('week');
+          return ({ rawYear, rawWeek });
+        }),
+        map(t => {
+          const maxYear = new Date().getFullYear();
+          const minYear = 2009;
 
-    this.maxWeek = this.year === this.maxYear ? DateHelper.getWeek(new Date()) : DateHelper.getTotalWeeks(this.year);
-    this.minWeek = this.year <= 2009 ? 12 : 1;
-    for (let w = this.maxWeek - 1; w > this.minWeek; w--) this.weeks.push(w);
+          if (t.rawYear === null) {
+            this.router.navigateByUrl(`/top/year/${maxYear}`);
+            return;
+          }
 
-    const rawWeek = this.route.snapshot.paramMap.get('week');
-    if (rawWeek === null) {
-      this.router.navigateByUrl(`/top/year/${this.year}/week/${this.maxWeek}`);
-      return;
-    }
-    this.week = Number.parseInt(rawWeek);
+          const year = Number.parseInt(t.rawYear);
+          const years = this.getYearsRange(year, minYear, maxYear);
+
+          const maxWeek = year === maxYear ? DateHelper.getWeek(new Date()) - 2 : DateHelper.getTotalWeeks(year);
+          const minWeek = year <= 2009 ? 12 : 1;
+
+          if (t.rawWeek === null) {
+            this.router.navigateByUrl(`/top/year/${year}/week/${maxWeek}`);
+            return;
+          }
+
+          const week = Number.parseInt(t.rawWeek);
+          const weeks = this.getWeeksRange(week, minWeek, maxWeek);
+
+          return ({ maxYear, year, minYear, years, maxWeek, week, minWeek, weeks });
+        }),
+        filter(t => t !== undefined));
+
+    yearWeekChangeObservable
+      .subscribe(t => {
+        this.maxYear = t!.maxYear;
+        this.year = t!.year;
+        this.minYear = t!.minYear;
+        this.years = t!.years;
+
+        this.maxWeek = t!.maxWeek;
+        this.week = t!.week;
+        this.minWeek = t!.minWeek;
+        this.weeks = t!.weeks;
+      });
+
+    yearWeekChangeObservable
+      .pipe(
+        tap(() => this.posts = undefined!),
+        switchMap(() => this.settingsService.getNsfw()),
+        switchMap(nsfw => this.topService.getByWeek(this.year, this.week, nsfw)))
+      .subscribe(p => this.posts = p)
 
     this.settingsService.getNsfw()
       .pipe(
+        skip(1),
+        filter(() => this.year !== undefined && this.week !== undefined),
         tap(() => this.posts = undefined!),
         switchMap(nsfw => this.topService.getByWeek(this.year, this.week, nsfw)))
       .subscribe(p => this.posts = p);
+  }
+
+  private getYearsRange(year: number, minYear: number, maxYear: number): number[] {
+    const years = [];
+
+    years.push(year);
+    for (let i = 1; i < 3; i++) {
+      years.push(year + i);
+      years.push(year - i);
+    }
+
+    return years
+      .filter(y => y < maxYear && y > minYear)
+      .sort((a, b) => b - a);
+  }
+
+  private getWeeksRange(week: number, minWeek: number, maxWeek: number): number[] {
+    const weeks = [];
+
+    weeks.push(week);
+    for (let i = 1; i < 5; i++) {
+      weeks.push(week + i);
+      weeks.push(week - i);
+    }
+
+    return weeks
+      .filter(w => w < maxWeek && w > minWeek)
+      .sort((a, b) => b - a);
   }
 }

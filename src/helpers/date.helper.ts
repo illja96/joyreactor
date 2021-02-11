@@ -19,9 +19,7 @@ export abstract class DateHelper {
     const endTimestamp = date.getTime();
 
     const differenceInMs = endTimestamp - startTimestamp;
-    console.log(differenceInMs);
     const differenceInWeeks = Math.floor(differenceInMs / 604800000);
-    console.log(differenceInWeeks);
 
     return differenceInWeeks;
   }

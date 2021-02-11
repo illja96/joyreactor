@@ -15,6 +15,5 @@ export class SettingsService {
 
   public setNsfw(nsfw: boolean): void {
     this.nsfwSubject.next(nsfw);
-    console.log(nsfw);
   }
 }

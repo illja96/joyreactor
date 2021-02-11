@@ -9,8 +9,7 @@ import { JRPost } from "../../../models/joy-reactor/post.interface";
   encapsulation: ViewEncapsulation.None
 })
 export class FeedPostComponent implements OnInit {
-  @Input()
-  public post: JRPost;
+  @Input() public post: JRPost;
 
   public bodyHtml: string;
 
