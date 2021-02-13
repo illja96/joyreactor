@@ -23,6 +23,6 @@ jobs:
     - name: NPM install
       run: npm install
     - name: NPM build
-      run: npm run ng build -- -c=production -base-href https://illja96.github.io/joyreactor/
+      run: npm run ng build -- -c=production --base-href https://illja96.github.io/joyreactor/
     - name: Update to github pages
       run: npm run ng deploy --no-build --branch=pages
