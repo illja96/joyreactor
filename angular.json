@@ -95,7 +95,13 @@
         },
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
-          "options": {}
+          "options": {
+            "noBuild": true,
+            "noSilent": true,
+            "branch": "pages",
+            "name": "Angular CLI GitHub pages",
+            "email": "angular-cli-ghpages@npmjs.com"
+          }
         }
       }
     }

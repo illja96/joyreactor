@@ -27,4 +27,4 @@ jobs:
     - name: Update to github pages
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: npm run ng deploy -- --no-build --no-silent --branch=pages
+      run: npm run ng deploy
