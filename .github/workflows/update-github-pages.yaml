@@ -25,4 +25,6 @@ jobs:
     - name: NPM build
       run: npm run ng build -- -c=production --base-href https://illja96.github.io/joyreactor/
     - name: Update to github pages
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npm run ng deploy -- --no-build --no-silent --branch=pages
