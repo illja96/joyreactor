@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { SettingsService } from "../../../services/settings.service";
-import { AuthService } from "../../../services/auth.service";
+import { AuthGqlService } from "../../../services/gql/auth-gql.service";
 
 @Component({
   selector: 'app-root-nav',
@@ -13,7 +13,7 @@ export class RootNavComponent {
   public form: FormGroup;
 
   constructor(
-    private readonly authService: AuthService,
+    private readonly authGqlService: AuthGqlService,
     private readonly settingsService: SettingsService) {
     this.isAuthorized = false;
     this.form = new FormGroup({
@@ -21,12 +21,12 @@ export class RootNavComponent {
     });
     this.form.valueChanges.subscribe(() => this.onFormValueChanges());
 
-    this.authService.getProfile()
+    this.authGqlService.getProfile()
       .subscribe(p => this.isAuthorized = p !== undefined);
   }
 
   public onLogoutClick(): void {
-    this.authService.logout();
+    this.authGqlService.logout();
   }
 
   private onFormValueChanges(): void {

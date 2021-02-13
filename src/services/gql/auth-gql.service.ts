@@ -2,17 +2,17 @@ import { Injectable } from "@angular/core";
 import { Apollo } from "apollo-angular";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map, tap } from "rxjs/operators";
-import { gqlAuthConstants } from "../constants/gql/gql-auth.constants";
-import { JRProfile } from "../models/joy-reactor/profile.interface";
-import { ParserService } from "./parser.service";
+import { gqlAuthConstants } from "../../constants/gql/gql-auth.constants";
+import { JRProfile } from "../../models/joy-reactor/profile.interface";
+import { ParserGqlService } from "./parser-gql.service";
 
 @Injectable({ providedIn: 'root' })
-export class AuthService {
+export class AuthGqlService {
   private readonly profileSubject: BehaviorSubject<JRProfile | undefined>;
 
   constructor(
     private readonly apollo: Apollo,
-    private readonly parserService: ParserService) {
+    private readonly parserGqlService: ParserGqlService) {
     const token = this.getTokenDirectly();
     this.profileSubject = new BehaviorSubject<JRProfile | undefined>(token);
   }
@@ -25,7 +25,8 @@ export class AuthService {
 
     return this.apollo.mutate<any>({ mutation: gqlAuthConstants.login, variables: variables })
       .pipe(
-        map(fr => this.parserService.parseProfile(fr)),
+        map(mr => mr.data.login.me as any),
+        map(fr => this.parserGqlService.parseProfile(fr)),
         tap(p => this.setProfile(p)));
   }
 

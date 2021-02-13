@@ -1,8 +1,7 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { AuthService } from "../../../services/auth.service";
-
+import { AuthGqlService } from "../../../services/gql/auth-gql.service";
 
 @Component({
   selector: "app-auth-login",
@@ -16,11 +15,11 @@ export class AuthLoginComponent {
   public get password() { return this.form.controls.password; }
 
   constructor(
-    private readonly authService: AuthService,
+    private readonly authGqlService: AuthGqlService,
     private readonly router: Router) {
     this.form = new FormGroup({
-      username: new FormControl("", [Validators.required]),
-      password: new FormControl("", [Validators.required])
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required])
     });
   }
 
@@ -28,7 +27,7 @@ export class AuthLoginComponent {
     const username = this.username.value;
     const password = this.password.value;
 
-    this.authService.login(username, password)
+    this.authGqlService.login(username, password)
       .subscribe(
         () => this.router.navigateByUrl('/'),
         () => this.password.setErrors({ badPassword: true }));

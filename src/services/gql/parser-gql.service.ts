@@ -1,23 +1,20 @@
 import { Injectable } from "@angular/core";
-import { ApolloQueryResult, FetchResult } from "@apollo/client/core";
-import { JRProfile } from "../models/joy-reactor/profile.interface";
-import { JRPost } from "../models/joy-reactor/post.interface";
-import { JRImage } from "../models/joy-reactor/image.interface";
-import { JRUser } from "../models/joy-reactor/user.interface";
-import { JRBlog } from "../models/joy-reactor/blog.interface";
-import { JRComment } from "../models/joy-reactor/comment.interface";
-import { JRPostAttributePicture } from "../models/joy-reactor/post-attribute-picture.interface";
-import { JRPostAttributeEmbed } from "../models/joy-reactor/post-attribute-embed.interface";
-import { JRCommentAttributePicture } from "../models/joy-reactor/comment-attribute-picture.interface";
-import { JRCommentAttributeEmbed } from "../models/joy-reactor/comment-attribute-embed.interface";
-import { JRPostAttribute } from "../models/joy-reactor/post-attribute.interface";
-import { JRCommentAttribute } from "../models/joy-reactor/comment-attribute.interface";
+import { JRProfile } from "../../models/joy-reactor/profile.interface";
+import { JRPost } from "../../models/joy-reactor/post.interface";
+import { JRImage } from "../../models/joy-reactor/image.interface";
+import { JRUser } from "../../models/joy-reactor/user.interface";
+import { JRBlog } from "../../models/joy-reactor/blog.interface";
+import { JRComment } from "../../models/joy-reactor/comment.interface";
+import { JRPostAttributePicture } from "../../models/joy-reactor/post-attribute-picture.interface";
+import { JRPostAttributeEmbed } from "../../models/joy-reactor/post-attribute-embed.interface";
+import { JRCommentAttributePicture } from "../../models/joy-reactor/comment-attribute-picture.interface";
+import { JRCommentAttributeEmbed } from "../../models/joy-reactor/comment-attribute-embed.interface";
+import { JRPostAttribute } from "../../models/joy-reactor/post-attribute.interface";
+import { JRCommentAttribute } from "../../models/joy-reactor/comment-attribute.interface";
 
 @Injectable({ providedIn: 'root' })
-export class ParserService {
-  public parseProfile(mutationResult: FetchResult<any, Record<string, any>, Record<string, any>>): JRProfile {
-    const rawProfile = mutationResult.data.login.me;
-
+export class ParserGqlService {
+  public parseProfile(rawProfile: any): JRProfile {
     const profile: JRProfile = {
       token: rawProfile.token,
       user: this.parseUser(rawProfile.user)
@@ -26,9 +23,7 @@ export class ParserService {
     return profile;
   }
 
-  public parsePosts(queryResult: ApolloQueryResult<any>): JRPost[] {
-    const rawPosts = queryResult.data.weekTopPosts as any[];
-
+  public parsePosts(rawPosts: any[]): JRPost[] {
     const posts = rawPosts
       .map(rp => this.parsePost(rp))
       .filter(p => p !== undefined);
@@ -36,14 +31,14 @@ export class ParserService {
     return posts;
   }
 
-  private parseId(encodedId: string): number {
+  public parseId(encodedId: string): number {
     const decodedId = atob(encodedId);
     const rawId = decodedId.split(':')[1];
 
     return Number.parseInt(rawId);
   }
 
-  private parseUser(rawUser: any): JRUser {
+  public parseUser(rawUser: any): JRUser {
     if (!rawUser) return undefined!;
 
     const user: JRUser = {
@@ -55,7 +50,7 @@ export class ParserService {
     return user;
   }
 
-  private parsePost(rawPost: any): JRPost {
+  public parsePost(rawPost: any): JRPost {
     if (!rawPost) return undefined!;
 
     const post: JRPost = {
@@ -169,7 +164,7 @@ export class ParserService {
     return image;
   }
 
-  private parseBlogs(rawBlogs: any[]): JRBlog[] {
+  public parseBlogs(rawBlogs: any[]): JRBlog[] {
     if (!rawBlogs) return [];
 
     return rawBlogs
@@ -177,7 +172,7 @@ export class ParserService {
       .filter(b => b !== undefined);
   }
 
-  private parseBlog(rawBlog: any): JRBlog {
+  public parseBlog(rawBlog: any): JRBlog {
     if (!rawBlog) return undefined!;
 
     const blog: JRBlog = {
@@ -191,7 +186,7 @@ export class ParserService {
     return blog;
   }
 
-  private parseComments(rawComments: any[]): JRComment[] {
+  public parseComments(rawComments: any[]): JRComment[] {
     if (!rawComments) return [];
 
     return rawComments
@@ -199,7 +194,7 @@ export class ParserService {
       .filter(c => c !== undefined);
   }
 
-  private parseComment(rawComment: any): JRComment {
+  public parseComment(rawComment: any): JRComment {
     if (!rawComment) return undefined!;
 
     const comment: JRComment = {

@@ -14,7 +14,7 @@
 
     <div class="row">
       <div class="col-12">
-        <a *ngFor="let blog of post.blogs" routerLink="tag/{{ blog.tag }}" class="badge badge-pill badge-primary">
+        <a *ngFor="let blog of post.blogs" routerLink="/tag/{{ blog.tag }}" [title]="blog.name" class="badge badge-pill badge-primary">
           {{ blog.name }}
         </a>
       </div>

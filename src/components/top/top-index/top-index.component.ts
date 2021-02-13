@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { filter, map, skip, switchMap, tap } from "rxjs/operators";
 import { SettingsService } from "../../../services/settings.service";
 import { JRPost } from "../../../models/joy-reactor/post.interface";
-import { TopService } from "../../../services/top.service";
+import { TopGqlService } from "../../../services/gql/top-gql.service";
 import { DateHelper } from "../../../helpers/date.helper";
 
 @Component({
@@ -27,7 +27,7 @@ export class TopIndexComponent implements OnInit {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly topService: TopService,
+    private readonly topGqlService: TopGqlService,
     private readonly settingsService: SettingsService) {
     this.maxYear = undefined!;
     this.year = undefined!;
@@ -95,7 +95,7 @@ export class TopIndexComponent implements OnInit {
       .pipe(
         tap(() => this.posts = undefined!),
         switchMap(() => this.settingsService.getNsfw()),
-        switchMap(nsfw => this.topService.getByWeek(this.year, this.week, nsfw)))
+        switchMap(nsfw => this.topGqlService.getByWeek(this.year, this.week, nsfw)))
       .subscribe(p => this.posts = p)
 
     this.settingsService.getNsfw()
@@ -103,7 +103,7 @@ export class TopIndexComponent implements OnInit {
         skip(1),
         filter(() => this.year !== undefined && this.week !== undefined),
         tap(() => this.posts = undefined!),
-        switchMap(nsfw => this.topService.getByWeek(this.year, this.week, nsfw)))
+        switchMap(nsfw => this.topGqlService.getByWeek(this.year, this.week, nsfw)))
       .subscribe(p => this.posts = p);
   }
 
