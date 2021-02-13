@@ -1,0 +1,27 @@
+name: Release main
+on:
+  push:
+    branches:
+      - main
+jobs:
+  update-github-pages:
+    name: Update GitHub pages
+    runs-on: ubuntu-latest
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup version
+      id: version
+      shell: pwsh
+      run: Write-Output "::set-output name=version::1.0.${{ github.run_id }}"
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 15.x
+    - name: NPM version
+      run: npm version ${{ steps.version.outputs.version }} --no-git-tag-version
+    - name: NPM install
+      run: npm install
+    - name: NPM build
+      run: npm run ng build -- -c=production -base-href https://illja96.github.io/joyreactor/
+    - name: Update to github pages
+      run: npm run ng deploy --no-build --branch=pages
