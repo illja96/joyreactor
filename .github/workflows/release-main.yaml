@@ -1,0 +1,125 @@
+name: Release main
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup version
+      id: version
+      shell: pwsh
+      run: Write-Output "::set-output name=version::1.0.${{ github.run_id }}"
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 15.x
+    - name: NPM version
+      run: npm version ${{ steps.version.outputs.version }} --no-git-tag-version
+    - name: NPM install
+      run: npm install
+    - name: NPM build
+      run: npm run ng build
+    - name: Archive release
+      uses: papeloto/action-zip@v1
+      with:
+        files: ./dist/joyreactor
+        dest: ./${{ steps.version.outputs.version }}.zip
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ steps.version.outputs.version }}
+        path: ./${{ steps.version.outputs.version }}.zip
+        retention-days: 1
+    - name: NPM build production
+      run: npm run ng build -- -c=production
+    - name: Archive production release
+      uses: papeloto/action-zip@v1
+      with:
+        files: ./dist/joyreactor
+        dest: ./${{ steps.version.outputs.version }}-production.zip
+    - name: Upload production artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ steps.version.outputs.version }}
+        path: ./${{ steps.version.outputs.version }}-production.zip
+        retention-days: 1
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: 
+    - build
+    steps:
+    - name: Download build artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ${{ needs.build.outputs.version }}
+    - name: Download production build artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ${{ needs.build.outputs.version }}-production
+        name: ${{ needs.build.outputs.version }}-production
+    - name: Create version release
+      uses: actions/create-release@v1
+      id: release
+      with:
+        tag_name: ${{ needs.build.outputs.version }}
+        release_name: ${{ needs.build.outputs.version }}
+        prerelease: true
+        draft: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload artifact
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.release.outputs.upload_url }}
+        asset_path: ./${{ needs.build.outputs.version }}.zip
+        asset_name: ${{ needs.build.outputs.version }}.zip
+        asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload production artifact
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.release.outputs.upload_url }}
+        asset_path: ./${{ needs.build.outputs.version }}-production.zip
+        asset_name: ${{ needs.build.outputs.version }}-production.zip
+        asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  docker-build-push:
+    name: Docker build & push
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup version
+      id: version
+      shell: pwsh
+      run: Write-Output "::set-output name=version::1.0.${{ github.run_id }}"
+    - name: Docker login
+      uses: docker/login-action@v1 
+      with:
+        registry: ghcr.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Docker build and push
+      uses: docker/build-push-action@v2
+      with:
+        file: ./Dockerfile
+        push: true
+        build-args: |
+          VERSION=${{ steps.version.outputs.version }}
+        tags: |
+          ghcr.io/illja96/joyreactor:latest
+          ghcr.io/illja96/joyreactor:${{ steps.version.outputs.version }}
