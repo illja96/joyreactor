@@ -1,6 +1,4 @@
 import { JRAttributeEmbed } from "./attribute-embed.interface";
-import { JRPost } from "./post.interface";
+import { JRPostAttribute } from "./post-attribute.interface";
 
-export interface JRPostAttributeEmbed extends JRAttributeEmbed {
-  post: JRPost
-}
+export interface JRPostAttributeEmbed extends JRPostAttribute, JRAttributeEmbed { }

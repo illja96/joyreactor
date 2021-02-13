@@ -2,11 +2,16 @@ import { Injectable } from "@angular/core";
 import { ApolloQueryResult, FetchResult } from "@apollo/client/core";
 import { JRProfile } from "../models/joy-reactor/profile.interface";
 import { JRPost } from "../models/joy-reactor/post.interface";
-import { JRAttribute } from "../models/joy-reactor/attribute.interface";
 import { JRImage } from "../models/joy-reactor/image.interface";
 import { JRUser } from "../models/joy-reactor/user.interface";
 import { JRBlog } from "../models/joy-reactor/blog.interface";
 import { JRComment } from "../models/joy-reactor/comment.interface";
+import { JRPostAttributePicture } from "../models/joy-reactor/post-attribute-picture.interface";
+import { JRPostAttributeEmbed } from "../models/joy-reactor/post-attribute-embed.interface";
+import { JRCommentAttributePicture } from "../models/joy-reactor/comment-attribute-picture.interface";
+import { JRCommentAttributeEmbed } from "../models/joy-reactor/comment-attribute-embed.interface";
+import { JRPostAttribute } from "../models/joy-reactor/post-attribute.interface";
+import { JRCommentAttribute } from "../models/joy-reactor/comment-attribute.interface";
 
 @Injectable({ providedIn: 'root' })
 export class ParserService {
@@ -34,9 +39,8 @@ export class ParserService {
   private parseId(encodedId: string): number {
     const decodedId = atob(encodedId);
     const rawId = decodedId.split(':')[1];
-    const id = Number.parseInt(rawId);
 
-    return id;
+    return Number.parseInt(rawId);
   }
 
   private parseUser(rawUser: any): JRUser {
@@ -44,6 +48,7 @@ export class ParserService {
 
     const user: JRUser = {
       id: this.parseId(rawUser.id),
+      encodedId: rawUser.id,
       username: rawUser.username
     };
 
@@ -55,13 +60,14 @@ export class ParserService {
 
     const post: JRPost = {
       id: this.parseId(rawPost.id),
+      encodedId: rawPost.id,
       text: rawPost.text,
       rating: Number.parseFloat(rawPost.rating),
       commentsCount: Number.parseInt(rawPost.commentsCount),
       createdAt: new Date(rawPost.createdAt),
       nsfw: rawPost.nsfw,
       user: this.parseUser(rawPost.user),
-      attributes: this.parseAttributes(rawPost.attributes),
+      attributes: this.parsePostAttributes(rawPost.attributes),
       blogs: this.parseBlogs(rawPost.blogs),
       bestComments: this.parseComments(rawPost.bestComments),
       comments: this.parseComments(rawPost.comments)
@@ -70,25 +76,81 @@ export class ParserService {
     return post;
   }
 
-  private parseAttributes(rawAttributes: any[]): JRAttribute[] {
+  private parsePostAttributes(rawAttributes: any[]): JRPostAttribute[] {
     if (!rawAttributes) return [];
 
     return rawAttributes
-      .map(ra => this.parseAttribute(ra))
+      .map(ra => this.parsePostAttribute(ra))
       .filter(a => a !== undefined);
   }
 
-  private parseAttribute(rawAttribute: any): JRAttribute {
+  private parsePostAttribute(rawAttribute: any): JRPostAttribute {
     if (!rawAttribute) return undefined!;
 
-    const attribute: JRAttribute = {
-      id: this.parseId(rawAttribute.id),
-      type: rawAttribute.type,
-      insertId: rawAttribute.insertId,
-      image: this.parseImage(rawAttribute.image)
-    };
+    switch (rawAttribute.__typename) {
+      case 'PostAttributePicture':
+        const postAttributePicture: JRPostAttributePicture = {
+          id: this.parseId(rawAttribute.id),
+          encodedId: rawAttribute.id,
+          type: rawAttribute.type,
+          insertId: rawAttribute.insertId,
+          image: this.parseImage(rawAttribute.image),
+          value: rawAttribute.value,
+          post: undefined!
+        };
+        return postAttributePicture;
+      case 'PostAttributeEmbed':
+        const postAttributeEmbed: JRPostAttributeEmbed = {
+          id: this.parseId(rawAttribute.id),
+          encodedId: rawAttribute.id,
+          type: rawAttribute.type,
+          insertId: rawAttribute.insertId,
+          image: this.parseImage(rawAttribute.image),
+          value: rawAttribute.value,
+          post: undefined!
+        };
+        return postAttributeEmbed;
+      default:
+        throw 'Invalid attribute type';
+    }
+  }
 
-    return attribute;
+  private parseCommentAttributes(rawAttributes: any[]): JRCommentAttribute[] {
+    if (!rawAttributes) return [];
+
+    return rawAttributes
+      .map(ra => this.parseCommentAttribute(ra))
+      .filter(a => a !== undefined);
+  }
+
+  private parseCommentAttribute(rawAttribute: any): JRCommentAttribute {
+    if (!rawAttribute) return undefined!;
+
+    switch (rawAttribute.__typename) {
+      case 'CommentAttributePicture':
+        const commentAttributePicture: JRCommentAttributePicture = {
+          id: this.parseId(rawAttribute.id),
+          encodedId: rawAttribute.id,
+          type: rawAttribute.type,
+          insertId: rawAttribute.insertId,
+          image: this.parseImage(rawAttribute.image),
+          comment: undefined!
+        };
+        return commentAttributePicture;
+      case 'CommentAttributeEmbed':
+        const commentAttributeEmbed: JRCommentAttributeEmbed = {
+          id: this.parseId(rawAttribute.id),
+          encodedId: rawAttribute.id,
+          type: rawAttribute.type,
+          insertId: rawAttribute.insertId,
+          image: this.parseImage(rawAttribute.image),
+          value: rawAttribute.value,
+          comment: undefined!
+        };
+        return commentAttributeEmbed;
+      default:
+        throw 'Invalid attribute type';
+    }
   }
 
   private parseImage(rawImage: any): JRImage {
@@ -96,6 +158,7 @@ export class ParserService {
 
     const image: JRImage = {
       id: this.parseId(rawImage.id),
+      encodedId: rawImage.id,
       width: Number.parseInt(rawImage.width),
       height: Number.parseInt(rawImage.height),
       comment: rawImage.comment,
@@ -119,6 +182,7 @@ export class ParserService {
 
     const blog: JRBlog = {
       id: this.parseId(rawBlog.id),
+      encodedId: rawBlog.id,
       tag: rawBlog.tag,
       name: rawBlog.name,
       synonyms: rawBlog.synonyms
@@ -140,6 +204,7 @@ export class ParserService {
 
     const comment: JRComment = {
       id: this.parseId(rawComment.id),
+      encodedId: rawComment.id,
       text: rawComment.text,
       createdAt: new Date(rawComment.createdAt),
       parent: this.parseComment(rawComment.parent),
@@ -147,7 +212,7 @@ export class ParserService {
       rating: Number.parseFloat(rawComment.rating),
       level: Number.parseInt(rawComment.level),
       user: this.parseUser(rawComment.user),
-      attributes: this.parseAttributes(rawComment.attributes)
+      attributes: this.parseCommentAttributes(rawComment.attributes)
     };
 
     return comment;

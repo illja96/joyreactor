@@ -1,6 +1,4 @@
 import { JRAttributeEmbed } from "./attribute-embed.interface";
-import { JRComment } from "./comment.interface";
+import { JRCommentAttribute } from "./comment-attribute.interface";
 
-export interface CommentAttributeEmbed extends JRAttributeEmbed {
-  comment: JRComment
-}
+export interface JRCommentAttributeEmbed extends JRCommentAttribute, JRAttributeEmbed { }

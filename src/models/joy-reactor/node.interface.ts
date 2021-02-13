@@ -1,3 +1,4 @@
 export interface JRNode {
-  id: number
+  id: number,
+  encodedId: string
 }

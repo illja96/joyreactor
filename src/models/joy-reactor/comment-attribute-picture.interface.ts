@@ -1,6 +1,4 @@
 import { JRAttributePicture } from "./attribute-picture.interface";
-import { JRComment } from "./comment.interface";
+import { JRCommentAttribute } from "./comment-attribute.interface";
 
-export interface JRCommentAttributePicture extends JRAttributePicture {
-  comment: JRComment,
-}
+export interface JRCommentAttributePicture extends JRCommentAttribute, JRAttributePicture { }

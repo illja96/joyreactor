@@ -1,6 +1,4 @@
 import { JRAttributePicture } from "./attribute-picture.interface";
-import { JRPost } from "./post.interface";
+import { JRPostAttribute } from "./post-attribute.interface";
 
-export interface JRPostAttributePicture extends JRAttributePicture {
-  post: JRPost
-}
+export interface JRPostAttributePicture extends JRPostAttribute, JRAttributePicture { }
