@@ -47,7 +47,7 @@ jobs:
     - name: Upload production artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ steps.version.outputs.version }}
+        name: ${{ steps.version.outputs.version }}-production
         path: ./${{ steps.version.outputs.version }}-production.zip
         retention-days: 1
   release:
