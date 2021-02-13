@@ -1,21 +1,20 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
+import { ReactiveFormsModule } from "@angular/forms";
+import { ApolloLink, InMemoryCache } from "@apollo/client/core";
+import { HttpClientModule } from "@angular/common/http";
 import { HttpLink } from "apollo-angular/http";
 import { APOLLO_OPTIONS } from "apollo-angular";
+import { setContext } from "apollo-link-context";
 import { RootRoutingModule } from "./root.routing";
 import { RootIndexComponent } from "./root-index/root-index.component"
-import { ApolloLink, InMemoryCache } from "@apollo/client/core";
 import { environment } from "../../environments/environment";
 import { RootFooterComponent } from "./root-footer/root-footer.component";
 import { RootNavComponent } from "./root-nav/root-nav.component";
 import { AuthModule } from "../auth/auth.module";
-import { HttpClientModule, HttpHeaders } from "@angular/common/http";
 import { FeedModule } from "../feed/feed.module";
 import { TopModule } from "../top/top.module";
-import { ReactiveFormsModule } from "@angular/forms";
-import { JRProfile } from "src/models/joy-reactor/profile.interface";
-import { ApolloAuthProvider } from "src/providers/apollo-auth.provider";
-import { setContext } from "apollo-link-context";
+import { JRProfile } from "../../models/joy-reactor/profile.interface";
 
 @NgModule({
   declarations: [

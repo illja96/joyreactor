@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { map, switchMap } from 'rxjs/operators';
-import { JRPost } from '../../../models/joy-reactor/post.interface';
-import { PostGqlService } from '../../../services/gql/post-gql.service';
-import { FeedHttpService } from '../../../services/http/feed-http.service';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { map, switchMap } from "rxjs/operators";
+import { JRPost } from "../../../models/joy-reactor/post.interface";
+import { PostGqlService } from "../../../services/gql/post-gql.service";
+import { FeedHttpService } from "../../../services/http/feed-http.service";
 
 @Component({
   selector: 'app-feed-all',
