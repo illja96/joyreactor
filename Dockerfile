@@ -1,11 +1,11 @@
 FROM node:15-alpine AS build
 
-ARG BUILD_NUMBER
-RUN test -n "${BUILD_NUMBER}" || (echo "BUILD_NUMBER argument not provided" && false)
+ARG VERSION
+RUN test -n "${VERSION}" || (echo "VERSION argument not provided" && false)
 
 WORKDIR /app
 COPY . ./
-RUN npm version "${BUILD_NUMBER}" --no-git-tag-version
+RUN npm version "${VERSION}" --no-git-tag-version
 RUN npm install
 RUN npm run ng build -- -c=production
 
