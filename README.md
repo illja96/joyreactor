@@ -1,19 +1,16 @@
 # JoyReactor alternative SPA client
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.2.
+## Demo
 
-## Development server
+You can find latest version of this application hosted on [repository GitHub Pages](https://illja96.github.io/joyreactor)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Requirements
 
-## Code scaffolding
+1. [Node.js](https://nodejs.org)
+2. [Angular CLI](https://angular.io)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Data sources
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+This project was intended to use only [JoyReactor GraphQL](https://api.joyreactor.cc/graphql-playground).
+For now, this is impossible but due to lack of queries and mutations on JoyReactor side.
+All of the missing data sources were fulfilled at the expense of html parsing.
