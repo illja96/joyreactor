@@ -5,13 +5,13 @@ import { FeedPostComponent } from "./feed-post/feed-post.component";
 import { FeedPostCommentsComponent } from "./feed-post-comments/feed-post-comments.component";
 import { FeedAllComponent } from "./feed-all/feed-all.component";
 import { FeedBestComponent } from "./feed-best/feed-best.component";
-import { FeedIndexComponent } from "./feed-index/feed-index.component";
+import { FeedGoodComponent } from "./feed-good/feed-good.component";
 
 @NgModule({
   declarations: [
     FeedAllComponent,
     FeedBestComponent,
-    FeedIndexComponent,
+    FeedGoodComponent,
     FeedPostComponent,
     FeedPostCommentsComponent
   ],

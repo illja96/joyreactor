@@ -1,16 +1,16 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { map, switchMap } from "rxjs/operators";
-import { JRPost } from "../../../models/joy-reactor/post.interface";
-import { PostGqlService } from "../../../services/gql/post-gql.service";
-import { FeedHttpService } from "../../../services/http/feed-http.service";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { map, switchMap } from 'rxjs/operators';
+import { JRPost } from '../../../models/joy-reactor/post.interface';
+import { PostGqlService } from '../../../services/gql/post-gql.service';
+import { FeedHttpService } from '../../../services/http/feed-http.service';
 
 @Component({
-  selector: 'app-feed-best',
-  templateUrl: './feed-best.component.html',
-  styleUrls: ['./feed-best.component.css']
+  selector: 'app-feed-good',
+  templateUrl: './feed-good.component.html',
+  styleUrls: ['./feed-good.component.css']
 })
-export class FeedBestComponent implements OnInit {
+export class FeedGoodComponent implements OnInit {
   public posts: JRPost[];
 
   constructor(
@@ -30,7 +30,7 @@ export class FeedBestComponent implements OnInit {
           const rawPage = p.get('page')!;
           return Number.parseInt(rawPage);
         }),
-        switchMap(p => this.feedHttpService.getBest(p)),
+        switchMap(p => this.feedHttpService.getGood(p)),
         switchMap(i => this.postGqlService.getAll(i)))
       .subscribe(p => this.posts = p);
   }
