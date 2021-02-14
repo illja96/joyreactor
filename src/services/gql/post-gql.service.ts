@@ -25,7 +25,10 @@ export class PostGqlService {
   }
 
   public getAll(ids: number[]): Observable<JRPost[]> {
-    const encodedIds = ids.map(id => btoa(id.toString()));
+    const encodedIds = ids
+      .map(id => `Post:${id}`)
+      .map(id => btoa(id));
+
     let variables: any = {};
     for (let i = 0; i < ids.length; i++) {
       variables[`id${i}`] = encodedIds[i];
