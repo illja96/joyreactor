@@ -1,5 +1,7 @@
 # JoyReactor alternative SPA client
 
+![Release main](https://github.com/illja96/joyreactor/workflows/Release%20main/badge.svg)
+
 ## Demo
 
 You can find latest version of this application hosted on [repository GitHub Pages](https://illja96.github.io/joyreactor)
