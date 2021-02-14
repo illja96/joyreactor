@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { map, switchMap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { JRPost } from '../../../models/joy-reactor/post.interface';
 import { PostGqlService } from '../../../services/gql/post-gql.service';
 import { FeedHttpService } from '../../../services/http/feed-http.service';
@@ -12,26 +12,40 @@ import { FeedHttpService } from '../../../services/http/feed-http.service';
 })
 export class FeedGoodComponent implements OnInit {
   public posts: JRPost[];
+  public lastPage: number;
 
   constructor(
+    private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly feedHttpService: FeedHttpService,
     private readonly postGqlService: PostGqlService) {
-      this.posts = undefined!;
-    }
+    this.posts = undefined!;
+    this.lastPage = undefined!;
+  }
 
   public ngOnInit(): void {
-    this.route.paramMap
+    const pageObservable = this.route.paramMap
       .pipe(
-        map(p => {
-          const isPaged = p.has('page');
+        map(paramMap => {
+          const isPaged = paramMap.has('page');
           if (!isPaged) return undefined;
 
-          const rawPage = p.get('page')!;
+          const rawPage = paramMap.get('page')!;
           return Number.parseInt(rawPage);
-        }),
-        switchMap(p => this.feedHttpService.getGood(p)),
-        switchMap(i => this.postGqlService.getAll(i)))
-      .subscribe(p => this.posts = p);
+        }));
+
+    pageObservable
+      .pipe(
+        filter(page => page === undefined),
+        switchMap(() => this.feedHttpService.getGoodLastPage()))
+      .subscribe(page => this.router.navigateByUrl(`/feed/good/${page}`));
+
+    pageObservable
+      .pipe(
+        filter(page => page !== undefined),
+        tap(page => this.lastPage = page!),
+        switchMap(page => this.feedHttpService.getGood(page!)),
+        switchMap(postIds => this.postGqlService.getAll(postIds)))
+      .subscribe(posts => this.posts = posts);
   }
 }

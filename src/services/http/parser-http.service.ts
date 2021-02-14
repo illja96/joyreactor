@@ -8,8 +8,18 @@ export class ParserHttpService {
     this.domParser = new DOMParser();
   }
 
+  public parseLastPage(html: string): number {
+    const dom = this.domParser.parseFromString(html, 'text/html');
+
+    const lastPageTag = dom.querySelector('#Pagination > div > div.pagination_expanded > span.current') as HTMLSpanElement;
+    const rawLastPage = lastPageTag.innerText;
+    
+    return Number.parseInt(rawLastPage);
+  }
+
   public parsePostIds(html: string): number[] {
     const dom = this.domParser.parseFromString(html, 'text/html');
+
     const rawPostLinkTags = dom.querySelectorAll('a[title="ссылка на пост"]') as NodeListOf<HTMLLinkElement>;
     const postLinkTags = Array.from(rawPostLinkTags);
 

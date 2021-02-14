@@ -11,28 +11,43 @@ export class FeedHttpService {
     private readonly httpClient: HttpClient,
     private readonly parserHttpService: ParserHttpService) { }
 
-  public getAll(page?: number): Observable<number[]> {
-    const url = page ?
-      `${environment.httpUri}/all/${page}` :
-      `${environment.httpUri}/all`;
+  public getAllLastPage(): Observable<number> {
+    const url = `${environment.httpUri}/all`;
+
+    return this.httpClient.get(url, { responseType: 'text' })
+      .pipe(map(h => this.parserHttpService.parseLastPage(h)));
+  }
+
+  public getAll(page: number): Observable<number[]> {
+    const url = `${environment.httpUri}/all/${page}`;
 
     return this.httpClient.get(url, { responseType: 'text' })
       .pipe(map(h => this.parserHttpService.parsePostIds(h)));
+  }
+
+  public getBestLastPage(): Observable<number> {
+    const url = `${environment.httpUri}/best`;
+
+    return this.httpClient.get(url, { responseType: 'text' })
+      .pipe(map(h => this.parserHttpService.parseLastPage(h)));
   }
 
   public getBest(page?: number): Observable<number[]> {
-    const url = page ?
-      `${environment.httpUri}/best/${page}` :
-      `${environment.httpUri}/best`;
+    const url = `${environment.httpUri}/best/${page}`;
 
     return this.httpClient.get(url, { responseType: 'text' })
       .pipe(map(h => this.parserHttpService.parsePostIds(h)));
   }
 
+  public getGoodLastPage(): Observable<number> {
+    const url = `${environment.httpUri}`;
+
+    return this.httpClient.get(url, { responseType: 'text' })
+      .pipe(map(h => this.parserHttpService.parseLastPage(h)));
+  }
+
   public getGood(page?: number): Observable<number[]> {
-    const url = page ?
-      `${environment.httpUri}/${page}` :
-      `${environment.httpUri}`;
+    const url = `${environment.httpUri}/${page}`;
 
     return this.httpClient.get(url, { responseType: 'text' })
       .pipe(map(h => this.parserHttpService.parsePostIds(h)));
