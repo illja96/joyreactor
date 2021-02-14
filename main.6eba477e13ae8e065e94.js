@@ -35,7 +35,7 @@
   ${_g}  
   ${bg}
   ${Og}
-  ${Sg}`};let qg=(()=>{class e{constructor(e,t){this.apollo=e,this.parserGqlService=t}getWithoutComments(e){const t=btoa(e.toString());return this.apollo.query({query:Vg.postWithoutComments,variables:{id:t}}).pipe(x(e=>this.parserGqlService.parsePost(e)))}getAll(e){const t=e.map(e=>btoa(e.toString()));let n={};for(let o=0;o<e.length;o++)n[`id${o}`]=t[o];const r=e.map((e,t)=>`$id${t}: ID!`).join(","),i=e.map((e,t)=>`post${t}:node(id: $id${t}) { ...PostWithoutCommentsFields }`).join("\n"),s=Xh.gql`
+  ${Sg}`};let qg=(()=>{class e{constructor(e,t){this.apollo=e,this.parserGqlService=t}getWithoutComments(e){const t=btoa(e.toString());return this.apollo.query({query:Vg.postWithoutComments,variables:{id:t}}).pipe(x(e=>this.parserGqlService.parsePost(e)))}getAll(e){const t=e.map(e=>`Post:${e}`).map(e=>btoa(e));let n={};for(let o=0;o<e.length;o++)n[`id${o}`]=t[o];const r=e.map((e,t)=>`$id${t}: ID!`).join(","),i=e.map((e,t)=>`post${t}:node(id: $id${t}) { ...PostWithoutCommentsFields }`).join("\n"),s=Xh.gql`
     query post(${r}) {
       ${i}
     }
