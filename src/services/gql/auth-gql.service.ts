@@ -25,7 +25,7 @@ export class AuthGqlService {
 
     return this.apollo.mutate<any>({ mutation: gqlAuthConstants.login, variables: variables })
       .pipe(
-        map(mr => mr.data.login.me as any),
+        map(mr => mr.data.login.me),
         map(fr => this.parserGqlService.parseProfile(fr)),
         tap(p => this.setProfile(p)));
   }
