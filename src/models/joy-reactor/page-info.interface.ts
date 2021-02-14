@@ -4,7 +4,7 @@ export interface JRPageInfo {
   hasNextPage: boolean,
 
   /**When paginating backwards, are there more items?*/
-  hasPreviousPage: Boolean,
+  hasPreviousPage: boolean,
 
   /**When paginating backwards, the cursor to continue*/
   startCursor: string | undefined,
