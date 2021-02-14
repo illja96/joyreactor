@@ -1,17 +1,19 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { filter, map, switchMap, tap } from "rxjs/operators";
+import { FeedType } from "../../../models/feed/feed-type.enum";
 import { FeedPage } from "../../../models/feed/feed-page.mode";
 import { JRPost } from "../../../models/joy-reactor/post.interface";
 import { PostGqlService } from "../../../services/gql/post-gql.service";
 import { FeedHttpService } from "../../../services/http/feed-http.service";
 
 @Component({
-  selector: 'app-feed-all',
-  templateUrl: './feed-all.component.html',
-  styleUrls: ['./feed-all.component.css']
+  selector: 'app-feed-index',
+  templateUrl: './feed-index.component.html',
+  styleUrls: ['./feed-index.component.css']
 })
-export class FeedAllComponent implements OnInit {
+export class FeedIndexComponent implements OnInit {
+  public type: FeedType;
   public posts: JRPost[];
 
   public lastPage: number;
@@ -24,6 +26,7 @@ export class FeedAllComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly feedHttpService: FeedHttpService,
     private readonly postGqlService: PostGqlService) {
+    this.type = undefined!;
     this.posts = undefined!;
 
     this.lastPage = undefined!;
@@ -33,27 +36,30 @@ export class FeedAllComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    const pageObservable = this.route.paramMap
+    const typePageObservable = this.route.paramMap
       .pipe(
-        map(paramMap => {
-          const isPaged = paramMap.has('page');
-          if (!isPaged) return undefined;
+        map(paramMap => ({ type: paramMap.get('type'), page: paramMap.get('page') })),
+        map(t => ({
+          type: t.type !== null ? <FeedType>t.type : null,
+          page: t.page !== null ? Number.parseInt(t.page) : null
+        })));
 
-          const rawPage = paramMap.get('page')!;
-          return Number.parseInt(rawPage);
-        }));
+    typePageObservable
+      .pipe(filter(t => t.type === null))
+      .subscribe(() => this.router.navigateByUrl(`/feed/${FeedType.Good}`));
 
-    pageObservable
+    typePageObservable
       .pipe(
-        filter(page => page === undefined),
-        switchMap(() => this.feedHttpService.getAllLastPage()))
-      .subscribe(page => this.router.navigateByUrl(`/feed/all/${page}`));
+        filter(t => t.type !== null && t.page === null),
+        tap(t => this.type = t.type!),
+        switchMap(t => this.feedHttpService.getLastPage(t.type!)))
+      .subscribe(page => this.router.navigateByUrl(`/feed/${this.type}/page/${page}`));
 
-    pageObservable
+    typePageObservable
       .pipe(
-        filter(page => page !== undefined),
-        tap(() => this.posts = undefined!),
-        switchMap(page => this.feedHttpService.getAll(page!)),
+        filter(t => t.type !== null && t.page !== null),
+        tap(t => { this.type = t.type!; this.posts = undefined!; }),
+        switchMap(t => this.feedHttpService.getAll(t.type!, t.page!)),
         tap(feedPage => this.updatePagination(feedPage)),
         switchMap(feedPage => this.postGqlService.getAll(feedPage.postIds)))
       .subscribe(posts => this.posts = posts);
@@ -62,7 +68,7 @@ export class FeedAllComponent implements OnInit {
   public loadNextPage(): void {
     this.nextPageLoading = true;
 
-    this.feedHttpService.getAll(this.page - 1)
+    this.feedHttpService.getAll(this.type, this.page - 1)
       .pipe(
         tap(feedPage => this.updatePagination(feedPage)),
         switchMap(feedPage => this.postGqlService.getAll(feedPage.postIds)))

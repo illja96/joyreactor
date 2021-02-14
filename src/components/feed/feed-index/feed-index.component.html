@@ -10,7 +10,7 @@
 
   <app-feed-post *ngFor="let post of posts" [post]="post"></app-feed-post>
 
-  <div *ngIf="posts && page" class="row">
+  <div *ngIf="posts && page && page !== 1" class="row">
     <button (click)="loadNextPage()" [disabled]="nextPageLoading" class="btn btn-outline-info btn-lg btn-block">
       <span *ngIf="!nextPageLoading">
         Загрузить следующую страницу
@@ -23,6 +23,6 @@
 
   <div *ngIf="posts && lastPage && page">
     <br>
-    <app-feed-pagination type="all" [lastPage]="lastPage" [page]="page"></app-feed-pagination>
+    <app-feed-pagination [type]="type" [lastPage]="lastPage" [page]="page"></app-feed-pagination>
   </div>
 </div>
