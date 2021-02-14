@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { filter, map, switchMap, tap } from "rxjs/operators";
+import { FeedPage } from "../../../models/feed/feed-page.mode";
 import { JRPost } from "../../../models/joy-reactor/post.interface";
 import { PostGqlService } from "../../../services/gql/post-gql.service";
 import { FeedHttpService } from "../../../services/http/feed-http.service";
@@ -12,7 +13,11 @@ import { FeedHttpService } from "../../../services/http/feed-http.service";
 })
 export class FeedAllComponent implements OnInit {
   public posts: JRPost[];
+
   public lastPage: number;
+  public page: number;
+
+  public nextPageLoading: boolean;
 
   constructor(
     private readonly router: Router,
@@ -20,7 +25,11 @@ export class FeedAllComponent implements OnInit {
     private readonly feedHttpService: FeedHttpService,
     private readonly postGqlService: PostGqlService) {
     this.posts = undefined!;
+
     this.lastPage = undefined!;
+    this.page = undefined!;
+
+    this.nextPageLoading = false;
   }
 
   public ngOnInit(): void {
@@ -43,9 +52,28 @@ export class FeedAllComponent implements OnInit {
     pageObservable
       .pipe(
         filter(page => page !== undefined),
-        tap(page => this.lastPage = page!),
+        tap(() => this.posts = undefined!),
         switchMap(page => this.feedHttpService.getAll(page!)),
-        switchMap(postIds => this.postGqlService.getAll(postIds)))
+        tap(feedPage => this.updatePagination(feedPage)),
+        switchMap(feedPage => this.postGqlService.getAll(feedPage.postIds)))
       .subscribe(posts => this.posts = posts);
+  }
+
+  public loadNextPage(): void {
+    this.nextPageLoading = true;
+
+    this.feedHttpService.getAll(this.page - 1)
+      .pipe(
+        tap(feedPage => this.updatePagination(feedPage)),
+        switchMap(feedPage => this.postGqlService.getAll(feedPage.postIds)))
+      .subscribe(posts => {
+        posts.forEach(p => this.posts.push(p));
+        this.nextPageLoading = false;
+      });
+  }
+
+  private updatePagination(feedPage: FeedPage): void {
+    this.lastPage = feedPage.lastPage;
+    this.page = feedPage.page;
   }
 }

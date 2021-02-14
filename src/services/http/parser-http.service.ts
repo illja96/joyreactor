@@ -11,7 +11,7 @@ export class ParserHttpService {
   public parseLastPage(html: string): number {
     const dom = this.domParser.parseFromString(html, 'text/html');
 
-    const lastPageTag = dom.querySelector('#Pagination > div > div.pagination_expanded > span.current') as HTMLSpanElement;
+    const lastPageTag = dom.querySelector('#Pagination > div > div.pagination_expanded > :nth-child(1)') as HTMLElement;
     const rawLastPage = lastPageTag.innerText;
     
     return Number.parseInt(rawLastPage);

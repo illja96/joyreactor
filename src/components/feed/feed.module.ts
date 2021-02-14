@@ -6,12 +6,14 @@ import { FeedPostCommentsComponent } from "./feed-post-comments/feed-post-commen
 import { FeedAllComponent } from "./feed-all/feed-all.component";
 import { FeedBestComponent } from "./feed-best/feed-best.component";
 import { FeedGoodComponent } from "./feed-good/feed-good.component";
+import { FeedPaginationComponent } from "./feed-pagination/feed-pagination.component";
 
 @NgModule({
   declarations: [
     FeedAllComponent,
     FeedBestComponent,
     FeedGoodComponent,
+    FeedPaginationComponent,
     FeedPostComponent,
     FeedPostCommentsComponent
   ],

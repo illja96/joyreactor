@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
+import { FeedPage } from "../../models/feed/feed-page.mode";
 import { environment } from "../../environments/environment";
 import { ParserHttpService } from "./parser-http.service";
 
@@ -18,11 +19,19 @@ export class FeedHttpService {
       .pipe(map(h => this.parserHttpService.parseLastPage(h)));
   }
 
-  public getAll(page: number): Observable<number[]> {
+  public getAll(page: number): Observable<FeedPage> {
     const url = `${environment.httpUri}/all/${page}`;
 
     return this.httpClient.get(url, { responseType: 'text' })
-      .pipe(map(h => this.parserHttpService.parsePostIds(h)));
+      .pipe(map(html => {
+        const feedPage: FeedPage = {
+          page: page,
+          lastPage: this.parserHttpService.parseLastPage(html),
+          postIds: this.parserHttpService.parsePostIds(html)
+        };
+
+        return feedPage;
+      }));
   }
 
   public getBestLastPage(): Observable<number> {
@@ -32,11 +41,19 @@ export class FeedHttpService {
       .pipe(map(h => this.parserHttpService.parseLastPage(h)));
   }
 
-  public getBest(page?: number): Observable<number[]> {
+  public getBest(page: number): Observable<FeedPage> {
     const url = `${environment.httpUri}/best/${page}`;
 
     return this.httpClient.get(url, { responseType: 'text' })
-      .pipe(map(h => this.parserHttpService.parsePostIds(h)));
+      .pipe(map(html => {
+        const feedPage: FeedPage = {
+          page: page,
+          lastPage: this.parserHttpService.parseLastPage(html),
+          postIds: this.parserHttpService.parsePostIds(html)
+        };
+
+        return feedPage;
+      }));
   }
 
   public getGoodLastPage(): Observable<number> {
@@ -46,10 +63,18 @@ export class FeedHttpService {
       .pipe(map(h => this.parserHttpService.parseLastPage(h)));
   }
 
-  public getGood(page?: number): Observable<number[]> {
+  public getGood(page: number): Observable<FeedPage> {
     const url = `${environment.httpUri}/${page}`;
 
     return this.httpClient.get(url, { responseType: 'text' })
-      .pipe(map(h => this.parserHttpService.parsePostIds(h)));
+      .pipe(map(html => {
+        const feedPage: FeedPage = {
+          page: page,
+          lastPage: this.parserHttpService.parseLastPage(html),
+          postIds: this.parserHttpService.parsePostIds(html)
+        };
+
+        return feedPage;
+      }));
   }
 }
