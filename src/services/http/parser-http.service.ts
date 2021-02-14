@@ -8,12 +8,19 @@ export class ParserHttpService {
     this.domParser = new DOMParser();
   }
 
+  public parseHeader(html: string): string {
+    const dom = this.domParser.parseFromString(html, 'text/html');
+
+    const headerTag = dom.querySelector('#header > div') as HTMLDivElement;
+    return headerTag.innerText;
+  }
+
   public parseLastPage(html: string): number {
     const dom = this.domParser.parseFromString(html, 'text/html');
 
     const lastPageTag = dom.querySelector('#Pagination > div > div.pagination_expanded > :nth-child(1)') as HTMLElement;
     const rawLastPage = lastPageTag.innerText;
-    
+
     return Number.parseInt(rawLastPage);
   }
 
