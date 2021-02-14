@@ -1,16 +1,16 @@
-<div *ngIf="years && weeks" class="container">
+<div *ngIf="week && year" class="container">
   <div class="card border-secondary mb-3">
     <div class="card-header text-center">
       <h1>
         Топ за {{ week }} неделю {{ year }} года
       </h1>
 
-      <app-top-pagination [maxYear]="maxYear" [year]="year" [minYear]="minYear" [years]="years" [maxWeek]="maxWeek"
-        [week]="week" [minWeek]="minWeek" [weeks]="weeks"></app-top-pagination>
+      <app-top-pagination [maxYear]="maxYear" [year]="year" [minYear]="minYear" [maxWeek]="maxWeek" [week]="week"
+        [minWeek]="minWeek"></app-top-pagination>
     </div>
   </div>
 
-  <div *ngIf="posts === undefined" class="row">
+  <div *ngIf="!posts" class="row">
     <div class="col-12 text-center">
       <div role="status" class="spinner-border text-info" style="width: 3rem; height: 3rem;">
         <span class="sr-only">Loading...</span>
@@ -21,6 +21,6 @@
 
   <app-feed-post *ngFor="let post of posts" [post]="post"></app-feed-post>
 
-  <app-top-pagination [maxYear]="maxYear" [year]="year" [minYear]="minYear" [years]="years" [maxWeek]="maxWeek"
-    [week]="week" [minWeek]="minWeek" [weeks]="weeks"></app-top-pagination>
+  <app-top-pagination [maxYear]="maxYear" [year]="year" [minYear]="minYear" [maxWeek]="maxWeek" [week]="week"
+    [minWeek]="minWeek"></app-top-pagination>
 </div>
