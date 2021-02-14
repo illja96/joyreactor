@@ -1,0 +1,23 @@
+<div class="container">
+  <div *ngIf="!posts" class="row">
+    <div class="col-12 text-center">
+      <div role="status" class="spinner-border text-info" style="width: 3rem; height: 3rem;">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <br> <br> <br>
+  </div>
+
+  <app-feed-post *ngFor="let post of posts" [post]="post"></app-feed-post>
+
+  <div *ngIf="posts && page && page !== 1" class="row">
+    <button (click)="loadNextPage()" [disabled]="nextPageLoading" class="btn btn-outline-info btn-lg btn-block">
+      <span *ngIf="!nextPageLoading">
+        Загрузить следующую страницу
+      </span>
+      <div *ngIf="nextPageLoading" role="status" class="spinner-border text-info" style="width: 2rem; height: 2rem;">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </button>
+  </div>
+</div>

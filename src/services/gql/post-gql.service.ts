@@ -3,7 +3,7 @@ import { Apollo, gql } from "apollo-angular";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { gqlFragmentsConstants } from "../../constants/gql/gql-fragments.constants";
-import { gqlFeedConstants } from "../../constants/gql/gql-feed.constants";
+import { gqlPostConstants } from "../../constants/gql/gql-post.constants";
 import { JRPost } from "../../models/joy-reactor/post.interface";
 import { ParserGqlService } from "./parser-gql.service";
 
@@ -11,16 +11,15 @@ import { ParserGqlService } from "./parser-gql.service";
 export class PostGqlService {
   constructor(
     private readonly apollo: Apollo,
-    private readonly parserGqlService: ParserGqlService) {
-  }
+    private readonly parserGqlService: ParserGqlService) { }
 
   public getWithoutComments(id: number): Observable<JRPost> {
-    const encodedId = btoa(id.toString());
+    const encodedId = btoa(`Post:${id}`);
     const variables = {
       id: encodedId
     };
 
-    return this.apollo.query<any>({ query: gqlFeedConstants.postWithoutComments, variables: variables })
+    return this.apollo.query<any>({ query: gqlPostConstants.postWithoutComments, variables: variables })
       .pipe(map(qr => this.parserGqlService.parsePost(qr)));
   }
 

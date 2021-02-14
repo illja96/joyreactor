@@ -22,8 +22,6 @@ export class FeedPaginationComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    console.log(this.type);
-    
     this.pages = [];
 
     this.pages.push(this.page);

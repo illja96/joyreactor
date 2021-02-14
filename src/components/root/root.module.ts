@@ -15,6 +15,7 @@ import { AuthModule } from "../auth/auth.module";
 import { FeedModule } from "../feed/feed.module";
 import { TopModule } from "../top/top.module";
 import { JRProfile } from "../../models/joy-reactor/profile.interface";
+import { TagModule } from "../tag/tag.module";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { JRProfile } from "../../models/joy-reactor/profile.interface";
     ReactiveFormsModule,
     AuthModule,
     FeedModule,
+    TagModule,
     TopModule,
     RootRoutingModule
   ],

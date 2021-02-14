@@ -1,7 +1,7 @@
 import { gql } from "apollo-angular";
 import { gqlFragmentsConstants } from "./gql-fragments.constants";
 
-export const gqlFeedConstants = {
+export const gqlPostConstants = {
   post: gql`
   query post($id: ID!) {
     post:node(id: $id) {
