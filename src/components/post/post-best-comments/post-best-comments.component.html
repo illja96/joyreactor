@@ -1,5 +1,9 @@
-<div *ngIf="comments" class="row">
+<div *ngIf="topLevelComments" class="row">
   <div class="col-12">
-    <app-post-comment *ngFor="let comment of topLevelComments" [comment]="comment" [comments]="comments"></app-post-comment>
+    <h3 class="text-warning">
+      Отличный комментарий!
+    </h3>
+
+    <app-post-comment *ngFor="let comment of topLevelComments" [comment]="comment" [post]="post" [comments]="comments"></app-post-comment>
   </div>
 </div>

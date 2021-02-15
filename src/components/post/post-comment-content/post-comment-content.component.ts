@@ -1,32 +1,38 @@
 import { Component, Input, OnChanges } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { JRPostAttributeEmbed } from "../../../models/joy-reactor/post-attribute-embed.interface";
-import { JRPostAttributePicture } from "../../../models/joy-reactor/post-attribute-picture.interface";
 import { JRAttributeType } from "../../../models/joy-reactor/attribute-type.enum";
-import { JRPostAttribute } from "../../../models/joy-reactor/post-attribute.interface";
+import { JRCommentAttributeEmbed } from "../../../models/joy-reactor/comment-attribute-embed.interface";
+import { JRCommentAttributePicture } from "../../../models/joy-reactor/comment-attribute-picture.interface";
+import { JRCommentAttribute } from "../../../models/joy-reactor/comment-attribute.interface";
+import { JRComment } from "../../../models/joy-reactor/comment.interface";
 import { JRPost } from "../../../models/joy-reactor/post.interface";
 
 @Component({
-  selector: 'app-post-content',
-  templateUrl: './post-content.component.html',
-  styleUrls: ['./post-content.component.css']
+  selector: 'app-post-comment-content',
+  templateUrl: './post-comment-content.component.html',
+  styleUrls: ['./post-comment-content.component.css']
 })
-export class PostContentComponent implements OnChanges {
+export class PostCommentContentComponent implements OnChanges {
+  @Input() public comment: JRComment;
   @Input() public post: JRPost;
 
   public html: SafeHtml;
 
   constructor(private readonly domSanitizer: DomSanitizer) {
+    this.comment = undefined!;
     this.post = undefined!;
+
     this.html = undefined!;
   }
 
   public ngOnChanges(): void {
-    let rawBodyHtml = this.post.text;
-    for (let i = 0; i < this.post.attributes.length; i++) {
+    if (!this.comment || !this.post) return;
+
+    let rawBodyHtml = this.comment.text;
+    for (let i = 0; i < this.comment.attributes.length; i++) {
       const replaceTagRegex = `&attribute_insert_${i + 1}&`;
 
-      const replaceTag = this.getReplaceTag(this.post.attributes[i] as JRPostAttribute);
+      const replaceTag = this.getReplaceTag(this.comment.attributes[i] as JRCommentAttribute);
       const isHtmlContainsReplaceTag = rawBodyHtml.match(replaceTagRegex);
       if (isHtmlContainsReplaceTag) rawBodyHtml = rawBodyHtml.replace(replaceTagRegex, `<br>${replaceTag.outerHTML}`);
       else rawBodyHtml += `<br>${replaceTag.outerHTML}`;
@@ -35,14 +41,14 @@ export class PostContentComponent implements OnChanges {
     this.html = this.domSanitizer.bypassSecurityTrustHtml(rawBodyHtml);
   }
 
-  private getReplaceTag(attribute: JRPostAttribute): HTMLElement {
-    const pictureAttribute = attribute as JRPostAttributePicture;
-    const embedAttribute = attribute as JRPostAttributeEmbed;
+  private getReplaceTag(attribute: JRCommentAttribute): HTMLElement {
+    const pictureAttribute = attribute as JRCommentAttributePicture;
+    const embedAttribute = attribute as JRCommentAttributeEmbed;
 
     switch (attribute.type) {
       case JRAttributeType.Picture:
         const pictureFileName = this.getPictureFileName(pictureAttribute);
-        const pictureUrl = `http://img10.joyreactor.cc/pics/post/${pictureFileName}`;
+        const pictureUrl = `http://img10.joyreactor.cc/pics/comment/${pictureFileName}`;
 
         const pictureElement = document.createElement('img');
         pictureElement.src = pictureUrl;
@@ -144,7 +150,7 @@ export class PostContentComponent implements OnChanges {
     return iframeWrapper;
   }
 
-  private getPictureFileName(attribute: JRPostAttribute): string {
+  private getPictureFileName(attribute: JRCommentAttribute): string {
     const nameParts = [];
 
     this.post.blogs

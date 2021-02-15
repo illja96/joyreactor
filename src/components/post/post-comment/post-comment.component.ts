@@ -1,4 +1,5 @@
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, Input, OnChanges } from "@angular/core";
+import { JRPost } from "../../../models/joy-reactor/post.interface";
 import { JRComment } from "../../../models/joy-reactor/comment.interface";
 
 @Component({
@@ -10,17 +11,19 @@ export class PostCommentComponent implements OnChanges {
   @Input() public comment: JRComment;
   public replies: JRComment[];
 
+  @Input() public post: JRPost;
   @Input() public comments: JRComment[];
 
   constructor() {
     this.comment = undefined!;
     this.replies = undefined!;
 
+    this.post = undefined!;
     this.comments = undefined!;
   }
 
   public ngOnChanges(): void {
-    if (!this.comment || !this.comments) return;
+    if (!this.comment || !this.post || !this.comments) return;
 
     this.replies = [];
     this.comments

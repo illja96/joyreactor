@@ -1,12 +1,19 @@
-<blockquote *ngIf="comment" class="blockquote blockquote-primary">
-  <p class="mb-0">
-    {{ comment.text }}
-  </p>
+<blockquote *ngIf="comment" class="blockquote blockquote-light">
+  <small>
+    <app-post-comment-content [comment]="comment" [post]="post"></app-post-comment-content>
+  </small>
 
   <footer class="blockquote-simple-footer">
     <div class="row">
       <div class="col-4 text-left">
-        <a routerLink="/user/{{ comment.user.id }}">{{ comment.user.username }}</a>
+        <a routerLink="/user/{{ comment.user.id }}">
+          <img [alt]="post.user.username" src="http://img1.joyreactor.cc/pics/avatar/user/{{ comment.user.id }}"
+            width="29px" height="29px">
+
+          <span>
+            {{ comment.user.username }}
+          </span>
+        </a>
       </div>
       <div class="col-4 text-center">
         <span>
@@ -25,5 +32,6 @@
     </div>
   </footer>
 
-  <app-post-comment *ngFor="let reply of replies" [comment]="reply" [comments]="comments"></app-post-comment>
+  <app-post-comment *ngFor="let reply of replies" [comment]="reply" [post]="post" [comments]="comments">
+  </app-post-comment>
 </blockquote>

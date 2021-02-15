@@ -6,11 +6,13 @@ import { PostCommentsComponent } from "./post-comments/post-comments.component";
 import { PostContentComponent } from "./post-content/post-content.component";
 import { PostIndexComponent } from "./post-index/post-index.component";
 import { PostRoutingModule } from "./post.routing";
+import { PostCommentContentComponent } from "./post-comment-content/post-comment-content.component";
 
 @NgModule({
   declarations: [
     PostBestCommentsComponent,
     PostCommentComponent,
+    PostCommentContentComponent,
     PostCommentsComponent,
     PostContentComponent,
     PostIndexComponent

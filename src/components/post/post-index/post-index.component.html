@@ -22,7 +22,9 @@
     </div>
   </div>
 
-  <app-post-content [post]="post"></app-post-content>
+  <div class="card-body">
+    <app-post-content [post]="post"></app-post-content>
+  </div>
 
   <div class="card-footer text-muted">
     <div class="row">
@@ -50,9 +52,9 @@
       </div>
     </div>
 
-    <div *ngIf="post.bestComments">
+    <div *ngIf="post.bestComments?.length !== 0">
       <br>
-      <app-post-best-comments [comments]="post.bestComments"></app-post-best-comments>
+      <app-post-best-comments [post]="post" [comments]="post.bestComments"></app-post-best-comments>
     </div>
   </div>
 </div>
