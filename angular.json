@@ -100,7 +100,8 @@
             "noSilent": true,
             "branch": "pages",
             "name": "Angular CLI GitHub pages",
-            "email": "angular-cli-ghpages@npmjs.com"
+            "email": "angular-cli-ghpages@npmjs.com",
+            "cname": "joyreactor.ivaxor.com"
           }
         }
       }

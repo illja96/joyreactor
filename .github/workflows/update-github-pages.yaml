@@ -24,7 +24,7 @@ jobs:
       run: npm install
     - name: NPM build
       run: npm run ng build -- -c=production
-    - name: Update to github pages
+    - name: Deploy to GitHub pages
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npm run ng deploy
