@@ -108,7 +108,7 @@ export class ParserGqlService {
         };
         return postAttributeEmbed;
       default:
-        throw 'Invalid attribute type';
+        throw new Error('Invalid attribute type');
     }
   }
 
@@ -146,7 +146,7 @@ export class ParserGqlService {
         };
         return commentAttributeEmbed;
       default:
-        throw 'Invalid attribute type';
+        throw new Error('Invalid attribute type');
     }
   }
 

@@ -69,7 +69,7 @@ export class AttributeMapperService {
         return bandcampElement;
 
       default:
-        throw 'Invalid type';
+        throw new Error('Invalid attribute type');
     }
   }
 
