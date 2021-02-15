@@ -18,14 +18,10 @@ export class TagHttpService {
       `${environment.httpUri}/tags/${page}`;
 
     return this.httpClient.get(url, { responseType: 'text' })
-      .pipe(map(html => {
-        const tagsPage: TagsPage = {
-          page: page,
-          lastPage: this.parserHttpService.parseFirstPage(html),
-          tagIds: this.parserHttpService.parseTagIds(html)
-        };
-
-        return tagsPage;
-      }));
+      .pipe(map(html => ({
+        page: page,
+        lastPage: this.parserHttpService.parseFirstPage(html),
+        tagIds: this.parserHttpService.parseTagIds(html)
+      })));
   }
 }

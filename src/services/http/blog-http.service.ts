@@ -24,14 +24,10 @@ export class BlogHttpService {
     const url = `${environment.httpUri}/tag/${blog.tag}/${page}`;
 
     return this.httpClient.get(url, { responseType: 'text' })
-      .pipe(map(html => {
-        const feedPage: FeedPage = {
-          page: page,
-          lastPage: this.parserHttpService.parseLastPage(html),
-          postIds: this.parserHttpService.parsePostIds(html)
-        };
-
-        return feedPage;
-      }));
+      .pipe(map(html => ({
+        page: page,
+        lastPage: this.parserHttpService.parseLastPage(html),
+        postIds: this.parserHttpService.parsePostIds(html)
+      })));
   }
 }
