@@ -18,10 +18,12 @@ import { JRProfile } from "../../models/joy-reactor/profile.interface";
 import { TagModule } from "../tag/tag.module";
 import { DiscussionModule } from "../discussion/discussion.module";
 import { PostModule } from "../post/post.module";
+import { RootHomeComponent } from "./root-home/root-home.component";
 
 @NgModule({
   declarations: [
     RootFooterComponent,
+    RootHomeComponent,
     RootIndexComponent,
     RootNavComponent
   ],
