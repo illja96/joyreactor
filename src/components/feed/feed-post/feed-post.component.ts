@@ -45,34 +45,74 @@ export class FeedPostComponent implements OnInit {
         const pictureFileName = this.getPictureFileName(pictureAttribute);
         const pictureUrl = `http://img10.joyreactor.cc/pics/post/${pictureFileName}`;
 
-        const pictureTag = document.createElement('img');
-        pictureTag.src = pictureUrl;
+        const pictureElement = document.createElement('img');
+        pictureElement.src = pictureUrl;
 
-        return pictureTag;
+        return pictureElement;
+
+      case JRAttributeType.YouTube:
+        const youtubeUrl = `https://www.youtube.com/embed/${embedAttribute.value}`;
+        const youtubeElement = this.createWrappedIframe(youtubeUrl);
+
+        return youtubeElement;
+
+      case JRAttributeType.Vimeo:
+        const vimeoUrl = `https://player.vimeo.com/video/${embedAttribute.value}`;
+        const vimeoElement = this.createWrappedIframe(vimeoUrl);
+
+        return vimeoElement;
 
       case JRAttributeType.Coub:
         const coubUrl = `https://coub.com/embed/${embedAttribute.value}`;
+        const coubElement = this.createWrappedIframe(coubUrl);
 
-        const coubTag = document.createElement('iframe');
-        coubTag.src = coubUrl;
-        coubTag.allowFullscreen = true;
-        coubTag.frameBorder = '0';
-        coubTag.style.width = '100%';
-        coubTag.style.height = '100%';
-        coubTag.style.position = 'absolute';
+        return coubElement;
 
-        const coubWrapperTag = document.createElement('div');
-        coubWrapperTag.style.width = '100%';
-        coubWrapperTag.style.height = '0px';
-        coubWrapperTag.style.paddingBottom = '56%';
-        coubWrapperTag.style.position = 'relative';
-        coubWrapperTag.appendChild(coubTag);
+      case JRAttributeType.SoundCloud:
+        const soundcloudAttribute = JSON.parse(embedAttribute.value);
+        const rawSoundcloudTrackUrl = soundcloudAttribute.url;
+        const encodedSoundcloudTrackUrl = encodeURIComponent(rawSoundcloudTrackUrl);
+        const fullSoundcloudTrackUrl: string = `${encodedSoundcloudTrackUrl}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true`;
+        const soundcloudTrackHeight: number = soundcloudAttribute.height;
 
-        return coubWrapperTag;
+        const soundcloudUrl = `https://w.soundcloud.com/player/?url=${fullSoundcloudTrackUrl}`;
+        const soundcloudElement = this.createSoundCloudIframe(soundcloudUrl, soundcloudTrackHeight);
+
+        return soundcloudElement;
 
       default:
         throw 'Invalid type';
     }
+  }
+
+  private createSoundCloudIframe(src: string, height: number): HTMLIFrameElement {
+    const iframe = document.createElement('iframe');
+    iframe.src = src;
+    iframe.allowFullscreen = true;
+    iframe.width = '100%';
+    iframe.height = `${height}px`;
+    iframe.style.border = '0px';
+
+    return iframe;
+  }
+
+  private createWrappedIframe(src: string): HTMLDivElement {
+    const iframe = document.createElement('iframe');
+    iframe.src = src;
+    iframe.allowFullscreen = true;
+    iframe.style.border = '0px';
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.position = 'absolute';
+
+    const iframeWrapper = document.createElement('div');
+    iframeWrapper.style.width = '100%';
+    iframeWrapper.style.height = '0px';
+    iframeWrapper.style.paddingBottom = '56.25%';
+    iframeWrapper.style.position = 'relative';
+    iframeWrapper.appendChild(iframe);
+
+    return iframeWrapper;
   }
 
   private getPictureFileName(attribute: JRAttribute): string {
