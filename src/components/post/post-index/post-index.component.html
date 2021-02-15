@@ -3,7 +3,8 @@
     <div class="row">
       <div class="col-12">
         <a routerLink="/user/{{ post.user.id }}">
-          <img [alt]="post.user.username" src="http://img1.joyreactor.cc/pics/avatar/user/{{ post.user.id }}">
+          <img src="http://img1.joyreactor.cc/pics/avatar/user/{{ post.user.id }}" [title]="post.user.username"
+            [alt]="post.user.username">
 
           <span class="ml-2">{{ post.user.username }}</span>
         </a>

@@ -7,8 +7,8 @@
     <div class="row">
       <div class="col-4 text-left">
         <a routerLink="/user/{{ comment.user.id }}">
-          <img [alt]="post.user.username" src="http://img1.joyreactor.cc/pics/avatar/user/{{ comment.user.id }}"
-            width="29px" height="29px">
+          <img src="http://img1.joyreactor.cc/pics/avatar/user/{{ comment.user.id }}" [title]="post.user.username"
+            [alt]="post.user.username" width="29px" height="29px">
 
           <span>
             {{ comment.user.username }}
