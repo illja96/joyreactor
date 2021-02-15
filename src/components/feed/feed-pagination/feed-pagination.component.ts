@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FeedType } from '../../../models/feed/feed-type.enum';
+import { Component, Input, OnInit } from "@angular/core";
+import { FeedType } from "../../../models/feed/feed-type.enum";
 
 @Component({
   selector: 'app-feed-pagination',
