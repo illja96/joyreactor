@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
-import { JRBlog } from '../../../models/joy-reactor/blog.interface';
-import { TagsPage } from '../../../models/tag/tags-page.model';
-import { TagGqlService } from '../../../services/gql/tag-gql.service';
-import { TagHttpService } from '../../../services/http/tag-http.service';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { filter, map, switchMap, tap } from "rxjs/operators";
+import { JRBlog } from "../../../models/joy-reactor/blog.interface";
+import { TagsPage } from "../../../models/tag/tags-page.model";
+import { TagGqlService } from "../../../services/gql/tag-gql.service";
+import { TagHttpService } from "../../../services/http/tag-http.service";
 
 @Component({
   selector: 'app-tag-list',

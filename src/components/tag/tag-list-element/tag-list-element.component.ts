@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { JRBlog } from "src/models/joy-reactor/blog.interface";
+import { JRBlog } from "../../../models/joy-reactor/blog.interface";
 
 @Component({
   selector: 'app-tag-list-element',

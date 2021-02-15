@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Apollo, gql } from "apollo-angular";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { gqlFragmentsConstants } from "src/constants/gql/gql-fragments.constants";
+import { gqlFragmentsConstants } from "../../constants/gql/gql-fragments.constants";
 import { JRBlog } from "../../models/joy-reactor/blog.interface";
 import { ParserGqlService } from "./parser-gql.service";
 
