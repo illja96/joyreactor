@@ -14,9 +14,22 @@
           Лента
         </a>
         <div class="dropdown-menu">
-          <a routerLink="/feed/all" class="dropdown-item" routerLinkActive="active">Новое</a>
+          <a routerLink="/feed/all" class="dropdown-item" routerLinkActive="active">Всё</a>
           <a routerLink="/feed/good" class="dropdown-item" routerLinkActive="active">Хорошее</a>
           <a routerLink="/feed/best" class="dropdown-item" routerLinkActive="active">Лучшее</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+          class="nav-link dropdown-toggle">
+          Обсуждаемое
+        </a>
+        <div class="dropdown-menu">
+          <a routerLink="/discussion/all" class="dropdown-item" routerLinkActive="active">Всё</a>
+          <a routerLink="/discussion/good" class="dropdown-item" routerLinkActive="active">Хорошее</a>
+          <a routerLink="/discussion/flame" class="dropdown-item" routerLinkActive="active">Срачи</a>
+          <a routerLink="/discussion/my" class="dropdown-item" routerLinkActive="active">Моё</a>
         </div>
       </li>
 
