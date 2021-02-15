@@ -72,7 +72,7 @@ export class FeedIndexComponent implements OnInit {
       .pipe(
         tap(feedPage => this.updatePagination(feedPage)),
         switchMap(feedPage => this.postGqlService.getAll(feedPage.postIds)),
-        map(p => p.filter(p => this.posts.find(pp => pp.id === p.id) === undefined)))
+        map(posts => posts.filter(p => this.posts.find(pp => pp.id === p.id) === undefined)))
       .subscribe(posts => {
         posts.forEach(p => this.posts.push(p));
         this.nextPageLoading = false;
