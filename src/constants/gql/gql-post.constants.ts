@@ -8,13 +8,14 @@ export const gqlPostConstants = {
       ...PostFields
     }
   }
-  ${gqlFragmentsConstants.postWithoutComments}
+  ${gqlFragmentsConstants.post}
   ${gqlFragmentsConstants.user}
   ${gqlFragmentsConstants.blog}
   ${gqlFragmentsConstants.image}
   ${gqlFragmentsConstants.postAttributePicture}
-  ${gqlFragmentsConstants.postAttributeEmbed}  
+  ${gqlFragmentsConstants.postAttributeEmbed}
   ${gqlFragmentsConstants.comment}
+  ${gqlFragmentsConstants.parentComment}
   ${gqlFragmentsConstants.commentAttributePicture}
   ${gqlFragmentsConstants.commentAttributeEmbed}`,
   postWithoutComments: gql`
@@ -28,8 +29,9 @@ export const gqlPostConstants = {
   ${gqlFragmentsConstants.blog}
   ${gqlFragmentsConstants.image}
   ${gqlFragmentsConstants.postAttributePicture}
-  ${gqlFragmentsConstants.postAttributeEmbed}  
+  ${gqlFragmentsConstants.postAttributeEmbed}
   ${gqlFragmentsConstants.comment}
+  ${gqlFragmentsConstants.parentComment}
   ${gqlFragmentsConstants.commentAttributePicture}
   ${gqlFragmentsConstants.commentAttributeEmbed}`
 };

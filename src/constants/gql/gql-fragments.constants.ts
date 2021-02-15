@@ -12,7 +12,7 @@ export const gqlFragmentsConstants = {
     username
   }`,
   post: `
-  fragment PostCommentsFields on Post {
+  fragment PostFields on Post {
     ...PostWithoutCommentsFields
     comments {
       ...CommentFields
@@ -31,19 +31,19 @@ export const gqlFragmentsConstants = {
     }
     attributes {
       ... on PostAttributePicture {
-        ... PostAttributePictureFields
+        ...PostAttributePictureFields
       }
       ... on PostAttributeEmbed {
         ...PostAttributeEmbedFields  
       }
     }
     blogs {
-      ...BlogFields    
+      ...BlogFields
     }
     bestComments {
       ...CommentFields
     }
-  }`,  
+  }`,
   image: `
   fragment ImageFields on Image {
     id
@@ -58,7 +58,7 @@ export const gqlFragmentsConstants = {
     id
     tag
     name
-    synonyms   
+    synonyms
   }`,
   comment: `
   fragment CommentFields on Comment {
@@ -66,7 +66,7 @@ export const gqlFragmentsConstants = {
     text
     createdAt
     parent {
-      ... ParentCommentFields
+      ...ParentCommentFields
     }
     rating
     level
@@ -75,7 +75,7 @@ export const gqlFragmentsConstants = {
     }
     attributes {
       ... on CommentAttributePicture {
-        ... CommentAttributePictureFields
+        ...CommentAttributePictureFields
       }
       ... on CommentAttributeEmbed {
         ...CommentAttributeEmbedFields  
