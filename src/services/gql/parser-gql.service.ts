@@ -11,6 +11,8 @@ import { JRCommentAttributePicture } from "../../models/joy-reactor/comment-attr
 import { JRCommentAttributeEmbed } from "../../models/joy-reactor/comment-attribute-embed.interface";
 import { JRPostAttribute } from "../../models/joy-reactor/post-attribute.interface";
 import { JRCommentAttribute } from "../../models/joy-reactor/comment-attribute.interface";
+import { JRAttributeType } from "../../models/joy-reactor/attribute-type.enum";
+import { JRImageType } from "../../models/joy-reactor/image-type.enum";
 
 @Injectable({ providedIn: 'root' })
 export class ParserGqlService {
@@ -87,7 +89,7 @@ export class ParserGqlService {
         const postAttributePicture: JRPostAttributePicture = {
           id: this.parseId(rawAttribute.id),
           encodedId: rawAttribute.id,
-          type: rawAttribute.type,
+          type: <JRAttributeType>rawAttribute.type,
           insertId: rawAttribute.insertId,
           image: this.parseImage(rawAttribute.image),
           value: rawAttribute.value,
@@ -98,7 +100,7 @@ export class ParserGqlService {
         const postAttributeEmbed: JRPostAttributeEmbed = {
           id: this.parseId(rawAttribute.id),
           encodedId: rawAttribute.id,
-          type: rawAttribute.type,
+          type: <JRAttributeType>rawAttribute.type,
           insertId: rawAttribute.insertId,
           image: this.parseImage(rawAttribute.image),
           value: rawAttribute.value,
@@ -126,7 +128,7 @@ export class ParserGqlService {
         const commentAttributePicture: JRCommentAttributePicture = {
           id: this.parseId(rawAttribute.id),
           encodedId: rawAttribute.id,
-          type: rawAttribute.type,
+          type: <JRAttributeType>rawAttribute.type,
           insertId: rawAttribute.insertId,
           image: this.parseImage(rawAttribute.image),
           comment: undefined!
@@ -136,7 +138,7 @@ export class ParserGqlService {
         const commentAttributeEmbed: JRCommentAttributeEmbed = {
           id: this.parseId(rawAttribute.id),
           encodedId: rawAttribute.id,
-          type: rawAttribute.type,
+          type: <JRAttributeType>rawAttribute.type,
           insertId: rawAttribute.insertId,
           image: this.parseImage(rawAttribute.image),
           value: rawAttribute.value,
@@ -157,7 +159,7 @@ export class ParserGqlService {
       width: Number.parseInt(rawImage.width),
       height: Number.parseInt(rawImage.height),
       comment: rawImage.comment,
-      type: rawImage.type,
+      type: <JRImageType>rawImage.type,
       hasVideo: rawImage.hasVideo
     };
 

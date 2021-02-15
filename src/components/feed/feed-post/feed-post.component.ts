@@ -1,4 +1,8 @@
-import { Component, OnInit, Input, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, Input, ViewEncapsulation, SecurityContext } from "@angular/core";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import { JRPostAttributePicture } from "../../../models/joy-reactor/post-attribute-picture.interface";
+import { JRPostAttributeEmbed } from "../../../models/joy-reactor/post-attribute-embed.interface";
+import { JRAttributeType } from "../../../models/joy-reactor/attribute-type.enum";
 import { JRAttribute } from "../../../models/joy-reactor/attribute.interface";
 import { JRPost } from "../../../models/joy-reactor/post.interface";
 
@@ -11,33 +15,67 @@ import { JRPost } from "../../../models/joy-reactor/post.interface";
 export class FeedPostComponent implements OnInit {
   @Input() public post: JRPost;
 
-  public bodyHtml: string;
+  public bodyHtml: SafeHtml;
 
-  constructor() {
+  constructor(private readonly domSanitizer: DomSanitizer) {
     this.post = undefined!;
-    this.bodyHtml = '';
+    this.bodyHtml = undefined!;
   }
 
   public ngOnInit(): void {
-    if (!this.post) return;
-
-    this.bodyHtml = this.post.text;
+    let rawBodyHtml = this.post.text;
     for (let i = 0; i < this.post.attributes.length; i++) {
-      const attribute = this.post.attributes[i];
-
-      const attributeFileName = this.getAttributeFileName(attribute);
-
-      const attributeHtml = document.createElement('img');
-      attributeHtml.src = `http://img10.joyreactor.cc/pics/post/${attributeFileName}`;
-
       const replaceTagRegex = `&attribute_insert_${i + 1}&`;
-      const isHtmlContainsReplaceTag = this.bodyHtml.match(replaceTagRegex);
-      if (isHtmlContainsReplaceTag) this.bodyHtml = this.bodyHtml.replace(replaceTagRegex, attributeHtml.outerHTML);
-      else this.bodyHtml += attributeHtml.outerHTML;
+
+      const replaceTag = this.getReplaceTag(this.post.attributes[i]);
+      const isHtmlContainsReplaceTag = rawBodyHtml.match(replaceTagRegex);
+      if (isHtmlContainsReplaceTag) rawBodyHtml = rawBodyHtml.replace(replaceTagRegex, replaceTag.outerHTML);
+      else rawBodyHtml += replaceTag.outerHTML;
+    }
+
+    this.bodyHtml = this.domSanitizer.bypassSecurityTrustHtml(rawBodyHtml);
+  }
+
+  private getReplaceTag(attribute: JRAttribute): HTMLElement {
+    const pictureAttribute = attribute as JRPostAttributePicture;
+    const embedAttribute = attribute as JRPostAttributeEmbed;
+
+    switch (attribute.type) {
+      case JRAttributeType.Picture:
+        const pictureFileName = this.getPictureFileName(pictureAttribute);
+        const pictureUrl = `http://img10.joyreactor.cc/pics/post/${pictureFileName}`;
+
+        const pictureTag = document.createElement('img');
+        pictureTag.src = pictureUrl;
+
+        return pictureTag;
+
+      case JRAttributeType.Coub:
+        const coubUrl = `https://coub.com/embed/${embedAttribute.value}`;
+
+        const coubTag = document.createElement('iframe');
+        coubTag.src = coubUrl;
+        coubTag.allowFullscreen = true;
+        coubTag.frameBorder = '0';
+        coubTag.style.width = '100%';
+        coubTag.style.height = '100%';
+        coubTag.style.position = 'absolute';
+
+        const coubWrapperTag = document.createElement('div');
+        coubWrapperTag.style.width = '100%';
+        coubWrapperTag.style.height = '0px';
+        coubWrapperTag.style.paddingBottom = '56%';
+        coubWrapperTag.style.position = 'relative';
+        coubWrapperTag.appendChild(coubTag);
+
+        return coubWrapperTag;
+
+      default:
+        throw 'Invalid type';
     }
   }
 
-  private getAttributeFileName(attribute: JRAttribute): string {
+  private getPictureFileName(attribute: JRAttribute): string {
     const nameParts = [];
 
     this.post.blogs

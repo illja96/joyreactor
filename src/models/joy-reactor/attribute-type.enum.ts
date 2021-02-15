@@ -1,8 +1,8 @@
 export enum JRAttributeType {
-  PICTURE,
-  YOUTUBE,
-  VIMEO,
-  COUB,
-  SOUNDCLOUD,
-  BANDCAMP
+  Picture = 'PICTURE',
+  YouTube = 'YOUTUBE',
+  Vimeo = 'VIMEO',
+  Coub = 'COUB',
+  SoundCloud = 'SOUNDCLOUD',
+  Bandcamp = 'BANDCAMP'
 }

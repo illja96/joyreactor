@@ -1,10 +1,10 @@
 import { JRNode } from "./node.interface";
-import { JRImageTypes } from "./image-types.enum";
+import { JRImageType } from "./image-type.enum";
 
 export interface JRImage extends JRNode {
   width: number,
   height: number,
   comment: string,
-  type: JRImageTypes,
+  type: JRImageType,
   hasVideo: boolean
 }
