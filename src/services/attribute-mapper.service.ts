@@ -19,6 +19,10 @@ export class AttributeMapperService {
           `http://img10.joyreactor.cc/pics/comment/${pictureFileName}`;
 
         const pictureElement = document.createElement('img');
+        pictureElement.style.width = 'auto';
+        pictureElement.style.height = 'auto';
+        pictureElement.style.maxWidth = '100%';
+        pictureElement.style.maxHeight = '100%';
         pictureElement.src = pictureUrl;
 
         return pictureElement;
