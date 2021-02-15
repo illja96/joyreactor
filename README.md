@@ -13,7 +13,7 @@
 
 ## Demo
 
-You can find latest version of this application hosted on [repository GitHub Pages](https://illja96.github.io/joyreactor)
+You can find latest version of this application hosted on [repository's GitHub Pages](https://illja96.github.io/joyreactor)
 
 ## Requirements
 
@@ -23,7 +23,7 @@ You can find latest version of this application hosted on [repository GitHub Pag
 ## Data sources
 
 This project was intended to use only [JoyReactor GraphQL](https://api.joyreactor.cc/graphql-playground).
-For now, this is impossible but due to lack of queries and mutations on JoyReactor side.
+For now, this is impossible due to lack of queries and mutations on JoyReactor side.
 All of the missing data sources were fulfilled at the expense of html parsing.
 
 ## Credits, Copyrights, License and Legal notes
