@@ -1,4 +1,15 @@
 <div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-warning">
+        <h4 class="alert-heading">Внимание!</h4>
+        <p class="mb-0">
+          Авторизация влияет только на контент с вкладки <a routerLink="/top">Топ</a>, наверное
+        </p>
+      </div>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-body">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-  <a routerLink="/" class="navbar-brand" [title]="header">JoyReactor</a>
+  <a routerLink="/" [title]="header" class="navbar-brand text-warning">JoyReactor</a>
 
   <button type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarConavbarlor01"
     aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
@@ -48,7 +48,7 @@
 
       <div class="custom-control custom-switch">
         <input id="nsfw" type="checkbox" formControlName="nsfw" class="custom-control-input" checked>
-        <label for="nsfw" class="custom-control-label">NSFW</label>
+        <label for="nsfw" title="Безопасно для работы (убирает эротику и всякое такое)" class="custom-control-label">NSFW</label>
       </div>
     </form>
   </div>
