@@ -52,6 +52,7 @@ export class PostGqlService {
     ${gqlFragmentsConstants.postAttributePicture}
     ${gqlFragmentsConstants.postAttributeEmbed}  
     ${gqlFragmentsConstants.comment}
+    ${gqlFragmentsConstants.parentComment}
     ${gqlFragmentsConstants.commentAttributePicture}
     ${gqlFragmentsConstants.commentAttributeEmbed}`
 

@@ -19,7 +19,7 @@
     <br> <br> <br>
   </div>
 
-  <app-feed-post *ngFor="let post of posts" [post]="post"></app-feed-post>
+  <app-post-index *ngFor="let post of posts" [post]="post"></app-post-index>
 
   <app-top-pagination [maxYear]="maxYear" [year]="year" [minYear]="minYear" [maxWeek]="maxWeek" [week]="week"
     [minWeek]="minWeek"></app-top-pagination>

@@ -15,6 +15,7 @@ export const gqlTopConstants = {
   ${gqlFragmentsConstants.postAttributePicture}
   ${gqlFragmentsConstants.postAttributeEmbed}  
   ${gqlFragmentsConstants.comment}
+  ${gqlFragmentsConstants.parentComment}
   ${gqlFragmentsConstants.commentAttributePicture}
   ${gqlFragmentsConstants.commentAttributeEmbed}`
 };

@@ -7,9 +7,9 @@ import { JRAttribute } from "../../../models/joy-reactor/attribute.interface";
 import { JRPost } from "../../../models/joy-reactor/post.interface";
 
 @Component({
-  selector: 'app-feed-post',
-  templateUrl: './feed-post.component.html',
-  styleUrls: ['./feed-post.component.css'],
+  selector: 'app-post-index',
+  templateUrl: './post-index.component.html',
+  styleUrls: ['./post-index.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class PostIndexComponent implements OnInit {

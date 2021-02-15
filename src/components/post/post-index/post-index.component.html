@@ -50,8 +50,9 @@
       </div>
     </div>
 
-    <div *ngIf="bestComments" class="row">
-      <app-feed-post-comment *ngFor="let comment of post.bestComments" [comment]="comment"></app-feed-post-comment>
+    <div *ngIf="post.bestComments">
+      <br>
+      <app-post-best-comments [comments]="post.bestComments"></app-post-best-comments>
     </div>
   </div>
 </div>

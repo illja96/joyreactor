@@ -1,1 +1,5 @@
-<p>post-best-comments works!</p>
+<div *ngIf="comments" class="row">
+  <div class="col-12">
+    <app-post-comment *ngFor="let comment of topLevelComments" [comment]="comment" [comments]="comments"></app-post-comment>
+  </div>
+</div>

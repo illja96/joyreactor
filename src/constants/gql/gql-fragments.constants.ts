@@ -65,6 +65,9 @@ export const gqlFragmentsConstants = {
     id
     text
     createdAt
+    parent {
+      ... ParentCommentFields
+    }
     rating
     level
     user {
@@ -78,6 +81,11 @@ export const gqlFragmentsConstants = {
         ...CommentAttributeEmbedFields  
       }
     }
+  }`,
+  parentComment: `
+  fragment ParentCommentFields on Comment {
+    id
+    level
   }`,
   postAttributePicture: `
   fragment PostAttributePictureFields on PostAttributePicture {

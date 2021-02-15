@@ -5,6 +5,7 @@ import { PostCommentComponent } from './post-comment/post-comment.component';
 import { PostCommentsComponent } from './post-comments/post-comments.component';
 import { PostContentComponent } from './post-content/post-content.component';
 import { PostIndexComponent } from './post-index/post-index.component';
+import { PostRoutingModule } from './post.routing';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { PostIndexComponent } from './post-index/post-index.component';
     PostIndexComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    PostRoutingModule
   ],
   exports: [
     PostIndexComponent
