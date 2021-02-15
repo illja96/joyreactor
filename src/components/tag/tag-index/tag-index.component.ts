@@ -69,7 +69,8 @@ export class TagIndexComponent implements OnInit {
     this.blogHttpService.getAll(this.blog, this.page - 1)
       .pipe(
         tap(feedPage => this.updatePagination(feedPage)),
-        switchMap(feedPage => this.postGqlService.getAll(feedPage.postIds)))
+        switchMap(feedPage => this.postGqlService.getAll(feedPage.postIds)),
+        map(p => p.filter(p => this.posts.find(pp => pp.id === p.id) === undefined)))
       .subscribe(posts => {
         posts.forEach(p => this.posts.push(p));
         this.nextPageLoading = false;
