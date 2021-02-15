@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { FeedPage } from "../../models/feed/feed-page.mode";
+import { FeedPage } from "../../models/feed/feed-page.model";
 import { environment } from "../../environments/environment";
 import { ParserHttpService } from "./parser-http.service";
 import { FeedType } from "../../models/feed/feed-type.enum";

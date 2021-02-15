@@ -42,7 +42,7 @@ export class PostGqlService {
       .join('\n');
 
     const query = gql`
-    query post(${queryParameters}) {
+    query posts(${queryParameters}) {
       ${queries}
     }
     ${gqlFragmentsConstants.postWithoutComments}

@@ -11,15 +11,24 @@ export class ParserHttpService {
   public parseHeader(html: string): string {
     const dom = this.domParser.parseFromString(html, 'text/html');
 
-    const headerTag = dom.querySelector('#header > div') as HTMLDivElement;
-    return headerTag.innerText;
+    const headerElement = dom.querySelector('#header > div') as HTMLDivElement;
+    return headerElement.innerText;
+  }
+
+  public parseFirstPage(html: string): number {
+    const dom = this.domParser.parseFromString(html, 'text/html');
+
+    const firstPageElement = dom.querySelector('#Pagination > div > div.pagination_expanded > :nth-last-child(1)') as HTMLElement;
+    const rawFirstPageElement = firstPageElement.innerText;
+
+    return Number.parseInt(rawFirstPageElement);
   }
 
   public parseLastPage(html: string): number {
     const dom = this.domParser.parseFromString(html, 'text/html');
 
-    const lastPageTag = dom.querySelector('#Pagination > div > div.pagination_expanded > :nth-child(1)') as HTMLElement;
-    const rawLastPage = lastPageTag.innerText;
+    const lastPageElement = dom.querySelector('#Pagination > div > div.pagination_expanded > :nth-child(1)') as HTMLElement;
+    const rawLastPage = lastPageElement.innerText;
 
     return Number.parseInt(rawLastPage);
   }
@@ -27,13 +36,29 @@ export class ParserHttpService {
   public parsePostIds(html: string): number[] {
     const dom = this.domParser.parseFromString(html, 'text/html');
 
-    const rawPostLinkTags = dom.querySelectorAll('a[title="ссылка на пост"]') as NodeListOf<HTMLLinkElement>;
-    const postLinkTags = Array.from(rawPostLinkTags);
+    const rawPostLinkElements = dom.querySelectorAll('a[title="ссылка на пост"]') as NodeListOf<HTMLLinkElement>;
+    const postLinkElements = Array.from(rawPostLinkElements);
 
-    return postLinkTags
-      .map(tag => tag.href)
+    return postLinkElements
+      .map(element => element.href)
       .map(url => url.split('/'))
       .map(urlParts => urlParts[urlParts.length - 1])
+      .map(rawId => Number.parseInt(rawId));
+  }
+
+  public parseTagIds(html: string): number[] {
+    const dom = this.domParser.parseFromString(html, 'text/html');
+
+    const rawTagImageElements = dom.querySelectorAll('#contentinner > div.blog_list_item > div.blog_list_avatar > a > img') as NodeListOf<HTMLImageElement>;
+    const tagImageElements = Array.from(rawTagImageElements);
+
+    return tagImageElements
+      .map(element => element.src)
+      .map(url => url.split('/'))
+      .map(urlParts => urlParts[urlParts.length - 1])
+      .map(filename => filename.split('.'))
+      .map(filenameParts => filenameParts[0])
+      .filter(rawId => rawId !== 'default_avatar')
       .map(rawId => Number.parseInt(rawId));
   }
 }

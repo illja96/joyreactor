@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { ParserHttpService } from "./parser-http.service";
 import { environment } from "../../environments/environment";
-import { FeedPage } from "../../models/feed/feed-page.mode";
+import { FeedPage } from "../../models/feed/feed-page.model";
 import { JRBlog } from "../../models/joy-reactor/blog.interface";
 
 @Injectable({ providedIn: 'root' })

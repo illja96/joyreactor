@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { filter, map, switchMap, tap } from "rxjs/operators";
 import { FeedType } from "../../../models/feed/feed-type.enum";
-import { FeedPage } from "../../../models/feed/feed-page.mode";
+import { FeedPage } from "../../../models/feed/feed-page.model";
 import { JRPost } from "../../../models/joy-reactor/post.interface";
 import { PostGqlService } from "../../../services/gql/post-gql.service";
 import { FeedHttpService } from "../../../services/http/feed-http.service";

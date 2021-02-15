@@ -5,7 +5,7 @@ import { BlogGqlService } from "../../../services/gql/blog-gql.service";
 import { BlogHttpService } from "../../../services/http/blog-http.service";
 import { JRPost } from "../../../models/joy-reactor/post.interface";
 import { JRBlog } from "../../../models/joy-reactor/blog.interface";
-import { FeedPage } from "../../../models/feed/feed-page.mode";
+import { FeedPage } from "../../../models/feed/feed-page.model";
 import { PostGqlService } from "../../../services/gql/post-gql.service";
 
 @Component({
