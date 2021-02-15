@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation, SecurityContext } from "@angular/core";
+import { Component, OnInit, Input, ViewEncapsulation } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { JRPostAttributePicture } from "../../../models/joy-reactor/post-attribute-picture.interface";
 import { JRPostAttributeEmbed } from "../../../models/joy-reactor/post-attribute-embed.interface";
@@ -80,20 +80,20 @@ export class FeedPostComponent implements OnInit {
 
         return soundcloudElement;
 
+      case JRAttributeType.Bandcamp:
+        const bandcampAttribute = JSON.parse(embedAttribute.value);
+        const bandcampUrl: string = bandcampAttribute.url;
+        const bandcampWidth: number = bandcampAttribute.width;
+        const bandcampHeight: number = bandcampAttribute.height;
+
+        const fullBandcampUrl = `https://bandcamp.com/EmbeddedPlayer/${bandcampUrl}`;
+        const bandcampElement = this.createBandcampIframe(fullBandcampUrl, bandcampHeight);
+
+        return bandcampElement;
+
       default:
         throw 'Invalid type';
     }
-  }
-
-  private createSoundCloudIframe(src: string, height: number): HTMLIFrameElement {
-    const iframe = document.createElement('iframe');
-    iframe.src = src;
-    iframe.allowFullscreen = true;
-    iframe.width = '100%';
-    iframe.height = `${height}px`;
-    iframe.style.border = '0px';
-
-    return iframe;
   }
 
   private createWrappedIframe(src: string): HTMLDivElement {
@@ -108,6 +108,36 @@ export class FeedPostComponent implements OnInit {
     const iframeWrapper = document.createElement('div');
     iframeWrapper.style.width = '100%';
     iframeWrapper.style.height = '0px';
+    iframeWrapper.style.paddingBottom = '56.25%';
+    iframeWrapper.style.position = 'relative';
+    iframeWrapper.appendChild(iframe);
+
+    return iframeWrapper;
+  }
+
+  private createSoundCloudIframe(src: string, height: number): HTMLIFrameElement {
+    const iframe = document.createElement('iframe');
+    iframe.src = src;
+    iframe.allowFullscreen = true;
+    iframe.width = '100%';
+    iframe.height = `${height}px`;
+    iframe.style.border = '0px';
+
+    return iframe;
+  }
+
+  private createBandcampIframe(src: string, height: number): HTMLDivElement {
+    const iframe = document.createElement('iframe');
+    iframe.src = src;
+    iframe.allowFullscreen = true;
+    iframe.style.border = '0px';
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.position = 'absolute';
+
+    const iframeWrapper = document.createElement('div');
+    iframeWrapper.style.width = '100%';
+    iframeWrapper.style.height = `${height}px`;
     iframeWrapper.style.paddingBottom = '56.25%';
     iframeWrapper.style.position = 'relative';
     iframeWrapper.appendChild(iframe);
