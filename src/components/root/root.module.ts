@@ -17,6 +17,7 @@ import { TopModule } from "../top/top.module";
 import { JRProfile } from "../../models/joy-reactor/profile.interface";
 import { TagModule } from "../tag/tag.module";
 import { DiscussionModule } from "../discussion/discussion.module";
+import { PostModule } from "../post/post.module";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { DiscussionModule } from "../discussion/discussion.module";
     AuthModule,
     DiscussionModule,
     FeedModule,
+    PostModule,
     TagModule,
     TopModule,
     RootRoutingModule

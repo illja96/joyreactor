@@ -1,0 +1,24 @@
+<blockquote *ngIf="comment" class="blockquote blockquote-primary">
+  <p class="mb-0">{{ comment.text }}</p>
+  <footer class="blockquote-footer">
+    <div class="row">
+      <div class="col-4 text-left">
+        <a routerLink="/user/{{ comment.user.id }}">{{ comment.user.username }}</a>
+      </div>
+      <div class="col-4 text-center">
+        <span>
+          {{ comment.createdAt | date: 'short' }}
+        </span>
+      </div>
+      <div class="col-4 text-rigth">
+        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-outline-success">+</button>
+          <button type="button" disabled class="btn btn-outline-info">
+            {{ comment.rating }}
+          </button>
+          <button type="button" class="btn btn-outline-danger">-</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+</blockquote>
