@@ -1,6 +1,8 @@
 {
   "cSpell.words": [
-    "subject",
+    "apollo",
+    "bearer",
+    "interceptor",
     "bandcamp",
     "bypass",
     "coub",
@@ -10,6 +12,7 @@
     "ghcr",
     "good",
     "illja",
+    "interceptors",
     "joyreactor",
     "mapper",
     "nsfw",
@@ -21,6 +24,7 @@
     "reactor",
     "sanitizer",
     "soundcloud",
+    "subject",
     "subscribers",
     "synonyms",
     "youtube",

@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { ReactiveFormsModule } from "@angular/forms";
 import { ApolloLink, InMemoryCache } from "@apollo/client/core";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HttpLink } from "apollo-angular/http";
 import { APOLLO_OPTIONS } from "apollo-angular";
 import { setContext } from "apollo-link-context";
@@ -19,6 +19,7 @@ import { TagModule } from "../tag/tag.module";
 import { DiscussionModule } from "../discussion/discussion.module";
 import { PostModule } from "../post/post.module";
 import { RootHomeComponent } from "./root-home/root-home.component";
+import { JoyreactorTagRedirectInterceptor } from "../../interceptors/joyreactor-tag-redirect.interceptor";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { RootHomeComponent } from "./root-home/root-home.component";
     RootRoutingModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JoyreactorTagRedirectInterceptor, multi: true },
     {
       provide: APOLLO_OPTIONS,
       useFactory: (httpLink: HttpLink) => {
