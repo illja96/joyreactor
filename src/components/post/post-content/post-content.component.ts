@@ -27,8 +27,8 @@ export class PostContentComponent implements OnChanges {
 
       const replaceTag = this.attributeMapperService.map(this.post, this.post.attributes[i], true);
       const isHtmlContainsReplaceTag = rawBodyHtml.match(replaceTagRegex);
-      if (isHtmlContainsReplaceTag) rawBodyHtml = rawBodyHtml.replace(replaceTagRegex, `<br>${replaceTag.outerHTML}`);
-      else rawBodyHtml += `<br>${replaceTag.outerHTML}`;
+      if (isHtmlContainsReplaceTag) rawBodyHtml = rawBodyHtml.replace(replaceTagRegex, replaceTag.outerHTML);
+      else rawBodyHtml += replaceTag.outerHTML;
     }
 
     this.html = this.domSanitizer.bypassSecurityTrustHtml(rawBodyHtml);
