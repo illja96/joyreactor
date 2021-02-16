@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterContentChecked, Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { filter, map, switchMap, tap } from "rxjs/operators";
 import { BlogGqlService } from "../../../services/gql/blog-gql.service";
@@ -13,7 +13,7 @@ import { PostGqlService } from "../../../services/gql/post-gql.service";
   templateUrl: './tag-index.component.html',
   styleUrls: ['./tag-index.component.css']
 })
-export class TagIndexComponent implements OnInit {
+export class TagIndexComponent implements OnInit, AfterContentChecked {
   public blog: JRBlog;
   public posts: JRPost[];
 
@@ -21,6 +21,9 @@ export class TagIndexComponent implements OnInit {
   public page: number;
 
   public nextPageLoading: boolean;
+
+  private fragment: string;
+  private fragmentApplied: boolean;
 
   constructor(
     private readonly router: Router,
@@ -35,9 +38,14 @@ export class TagIndexComponent implements OnInit {
     this.page = undefined!;
 
     this.nextPageLoading = false;
+
+    this.fragment = undefined!;
+    this.fragmentApplied = false;
   }
 
   public ngOnInit(): void {
+    this.route.fragment.subscribe(fragment => this.fragment = fragment);
+
     const pageObservable = this.route.paramMap
       .pipe(
         map(paramMap => paramMap.get('id')),
@@ -61,6 +69,17 @@ export class TagIndexComponent implements OnInit {
         tap(feedPage => this.updatePagination(feedPage)),
         switchMap(feedPage => this.postGqlService.getAll(feedPage.postIds)))
       .subscribe(posts => this.posts = posts);
+  }
+
+  public ngAfterContentChecked(): void {
+    if (this.fragmentApplied) return;
+    if (!this.posts) return;
+
+    const fragmentElement = document.getElementById(this.fragment);
+    if (!fragmentElement) return;
+
+    fragmentElement.scrollIntoView();
+    this.fragmentApplied = true;
   }
 
   public loadNextPage(): void {

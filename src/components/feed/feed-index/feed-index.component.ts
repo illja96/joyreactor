@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterContentChecked, Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { filter, map, switchMap, tap } from "rxjs/operators";
 import { FeedType } from "../../../models/feed/feed-type.enum";
@@ -12,7 +12,7 @@ import { FeedHttpService } from "../../../services/http/feed-http.service";
   templateUrl: './feed-index.component.html',
   styleUrls: ['./feed-index.component.css']
 })
-export class FeedIndexComponent implements OnInit {
+export class FeedIndexComponent implements OnInit, AfterContentChecked {
   public type: FeedType;
   public posts: JRPost[];
 
@@ -20,6 +20,9 @@ export class FeedIndexComponent implements OnInit {
   public page: number;
 
   public nextPageLoading: boolean;
+
+  private fragment: string;
+  private fragmentApplied: boolean;
 
   constructor(
     private readonly router: Router,
@@ -33,9 +36,14 @@ export class FeedIndexComponent implements OnInit {
     this.page = undefined!;
 
     this.nextPageLoading = false;
+
+    this.fragment = undefined!;
+    this.fragmentApplied = false;
   }
 
   public ngOnInit(): void {
+    this.route.fragment.subscribe(fragment => this.fragment = fragment);
+
     const typePageObservable = this.route.paramMap
       .pipe(
         map(paramMap => ({ type: paramMap.get('type'), page: paramMap.get('page') })),
@@ -63,6 +71,17 @@ export class FeedIndexComponent implements OnInit {
         tap(feedPage => this.updatePagination(feedPage)),
         switchMap(feedPage => this.postGqlService.getAll(feedPage.postIds)))
       .subscribe(posts => this.posts = posts);
+  }
+
+  public ngAfterContentChecked(): void {
+    if (this.fragmentApplied) return;
+    if (!this.posts) return;
+
+    const fragmentElement = document.getElementById(this.fragment);
+    if (!fragmentElement) return;
+
+    fragmentElement.scrollIntoView();
+    this.fragmentApplied = true;
   }
 
   public loadNextPage(): void {
