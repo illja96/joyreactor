@@ -16,7 +16,7 @@ export class FeedIndexComponent implements OnInit, AfterContentChecked {
   public type: FeedType;
   public posts: JRPost[];
 
-  public lastPage: number;
+  public lastPage: number | null;
   public page: number;
 
   public nextPageLoading: boolean;
@@ -60,7 +60,9 @@ export class FeedIndexComponent implements OnInit, AfterContentChecked {
       .pipe(
         filter(t => t.type !== null && t.page === null),
         tap(t => this.type = t.type!),
-        switchMap(t => this.feedHttpService.getLastPage(t.type!)))
+        switchMap(t => this.feedHttpService.getLastPage(t.type!)),
+        tap(page => this.lastPage = page),
+        filter(page => page !== null))
       .subscribe(page => this.router.navigateByUrl(`/feed/${this.type}/page/${page}`));
 
     typePageObservable

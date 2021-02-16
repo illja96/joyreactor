@@ -1,5 +1,5 @@
 export interface FeedPage {
-  lastPage: number;
+  lastPage: number | null;
   page: number;
 
   postIds: number[];

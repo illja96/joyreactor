@@ -13,7 +13,7 @@ export class FeedHttpService {
     private readonly httpClient: HttpClient,
     private readonly parserHttpService: ParserHttpService) { }
 
-  public getLastPage(type: FeedType): Observable<number> {
+  public getLastPage(type: FeedType): Observable<number | null> {
     const url = `${this.getBaseUrl(type)}`;
 
     return this.httpClient.get(url, { responseType: 'text' })

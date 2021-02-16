@@ -15,21 +15,23 @@ export class ParserHttpService {
     return headerElement.innerText;
   }
 
-  public parseFirstPage(html: string): number {
+  public parseFirstPage(html: string): number | null {
     const dom = this.domParser.parseFromString(html, 'text/html');
 
     const firstPageElement = dom.querySelector('#Pagination > div > div.pagination_expanded > :nth-last-child(1)') as HTMLElement;
-    const rawFirstPageElement = firstPageElement.innerText;
+    if (!firstPageElement) return null;
 
+    const rawFirstPageElement = firstPageElement.innerText;
     return Number.parseInt(rawFirstPageElement);
   }
 
-  public parseLastPage(html: string): number {
+  public parseLastPage(html: string): number | null {
     const dom = this.domParser.parseFromString(html, 'text/html');
 
     const lastPageElement = dom.querySelector('#Pagination > div > div.pagination_expanded > :nth-child(1)') as HTMLElement;
-    const rawLastPage = lastPageElement.innerText;
+    if (!lastPageElement) return null;
 
+    const rawLastPage = lastPageElement.innerText;
     return Number.parseInt(rawLastPage);
   }
 

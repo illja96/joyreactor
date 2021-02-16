@@ -13,11 +13,11 @@ export class BlogHttpService {
     private readonly httpClient: HttpClient,
     private readonly parserHttpService: ParserHttpService) { }
 
-  public getLastPage(blog: JRBlog): Observable<number> {
+  public getLastPage(blog: JRBlog): Observable<number | null> {
     const url = `${environment.httpUri}/tag/${blog.tag}`;
 
     return this.httpClient.get(url, { responseType: 'text' })
-      .pipe(map(h => this.parserHttpService.parseLastPage(h)));
+      .pipe(map(html => this.parserHttpService.parseLastPage(html)));
   }
 
   public getAll(blog: JRBlog, page: number): Observable<FeedPage> {

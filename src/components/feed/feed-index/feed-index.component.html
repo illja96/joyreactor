@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngIf="!posts" class="row">
+  <div *ngIf="!posts && lastPage !== null" class="row">
     <div class="col-12 text-center">
       <div role="status" class="spinner-border text-info" style="width: 3rem; height: 3rem;">
         <span class="sr-only">Loading...</span>

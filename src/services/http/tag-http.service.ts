@@ -21,7 +21,7 @@ export class TagHttpService {
     return this.httpClient.get(url, { responseType: 'text' })
       .pipe(map(html => ({
         page: page,
-        lastPage: this.parserHttpService.parseFirstPage(html),
+        lastPage: this.parserHttpService.parseFirstPage(html)!,
         tagIds: this.parserHttpService.parseTagIds(html)
       })));
   }
