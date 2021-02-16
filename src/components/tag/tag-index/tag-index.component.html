@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-xl-10 col-lg-10 col-md-10 col-sm-9 text-left">
           <h3>{{ tag.name }}</h3>
-  
+
           <span *ngIf="tag.synonyms && tag.name !== tag.synonyms">
             {{ tag.synonyms }}
           </span>
@@ -15,6 +15,10 @@
             width="96px" height="96px">
         </div>
       </div>
+    </div>
+
+    <div *ngIf="posts && tag && page && lastPage" class="card-body">
+      <app-tag-index-pagination [tag]="tag" [page]="page" [lastPage]="lastPage"></app-tag-index-pagination>
     </div>
   </div>
 
@@ -28,6 +32,7 @@
   </div>
 
   <app-post-index *ngFor="let post of posts" [post]="post"></app-post-index>
+
   <div *ngIf="posts && page && page !== 1" class="row">
     <button (click)="loadNextPage()" [disabled]="nextPageLoading" class="btn btn-outline-info btn-lg btn-block">
       <span *ngIf="!nextPageLoading">
@@ -37,5 +42,10 @@
         <span class="sr-only">Loading...</span>
       </div>
     </button>
+  </div>
+
+  <div *ngIf="posts && tag && page && lastPage">
+    <br>
+    <app-tag-index-pagination [tag]="tag" [page]="page" [lastPage]="lastPage"></app-tag-index-pagination>
   </div>
 </div>

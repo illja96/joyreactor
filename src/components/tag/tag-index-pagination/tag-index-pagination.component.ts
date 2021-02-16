@@ -1,20 +1,20 @@
 import { Component, Input, OnChanges } from "@angular/core";
-import { FeedType } from "../../../models/feed/feed-type.enum";
+import { JRBlog } from "../../../models/joy-reactor/blog.interface";
 
 @Component({
-  selector: 'app-feed-index-pagination',
-  templateUrl: './feed-index-pagination.component.html',
-  styleUrls: ['./feed-index-pagination.component.css']
+  selector: 'app-tag-index-pagination',
+  templateUrl: './tag-index-pagination.component.html',
+  styleUrls: ['./tag-index-pagination.component.css']
 })
-export class FeedIndexPaginationComponent implements OnChanges {
-  @Input() public type: FeedType;
+export class TagIndexPaginationComponent implements OnChanges {
+  @Input() public tag: JRBlog;
   @Input() public lastPage: number;
   @Input() public page: number;
 
   public pages: number[];
 
   constructor() {
-    this.type = undefined!;
+    this.tag = undefined!;
     this.lastPage = undefined!;
     this.page = undefined!;
 
@@ -22,7 +22,7 @@ export class FeedIndexPaginationComponent implements OnChanges {
   }
 
   public ngOnChanges(): void {
-    if (!this.type || !this.lastPage || !this.page) return;
+    if (!this.tag || !this.lastPage || !this.page) return;
 
     this.pages = [];
 

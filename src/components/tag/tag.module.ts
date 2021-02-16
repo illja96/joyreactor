@@ -6,10 +6,12 @@ import { PostModule } from "../post/post.module";
 import { TagListComponent } from "./tag-list/tag-list.component";
 import { TagListElementComponent } from "./tag-list-element/tag-list-element.component";
 import { TagListPaginationComponent } from "./tag-list-pagination/tag-list-pagination.component";
+import { TagIndexPaginationComponent } from "./tag-index-pagination/tag-index-pagination.component";
 
 @NgModule({
   declarations: [
     TagIndexComponent,
+    TagIndexPaginationComponent,
     TagListComponent,
     TagListElementComponent,
     TagListPaginationComponent

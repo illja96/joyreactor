@@ -67,6 +67,7 @@ export class TagIndexComponent implements OnInit, AfterContentChecked {
     pageObservable
       .pipe(
         filter(page => page !== null),
+        tap(() => this.posts = undefined!),
         switchMap(page => this.blogHttpService.getAll(this.tag, page!)),
         tap(feedPage => this.updatePagination(feedPage)),
         switchMap(feedPage => this.postGqlService.getAll(feedPage.postIds)))
