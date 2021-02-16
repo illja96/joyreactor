@@ -37,8 +37,15 @@
         <a routerLink="/top" class="nav-link" routerLinkActive="active">Топ</a>
       </li>
 
-      <li class="nav-item">
-        <a routerLink="/tags" class="nav-link" routerLinkActive="active">Теги</a>
+      <li class="nav-item dropdown">
+        <a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+          class="nav-link dropdown-toggle">
+          Теги
+        </a>
+        <div class="dropdown-menu">
+          <a routerLink="/tags/rating" class="dropdown-item" routerLinkActive="active">По рейтингу</a>
+          <a routerLink="/tags/subscribers" class="dropdown-item" routerLinkActive="active">По подписчикам</a>
+        </div>
       </li>
     </ul>
 

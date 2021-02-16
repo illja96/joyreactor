@@ -5,6 +5,7 @@ import { map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 import { ParserHttpService } from "./parser-http.service";
 import { TagsPage } from "../../models/tag/tags-page.model";
+import { TagSortType } from "../../models/tag/tag-sort-type.model";
 
 @Injectable({ providedIn: 'root' })
 export class TagHttpService {
@@ -12,10 +13,10 @@ export class TagHttpService {
     private readonly httpClient: HttpClient,
     private readonly parserHttpService: ParserHttpService) { }
 
-  public getAll(page: number): Observable<TagsPage> {
-    const url = page >= 1 ?
-      `${environment.httpUri}/tags` :
-      `${environment.httpUri}/tags/${page}`;
+  public getAll(page: number, sortBy: TagSortType): Observable<TagsPage> {
+    let url = `${environment.httpUri}/tags`;
+    if (sortBy === TagSortType.Subscribers) url += '/subscribers';
+    if (page > 1) url += `/${page}`;
 
     return this.httpClient.get(url, { responseType: 'text' })
       .pipe(map(html => ({

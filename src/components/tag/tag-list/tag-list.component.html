@@ -1,6 +1,14 @@
 <div class="container">
-  <div class="row">
-    <div class="col-12">
+  <div *ngIf="tags && sortBy && lastPage && page" class="card border-secondary mb-3">
+    <div class="card-header text-center">
+      <h1>
+        Список тегов по
+        <span *ngIf="sortBy === tagSortType.Rating">рейтингу</span>
+        <span *ngIf="sortBy === tagSortType.Subscribers">подписчикам</span>
+      </h1>
+    </div>
+
+    <div class="card-body">
       <div class="alert alert-warning">
         <h4 class="alert-heading">Внимание!</h4>
         <p class="mb-0">
@@ -9,6 +17,8 @@
           ограничений API
         </p>
       </div>
+
+      <app-tag-list-pagination [sortBy]="sortBy" [page]="page" [maxPage]="lastPage"></app-tag-list-pagination>
     </div>
   </div>
 
@@ -25,5 +35,21 @@
     <div *ngFor="let tag of tags" class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
       <app-tag-list-element [tag]="tag"></app-tag-list-element>
     </div>
+  </div>
+
+  <div *ngIf="tags && page && page !== lastPage" class="row">
+    <button (click)="loadNextPage()" [disabled]="nextPageLoading" class="btn btn-outline-info btn-lg btn-block">
+      <span *ngIf="!nextPageLoading">
+        Загрузить следующую страницу
+      </span>
+      <div *ngIf="nextPageLoading" role="status" class="spinner-border text-info" style="width: 2rem; height: 2rem;">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </button>
+  </div>
+
+  <div *ngIf="tags && lastPage && page">
+    <br>
+    <app-tag-list-pagination [sortBy]="sortBy" [page]="page" [maxPage]="lastPage"></app-tag-list-pagination>
   </div>
 </div>

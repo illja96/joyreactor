@@ -5,12 +5,14 @@ import { TagIndexComponent } from "./tag-index/tag-index.component";
 import { PostModule } from "../post/post.module";
 import { TagListComponent } from "./tag-list/tag-list.component";
 import { TagListElementComponent } from "./tag-list-element/tag-list-element.component";
+import { TagListPaginationComponent } from "./tag-list-pagination/tag-list-pagination.component";
 
 @NgModule({
   declarations: [
     TagIndexComponent,
     TagListComponent,
-    TagListElementComponent
+    TagListElementComponent,
+    TagListPaginationComponent
   ],
   imports: [
     CommonModule,
