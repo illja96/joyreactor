@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnChanges } from "@angular/core";
 import { FeedType } from "../../../models/feed/feed-type.enum";
 
 @Component({
@@ -6,22 +6,22 @@ import { FeedType } from "../../../models/feed/feed-type.enum";
   templateUrl: './feed-pagination.component.html',
   styleUrls: ['./feed-pagination.component.css']
 })
-export class FeedPaginationComponent implements OnInit {
-  public pages: number[];
-
+export class FeedPaginationComponent implements OnChanges {
   @Input() public type: FeedType;
   @Input() public lastPage: number;
   @Input() public page: number;
 
-  constructor() {
-    this.pages = undefined!;
+  public pages: number[];
 
+  constructor() {
     this.type = undefined!;
     this.lastPage = undefined!;
     this.page = undefined!;
+
+    this.pages = undefined!;
   }
 
-  public ngOnInit(): void {
+  public ngOnChanges(): void {
     this.pages = [];
 
     this.pages.push(this.page);
