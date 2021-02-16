@@ -20,11 +20,13 @@ import { DiscussionModule } from "../discussion/discussion.module";
 import { PostModule } from "../post/post.module";
 import { RootHomeComponent } from "./root-home/root-home.component";
 import { JoyreactorTagRedirectInterceptor } from "../../interceptors/joyreactor-tag-redirect.interceptor";
+import { RootHotKeysComponent } from "./root-hot-keys/root-hot-keys.component";
 
 @NgModule({
   declarations: [
     RootFooterComponent,
     RootHomeComponent,
+    RootHotKeysComponent,
     RootIndexComponent,
     RootNavComponent
   ],

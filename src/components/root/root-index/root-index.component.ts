@@ -5,6 +5,4 @@ import { Component } from "@angular/core";
   templateUrl: './root-index.component.html',
   styleUrls: ['./root-index.component.css']
 })
-export class RootIndexComponent {
-  title = 'joyreactor';
-}
+export class RootIndexComponent { }
