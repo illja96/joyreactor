@@ -2,13 +2,13 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FeedRoutingModule } from "./feed.routing";
 import { FeedIndexComponent } from "./feed-index/feed-index.component";
-import { FeedPaginationComponent } from "./feed-pagination/feed-pagination.component";
 import { PostModule } from "../post/post.module";
+import { FeedIndexPaginationComponent } from "./feed-index-pagination/feed-index-pagination.component";
 
 @NgModule({
   declarations: [
     FeedIndexComponent,
-    FeedPaginationComponent
+    FeedIndexPaginationComponent
   ],
   imports: [
     CommonModule,

@@ -2,11 +2,11 @@ import { Component, Input, OnChanges } from "@angular/core";
 import { FeedType } from "../../../models/feed/feed-type.enum";
 
 @Component({
-  selector: 'app-feed-pagination',
-  templateUrl: './feed-pagination.component.html',
-  styleUrls: ['./feed-pagination.component.css']
+  selector: 'app-feed-index-pagination',
+  templateUrl: './feed-index-pagination.component.html',
+  styleUrls: ['./feed-index-pagination.component.css']
 })
-export class FeedPaginationComponent implements OnChanges {
+export class FeedIndexPaginationComponent implements OnChanges {
   @Input() public type: FeedType;
   @Input() public lastPage: number;
   @Input() public page: number;
