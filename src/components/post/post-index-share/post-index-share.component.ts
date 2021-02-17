@@ -11,8 +11,9 @@ export class PostIndexShareComponent implements OnChanges {
   @Input() public post: JRPost;
 
   public visibleShareTypes: ShareType[];
-
   public shareTypeInfo: { [key in ShareType]: { fa: string, text: string, url: string }; };
+
+  private url: string;
 
   constructor() {
     this.post = undefined!;
@@ -25,20 +26,26 @@ export class PostIndexShareComponent implements OnChanges {
       ShareType.Twitter,
       ShareType.Facebook
     ];
+
+    this.url = undefined!;
   }
 
   public ngOnChanges(): void {
-    const url = `${window.location.origin}/post/${this.post.id}`;
+    this.url = `${window.location.origin}/post/${this.post.id}`;
 
     // TODO: Implement all share types
     this.shareTypeInfo = {
-      [ShareType.Telegram]: { fa: 'fab fa-telegram-plane', text: 'Telegram', url: `https://t.me/share/url?url=${url}` },
+      [ShareType.Telegram]: { fa: 'fab fa-telegram-plane', text: 'Telegram', url: `https://t.me/share/url?url=${this.url}` },
       [ShareType.Messenger]: { fa: 'fab fa-facebook-messenger', text: 'Messenger', url: '' },
       [ShareType.Viber]: { fa: 'fab fa-viber', text: 'Viber', url: '' },
       [ShareType.Whatsapp]: { fa: 'fab fa-whatsapp', text: 'Whatsapp', url: '' },
-      [ShareType.VK]: { fa: 'fab fa-vk', text: 'VK', url: `http://vk.com/share.php?url=${url}` },
-      [ShareType.Twitter]: { fa: 'fab fa-twitter', text: 'Twitter', url: `http://twitter.com/home?status=${url}` },
-      [ShareType.Facebook]: { fa: 'fab fa-facebook-f', text: 'Facebook', url: `http://www.facebook.com/sharer.php?u=${url}` }
+      [ShareType.VK]: { fa: 'fab fa-vk', text: 'VK', url: `http://vk.com/share.php?url=${this.url}` },
+      [ShareType.Twitter]: { fa: 'fab fa-twitter', text: 'Twitter', url: `http://twitter.com/home?status=${this.url}` },
+      [ShareType.Facebook]: { fa: 'fab fa-facebook-f', text: 'Facebook', url: `http://www.facebook.com/sharer.php?u=${this.url}` }
     };
+  }
+
+  public copyToClipboard(): void {
+    navigator.clipboard.writeText(this.url);
   }
 }

@@ -2,7 +2,7 @@
   <a routerLink="/post/{{ post.id }}" class="btn btn-outline-info">
     Открыть
   </a>
-  <button class="btn btn-outline-info">
+  <button (click)="copyToClipboard()" class="btn btn-outline-info">
     <i class="far fa-clipboard"></i>
   </button>
   <div class="btn-group" role="group">
