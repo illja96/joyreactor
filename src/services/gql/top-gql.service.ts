@@ -16,13 +16,13 @@ export class TopGqlService {
   public getByWeek(type: TopType, year: number, week: number): Observable<JRPost[]> {
     let nsfw: boolean | null;
     switch (type) {
-      case TopType.OnlySWF:
+      case TopType.onlySWF:
         nsfw = false;
         break;
-      case TopType.All:
+      case TopType.all:
         nsfw = null;
         break;
-      case TopType.OnlyNSFW:
+      case TopType.onlyNSFW:
         nsfw = true;
         break;
       default:

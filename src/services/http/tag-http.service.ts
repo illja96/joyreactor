@@ -5,7 +5,7 @@ import { map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 import { ParserHttpService } from "./parser-http.service";
 import { TagsPage } from "../../models/tag/tags-page.model";
-import { TagSortType } from "../../models/tag/tag-sort-type.model";
+import { TagSortType } from "../../models/tag/tag-sort-type.enum";
 
 @Injectable({ providedIn: 'root' })
 export class TagHttpService {
@@ -15,7 +15,7 @@ export class TagHttpService {
 
   public getAll(page: number, sortBy: TagSortType): Observable<TagsPage> {
     let url = `${environment.httpUri}/tags`;
-    if (sortBy === TagSortType.Subscribers) url += '/subscribers';
+    if (sortBy === TagSortType.subscribers) url += '/subscribers';
     if (page > 1) url += `/${page}`;
 
     return this.httpClient.get(url, { responseType: 'text' })

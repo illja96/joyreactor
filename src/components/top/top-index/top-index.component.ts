@@ -61,7 +61,7 @@ export class TopIndexComponent implements OnInit {
     yearWeekObservable
       .pipe(
         filter(t => t.type === null),
-        map(() => ({ type: TopType.OnlySWF })))
+        map(() => ({ type: TopType.onlySWF })))
       .subscribe(t => this.router.navigateByUrl(`/top/${t.type}`, { skipLocationChange: true }));
 
     yearWeekObservable

@@ -53,8 +53,10 @@ export class FeedIndexComponent implements OnInit, AfterContentChecked {
         })));
 
     typePageObservable
-      .pipe(filter(t => t.type === null))
-      .subscribe(() => this.router.navigateByUrl(`/feed/${FeedType.Good}`, { skipLocationChange: true }));
+      .pipe(
+        filter(t => t.type === null),
+        map(() => ({ type: FeedType.good })))
+      .subscribe(t => this.router.navigateByUrl(`/feed/${t.type}`, { skipLocationChange: true }));
 
     typePageObservable
       .pipe(

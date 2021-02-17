@@ -14,14 +14,22 @@ export class FeedHttpService {
     private readonly parserHttpService: ParserHttpService) { }
 
   public getLastPage(type: FeedType): Observable<number | null> {
-    const url = `${this.getBaseUrl(type)}`;
+    let url = environment.httpUri;
+
+    const feedUrlPart = this.mapToUrl(type);
+    if (feedUrlPart) url += `/${feedUrlPart}`;
 
     return this.httpClient.get(url, { responseType: 'text' })
       .pipe(map(h => this.parserHttpService.parseLastPage(h)));
   }
 
   public getAll(type: FeedType, page: number): Observable<FeedPage> {
-    const url = `${this.getBaseUrl(type)}/${page}`;
+    let url = environment.httpUri;
+
+    const feedUrlPart = this.mapToUrl(type);
+    if (feedUrlPart) url += `/${feedUrlPart}`;
+
+    url += `/${page}`;
 
     return this.httpClient.get(url, { responseType: 'text' })
       .pipe(map(html => {
@@ -35,14 +43,18 @@ export class FeedHttpService {
       }));
   }
 
-  private getBaseUrl(type: FeedType): string {
+  private mapToUrl(type: FeedType): string | null {
     switch (type) {
-      case FeedType.All:
-        return `${environment.httpUri}/all`;
-      case FeedType.Best:
-        return `${environment.httpUri}/best`;
-      case FeedType.Good:
-        return `${environment.httpUri}`;
+      case FeedType.new:
+        return 'new';
+      case FeedType.all:
+        return 'all';
+      case FeedType.good:
+        return null;
+      case FeedType.best:
+        return 'best';
+      default:
+        throw new Error('Invalid feed type');
     }
   }
 }

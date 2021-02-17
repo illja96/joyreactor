@@ -1,6 +1,6 @@
 export enum DiscussionType {
-  All = 'all',
-  Good = 'good',
-  Flame = 'flame',
-  Me = 'me'
+  all = 'all',
+  good = 'good',
+  flame = 'flame',
+  me = 'me'
 }

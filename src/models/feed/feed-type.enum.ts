@@ -1,5 +1,6 @@
 export enum FeedType {
-  All = 'all',
-  Best = 'best',
-  Good = 'good'
+  new = 'new',
+  all = 'all',
+  good = 'good',
+  best = 'best'
 }

@@ -1,5 +1,5 @@
 export enum TopType {
-  OnlySWF = 'swf',
-  All = 'all',
-  OnlyNSFW = 'nsfw'
+  onlySWF = 'swf',
+  all = 'all',
+  onlyNSFW = 'nsfw'
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { filter, map, switchMap, tap } from "rxjs/operators";
-import { TagSortType } from "../../../models/tag/tag-sort-type.model";
+import { TagSortType } from "../../../models/tag/tag-sort-type.enum";
 import { JRBlog } from "../../../models/joy-reactor/blog.interface";
 import { TagsPage } from "../../../models/tag/tags-page.model";
 import { TagGqlService } from "../../../services/gql/tag-gql.service";
@@ -31,7 +31,7 @@ export class TagListComponent implements OnInit {
     this.tagSortType = TagSortType;
 
     this.tags = undefined!;
-    this.sortBy = TagSortType.Rating;
+    this.sortBy = undefined!;
 
     this.page = undefined!;
     this.lastPage = undefined!;
@@ -51,7 +51,7 @@ export class TagListComponent implements OnInit {
     sortByPageObservable
       .pipe(
         filter(t => t.sortBy === null),
-        map(() => ({ sortBy: TagSortType.Rating })))
+        map(() => ({ sortBy: TagSortType.rating })))
       .subscribe(t => this.router.navigateByUrl(`/tags/${t.sortBy}`, { skipLocationChange: true }));
 
     sortByPageObservable

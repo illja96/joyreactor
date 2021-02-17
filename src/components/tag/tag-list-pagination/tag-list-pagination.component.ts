@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from "@angular/core";
-import { TagSortType } from "../../../models/tag/tag-sort-type.model";
+import { TagSortType } from "../../../models/tag/tag-sort-type.enum";
 
 @Component({
   selector: 'app-tag-list-pagination',
