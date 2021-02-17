@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges } from "@angular/core";
+import { FeedType } from "../../../models/feed/feed-type.enum";
 import { JRBlog } from "../../../models/joy-reactor/blog.interface";
 
 @Component({
@@ -8,6 +9,7 @@ import { JRBlog } from "../../../models/joy-reactor/blog.interface";
 })
 export class TagIndexPaginationComponent implements OnChanges {
   @Input() public tag: JRBlog;
+  @Input() public type: FeedType;
   @Input() public lastPage: number;
   @Input() public page: number;
 
@@ -15,6 +17,7 @@ export class TagIndexPaginationComponent implements OnChanges {
 
   constructor() {
     this.tag = undefined!;
+    this.type = undefined!;
     this.lastPage = undefined!;
     this.page = undefined!;
 
@@ -22,7 +25,7 @@ export class TagIndexPaginationComponent implements OnChanges {
   }
 
   public ngOnChanges(): void {
-    if (!this.tag || !this.lastPage || !this.page) return;
+    if (!this.tag || !this.type || !this.lastPage || !this.page) return;
 
     this.pages = [];
 

@@ -6,17 +6,19 @@ import { FeedPage } from "../../models/feed/feed-page.model";
 import { environment } from "../../environments/environment";
 import { ParserHttpService } from "./parser-http.service";
 import { FeedType } from "../../models/feed/feed-type.enum";
+import { FeedTypeMapperService } from "../feed-type-mapper.service";
 
 @Injectable({ providedIn: 'root' })
 export class FeedHttpService {
   constructor(
     private readonly httpClient: HttpClient,
-    private readonly parserHttpService: ParserHttpService) { }
+    private readonly parserHttpService: ParserHttpService,
+    private readonly feedTypeMapperService: FeedTypeMapperService) { }
 
   public getLastPage(type: FeedType): Observable<number | null> {
     let url = environment.httpUri;
 
-    const feedUrlPart = this.mapToUrl(type);
+    const feedUrlPart = this.feedTypeMapperService.mapToUrl(type);
     if (feedUrlPart) url += `/${feedUrlPart}`;
 
     return this.httpClient.get(url, { responseType: 'text' })
@@ -26,7 +28,7 @@ export class FeedHttpService {
   public getAll(type: FeedType, page: number): Observable<FeedPage> {
     let url = environment.httpUri;
 
-    const feedUrlPart = this.mapToUrl(type);
+    const feedUrlPart = this.feedTypeMapperService.mapToUrl(type);
     if (feedUrlPart) url += `/${feedUrlPart}`;
 
     url += `/${page}`;
@@ -41,20 +43,5 @@ export class FeedHttpService {
 
         return feedPage;
       }));
-  }
-
-  private mapToUrl(type: FeedType): string | null {
-    switch (type) {
-      case FeedType.new:
-        return 'new';
-      case FeedType.all:
-        return 'all';
-      case FeedType.good:
-        return null;
-      case FeedType.best:
-        return 'best';
-      default:
-        throw new Error('Invalid feed type');
-    }
   }
 }

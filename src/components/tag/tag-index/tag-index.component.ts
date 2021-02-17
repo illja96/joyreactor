@@ -7,6 +7,7 @@ import { JRPost } from "../../../models/joy-reactor/post.interface";
 import { JRBlog } from "../../../models/joy-reactor/blog.interface";
 import { FeedPage } from "../../../models/feed/feed-page.model";
 import { PostGqlService } from "../../../services/gql/post-gql.service";
+import { FeedType } from "../../../models/feed/feed-type.enum";
 
 @Component({
   selector: 'app-tag-index',
@@ -15,6 +16,8 @@ import { PostGqlService } from "../../../services/gql/post-gql.service";
 })
 export class TagIndexComponent implements OnInit, AfterContentChecked {
   public tag: JRBlog;
+  public type: FeedType;
+
   public posts: JRPost[];
 
   public lastPage: number | null;
@@ -32,6 +35,8 @@ export class TagIndexComponent implements OnInit, AfterContentChecked {
     private readonly blogGqlService: BlogGqlService,
     private readonly postGqlService: PostGqlService) {
     this.tag = undefined!;
+    this.type = undefined!;
+
     this.posts = undefined!;
 
     this.lastPage = undefined!;
@@ -46,29 +51,41 @@ export class TagIndexComponent implements OnInit, AfterContentChecked {
   public ngOnInit(): void {
     this.route.fragment.subscribe(fragment => this.fragment = fragment);
 
-    const pageObservable = this.route.paramMap
+    const typePageObservable = this.route.paramMap
       .pipe(
         map(paramMap => paramMap.get('id')),
         map(id => Number.parseInt(id!)),
-        switchMap(id => this.blogGqlService.get(id)),
+        switchMap(id => this.blogGqlService.get(id!)),
         tap(tag => this.tag = tag),
         switchMap(() => this.route.paramMap),
-        map(paramMap => paramMap.get('page')),
-        map(page => page !== null ? Number.parseInt(page!) : null));
+        map(paramMap => ({ type: paramMap.get('type'), page: paramMap.get('page') })),
+        map(t => ({
+          type: t.type !== null ? <FeedType>t.type : null,
+          page: t.page !== null ? Number.parseInt(t.page) : null
+        })));
 
-    pageObservable
+    typePageObservable
       .pipe(
-        filter(page => page === null),
-        switchMap(() => this.blogHttpService.getLastPage(this.tag)),
+        filter(t => t.type === null),
+        map(() => ({ type: FeedType.good })))
+      .subscribe(t => this.router.navigateByUrl(`/tag/${this.tag.id}/${t.type}`, { skipLocationChange: true }));
+
+    typePageObservable
+      .pipe(
+        filter(t => t.type !== null && t.page === null),
+        tap(t => this.type = t.type!),
+        switchMap(() => this.blogHttpService.getLastPage(this.tag, this.type)),
         tap(page => this.lastPage = page),
         filter(page => page !== null))
-      .subscribe(page => this.router.navigateByUrl(`/tag/${this.tag.id}/page/${page}`));
+      .subscribe(() => this.router.navigateByUrl(`/tag/${this.tag.id}/${this.type}/${this.lastPage}`));
 
-    pageObservable
+    typePageObservable
       .pipe(
-        filter(page => page !== null),
+        filter(t => t.type !== null && t.page !== null),
         tap(() => this.posts = undefined!),
-        switchMap(page => this.blogHttpService.getAll(this.tag, page!)),
+        tap(t => this.type = t.type!),
+        tap(t => this.page = t.page!),
+        switchMap(() => this.blogHttpService.getAll(this.tag, this.type, this.page)),
         tap(feedPage => this.updatePagination(feedPage)),
         switchMap(feedPage => this.postGqlService.getAll(feedPage.postIds)))
       .subscribe(posts => this.posts = posts);
@@ -88,7 +105,7 @@ export class TagIndexComponent implements OnInit, AfterContentChecked {
   public loadNextPage(): void {
     this.nextPageLoading = true;
 
-    this.blogHttpService.getAll(this.tag, this.page - 1)
+    this.blogHttpService.getAll(this.tag, this.type, this.page - 1)
       .pipe(
         tap(feedPage => this.updatePagination(feedPage)),
         switchMap(feedPage => this.postGqlService.getAll(feedPage.postIds)),

@@ -58,7 +58,7 @@ export class TagListComponent implements OnInit {
       .pipe(
         filter(t => t.sortBy !== null && t.page === null),
         map(t => ({ sortBy: t.sortBy, page: 1 })))
-      .subscribe(t => this.router.navigateByUrl(`/tags/${t.sortBy}/page/${t.page}`));
+      .subscribe(t => this.router.navigateByUrl(`/tags/${t.sortBy}/${t.page}`));
 
     sortByPageObservable
       .pipe(

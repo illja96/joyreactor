@@ -65,7 +65,7 @@ export class FeedIndexComponent implements OnInit, AfterContentChecked {
         switchMap(t => this.feedHttpService.getLastPage(t.type!)),
         tap(page => this.lastPage = page),
         filter(page => page !== null))
-      .subscribe(page => this.router.navigateByUrl(`/feed/${this.type}/page/${page}`));
+      .subscribe(page => this.router.navigateByUrl(`/feed/${this.type}/${page}`));
 
     typePageObservable
       .pipe(

@@ -14,11 +14,35 @@
           <img src="http://img1.joyreactor.cc/pics/avatar/tag/{{ tag.id }}" [title]="tag.name" [alt]="tag.name"
             width="96px" height="96px">
         </div>
-      </div>
-    </div>
 
-    <div *ngIf="posts && tag && page && lastPage" class="card-body">
-      <app-tag-index-pagination [tag]="tag" [page]="page" [lastPage]="lastPage"></app-tag-index-pagination>
+        <div class="col-12">
+          <hr>
+          <div class="btn-group btn-block" role="group">
+            <a routerLink="/tag/{{ tag.id }}/new" [skipLocationChange]="true" class="btn btn-outline-info"
+              routerLinkActive="active">
+              Новоё
+            </a>
+            <a routerLink="/tag/{{ tag.id }}/all" [skipLocationChange]="true" class="btn btn-outline-info"
+              routerLinkActive="active">
+              Всё
+            </a>
+            <a routerLink="/tag/{{ tag.id }}/good" [skipLocationChange]="true" class="btn btn-outline-info"
+              routerLinkActive="active">
+              Хорошее
+            </a>
+            <a routerLink="/tag/{{ tag.id }}/best" [skipLocationChange]="true" class="btn btn-outline-info"
+              routerLinkActive="active">
+              Лучшее
+            </a>
+          </div>
+        </div>
+
+        <div *ngIf="posts && page && lastPage" class="col-12">
+          <br> <br>
+          <app-tag-index-pagination [tag]="tag" [type]="type" [page]="page" [lastPage]="lastPage">
+          </app-tag-index-pagination>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -48,6 +72,6 @@
 
   <div *ngIf="posts && tag && page && lastPage">
     <br>
-    <app-tag-index-pagination [tag]="tag" [page]="page" [lastPage]="lastPage"></app-tag-index-pagination>
+    <app-tag-index-pagination [tag]="tag" [type]="type" [page]="page" [lastPage]="lastPage"></app-tag-index-pagination>
   </div>
 </div>

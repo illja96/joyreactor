@@ -6,9 +6,10 @@ import { TagListComponent } from "./tag-list/tag-list.component";
 const routes: Routes = [
   { path: 'tags', pathMatch: 'full', component: TagListComponent },
   { path: 'tags/:sortBy', pathMatch: 'full', component: TagListComponent },
-  { path: 'tags/:sortBy/page/:page', pathMatch: 'full', component: TagListComponent },
+  { path: 'tags/:sortBy/:page', pathMatch: 'full', component: TagListComponent },
   { path: 'tag/:id', pathMatch: 'full', component: TagIndexComponent },
-  { path: 'tag/:id/page/:page', pathMatch: 'full', component: TagIndexComponent }
+  { path: 'tag/:id/:type', pathMatch: 'full', component: TagIndexComponent },
+  { path: 'tag/:id/:type/:page', pathMatch: 'full', component: TagIndexComponent }
 ];
 
 @NgModule({

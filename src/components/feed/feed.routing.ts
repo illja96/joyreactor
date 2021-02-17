@@ -5,7 +5,7 @@ import { FeedIndexComponent } from "./feed-index/feed-index.component";
 const routes: Routes = [
   { path: 'feed', pathMatch: 'full', component: FeedIndexComponent },
   { path: 'feed/:type', pathMatch: 'full', component: FeedIndexComponent },
-  { path: 'feed/:type/page/:page', pathMatch: 'full', component: FeedIndexComponent }
+  { path: 'feed/:type/:page', pathMatch: 'full', component: FeedIndexComponent }
 ];
 
 @NgModule({

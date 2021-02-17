@@ -5,7 +5,7 @@ import { DiscussionIndexComponent } from "./discussion-index/discussion-index.co
 const routes: Routes = [
   { path: 'discussion', pathMatch: 'full', component: DiscussionIndexComponent },
   { path: 'discussion/:type', pathMatch: 'full', component: DiscussionIndexComponent },
-  { path: 'discussion/:type/page/:page', pathMatch: 'full', component: DiscussionIndexComponent }
+  { path: 'discussion/:type/:page', pathMatch: 'full', component: DiscussionIndexComponent }
 ];
 
 @NgModule({

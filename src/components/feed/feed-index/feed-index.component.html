@@ -1,4 +1,36 @@
 <div class="container">
+  <div *ngIf="type" class="card border-secondary mb-3">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12">
+          <div class="btn-group btn-block" role="group">
+            <a routerLink="/feed/new" [skipLocationChange]="true" class="btn btn-outline-info"
+              routerLinkActive="active">
+              Новоё
+            </a>
+            <a routerLink="/feed/all" [skipLocationChange]="true" class="btn btn-outline-info"
+              routerLinkActive="active">
+              Всё
+            </a>
+            <a routerLink="/feed/good" [skipLocationChange]="true" class="btn btn-outline-info"
+              routerLinkActive="active">
+              Хорошее
+            </a>
+            <a routerLink="/feed/best" [skipLocationChange]="true" class="btn btn-outline-info"
+              routerLinkActive="active">
+              Лучшее
+            </a>
+          </div>
+        </div>
+
+        <div *ngIf="posts && lastPage && page" class="col-12">
+          <br> <br>
+          <app-feed-index-pagination [type]="type" [lastPage]="lastPage" [page]="page"></app-feed-index-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div *ngIf="!posts && lastPage !== null" class="row">
     <div class="col-12 text-center">
       <div role="status" class="spinner-border text-warning" style="width: 3rem; height: 3rem;">

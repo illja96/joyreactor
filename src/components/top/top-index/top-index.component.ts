@@ -68,7 +68,7 @@ export class TopIndexComponent implements OnInit {
       .pipe(
         filter(t => t.type !== null && t.year === null),
         map(t => ({ type: t.type!, year: maxYear })))
-      .subscribe(t => this.router.navigateByUrl(`/top/${t.type}/year/${t.year}`, { skipLocationChange: true }));
+      .subscribe(t => this.router.navigateByUrl(`/top/${t.type}/${t.year}`, { skipLocationChange: true }));
 
     yearWeekObservable
       .pipe(
@@ -78,7 +78,7 @@ export class TopIndexComponent implements OnInit {
           year: t.year!,
           week: t.year === maxYear ? DateHelper.getWeek(new Date()) - 2 : DateHelper.getTotalWeeks(t.year!)
         })))
-      .subscribe(t => this.router.navigateByUrl(`/top/${t.type}/year/${t.year}/week/${t.week}`));
+      .subscribe(t => this.router.navigateByUrl(`/top/${t.type}/${t.year}/${t.week}`));
 
     yearWeekObservable
       .pipe(

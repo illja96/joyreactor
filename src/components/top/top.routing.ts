@@ -5,8 +5,8 @@ import { TopIndexComponent } from "./top-index/top-index.component";
 const routes: Routes = [
   { path: 'top', pathMatch: 'full', component: TopIndexComponent },
   { path: 'top/:type', pathMatch: 'full', component: TopIndexComponent },
-  { path: 'top/:type/year/:year', pathMatch: 'full', component: TopIndexComponent },
-  { path: 'top/:type/year/:year/week/:week', pathMatch: 'full', component: TopIndexComponent }
+  { path: 'top/:type/:year', pathMatch: 'full', component: TopIndexComponent },
+  { path: 'top/:type/:year/:week', pathMatch: 'full', component: TopIndexComponent }
 ];
 
 @NgModule({
