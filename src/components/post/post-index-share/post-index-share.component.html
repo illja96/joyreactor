@@ -1,0 +1,25 @@
+<div class="btn-group btn-group-sm" role="group" aria-label="Post share">
+  <a routerLink="/post/{{ post.id }}" class="btn btn-outline-info">
+    Открыть
+  </a>
+  <button class="btn btn-outline-info">
+    <i class="far fa-clipboard"></i>
+  </button>
+  <div class="btn-group" role="group">
+    <button id="{{ post.id }}-share" [disabled]="!visibleShareTypes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+      class="btn btn-sm btn-outline-info dropdown-toggle"></button>
+    <div attr.aria-labelledby="{{ post.id }}-share" class="dropdown-menu">
+      <a *ngFor="let visibleShareType of visibleShareTypes" target="_blank" [href]="shareTypeInfo[visibleShareType].url"
+        class="dropdown-item">
+        <div class="row">
+          <div class="col-2 text-center">
+            <i [class]="shareTypeInfo[visibleShareType].fa"></i>
+          </div>
+          <div class="col-9 text-left">
+            {{ shareTypeInfo[visibleShareType].text }}
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

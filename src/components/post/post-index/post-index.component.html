@@ -29,16 +29,26 @@
 
   <div class="card-footer text-muted">
     <div class="row">
-      <div class="col-6 text-left">
+      <div class="col-4 text-left">
         {{ post.createdAt | date: 'short' }}
       </div>
-      <div class="col-6 text-right">
-        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+
+      <div class="col-4 text-center">
+        <app-post-index-share [post]="post"></app-post-index-share>
+      </div>
+
+      <div class="col-4 text-right">
+        <button class="btn btn-sm btn-outline-warning">
+          <i class="fas fa-star"></i>
+        </button>
+
+        &nbsp;
+        <div class="btn-group btn-group-sm" role="group" aria-label="Post rating">
           <button type="button" class="btn btn-outline-success">
             <i class="far fa-smile"></i>
           </button>
           <button type="button" disabled class="btn btn-outline-info">
-            {{ post.rating }}
+            {{ post.rating | number : '1.0-2' }}
           </button>
           <button type="button" class="btn btn-outline-danger">
             <i class="far fa-frown"></i>
@@ -55,7 +65,7 @@
     <br>
     <div class="row">
       <div class="col-12">
-        <button class="btn btn-outline-info btn-sm btn-block">
+        <button [disabled]="post.commentsCount === 0" class="btn btn-outline-warning btn-sm btn-block">
           Комментарии ({{ post.commentsCount }})
         </button>
       </div>

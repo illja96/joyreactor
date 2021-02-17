@@ -1,0 +1,7 @@
+.btn-group.btn-group-sm .btn.btn-outline-success {
+  z-index: 1;
+}
+
+.btn-group.btn-group-sm .btn.btn-outline-danger {
+  z-index: 1;
+}

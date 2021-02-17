@@ -23,7 +23,7 @@
       </div>
 
       <div class="col-4 text-right">
-        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+        <div class="btn-group btn-group-sm" role="group" aria-label="Comment rating">
           <button type="button" class="btn btn-outline-success">
             <small>
               <i class="far fa-smile"></i>
@@ -31,7 +31,7 @@
           </button>
           <button type="button" disabled class="btn btn-outline-info">
             <small>
-              {{ comment.rating }}
+              {{ comment.rating | number : '1.0-2' }}
             </small>
           </button>
           <button type="button" class="btn btn-outline-danger">
