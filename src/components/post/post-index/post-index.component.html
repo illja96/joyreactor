@@ -1,6 +1,6 @@
 <div *ngIf="post" [id]="post.id" class="card border-secondary mb-3">
   <div class="card-header">
-    <app-post-index-header [post]="post"></app-post-index-header>
+    <app-post-header [post]="post"></app-post-header>
   </div>
 
   <div class="card-body">
@@ -14,26 +14,11 @@
       </div>
 
       <div class="col-4 text-center">
-        <app-post-index-share [post]="post"></app-post-index-share>
+        <app-post-share-button [post]="post"></app-post-share-button>
       </div>
 
       <div class="col-4 text-right">
-        <button class="btn btn-sm btn-outline-warning">
-          <i class="fas fa-star"></i>
-        </button>
-
-        &nbsp;
-        <div class="btn-group btn-group-sm" role="group" aria-label="Post rating">
-          <button type="button" class="btn btn-outline-success">
-            <i class="far fa-smile"></i>
-          </button>
-          <button type="button" disabled class="btn btn-outline-info">
-            {{ post.rating | number : '1.0-2' }}
-          </button>
-          <button type="button" class="btn btn-outline-danger">
-            <i class="far fa-frown"></i>
-          </button>
-        </div>
+        <app-post-rating-favorite [post]="post"></app-post-rating-favorite>
       </div>
     </div>
 

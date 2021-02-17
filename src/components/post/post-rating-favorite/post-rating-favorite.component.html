@@ -1,0 +1,20 @@
+<div *ngIf="post" class="row">
+  <div class="col-12">
+    <button class="btn btn-sm btn-outline-warning">
+      <i class="fas fa-star"></i>
+    </button>
+
+    &nbsp;
+    <div class="btn-group btn-group-sm" role="group" aria-label="Post rating">
+      <button type="button" class="btn btn-outline-success">
+        <i class="far fa-smile"></i>
+      </button>
+      <button type="button" disabled class="btn btn-outline-info">
+        {{ post.rating | number : '1.0-2' }}
+      </button>
+      <button type="button" class="btn btn-outline-danger">
+        <i class="far fa-frown"></i>
+      </button>
+    </div>
+  </div>
+</div>

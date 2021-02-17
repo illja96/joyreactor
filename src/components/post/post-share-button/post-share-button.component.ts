@@ -3,11 +3,11 @@ import { JRPost } from "../../../models/joy-reactor/post.interface";
 import { ShareType } from "../../../models/share-type.enum";
 
 @Component({
-  selector: 'app-post-index-share',
-  templateUrl: './post-index-share.component.html',
-  styleUrls: ['./post-index-share.component.css']
+  selector: 'app-post-share-button',
+  templateUrl: './post-share-button.component.html',
+  styleUrls: ['./post-share-button.component.css']
 })
-export class PostIndexShareComponent implements OnChanges {
+export class PostShareButtonComponent implements OnChanges {
   @Input() public post: JRPost;
 
   public visibleShareTypes: ShareType[];

@@ -7,8 +7,9 @@ import { PostContentComponent } from "./post-content/post-content.component";
 import { PostIndexComponent } from "./post-index/post-index.component";
 import { PostRoutingModule } from "./post.routing";
 import { PostCommentContentComponent } from "./post-comment-content/post-comment-content.component";
-import { PostIndexShareComponent } from "./post-index-share/post-index-share.component";
-import { PostIndexHeaderComponent } from "./post-index-header/post-index-header.component";
+import { PostHeaderComponent } from "./post-header/post-header.component";
+import { PostShareButtonComponent } from "./post-share-button/post-share-button.component";
+import { PostRatingFavoriteComponent } from "./post-rating-favorite/post-rating-favorite.component";
 
 @NgModule({
   declarations: [
@@ -17,9 +18,10 @@ import { PostIndexHeaderComponent } from "./post-index-header/post-index-header.
     PostCommentContentComponent,
     PostCommentsComponent,
     PostContentComponent,
+    PostHeaderComponent,
     PostIndexComponent,
-    PostIndexHeaderComponent,
-    PostIndexShareComponent
+    PostShareButtonComponent,
+    PostRatingFavoriteComponent
   ],
   imports: [
     CommonModule,
