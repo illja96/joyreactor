@@ -3,7 +3,7 @@ import { gqlFragmentsConstants } from "./gql-fragments.constants";
 
 export const gqlTopConstants = {
   week: gql`
-  query weekTopPosts($year: Int!, $week: Int!, $nsfw: Boolean!) {
+  query weekTopPosts($year: Int!, $week: Int!, $nsfw: Boolean) {
     posts:weekTopPosts(year: $year, week: $week, nsfw: $nsfw) {
       ...PostWithoutCommentsFields
     }

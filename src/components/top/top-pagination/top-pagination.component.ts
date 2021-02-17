@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
+import { TopType } from "../../../models/feed/top-type.enum";
 
 @Component({
   selector: 'app-top-pagination',
@@ -6,6 +7,8 @@ import { Component, Input, OnChanges, OnInit } from "@angular/core";
   styleUrls: ['./top-pagination.component.css']
 })
 export class TopPaginationComponent implements OnInit, OnChanges {
+  @Input() public type: TopType;
+
   @Input() public maxYear: number;
   @Input() public year: number;
   @Input() public minYear: number;
@@ -17,6 +20,8 @@ export class TopPaginationComponent implements OnInit, OnChanges {
   public weeks: number[];
 
   constructor() {
+    this.type = undefined!;
+
     this.maxYear = undefined!;
     this.year = undefined!;
     this.minYear = undefined!;
@@ -37,6 +42,8 @@ export class TopPaginationComponent implements OnInit, OnChanges {
   }
 
   public update(): void {
+    if (!this.type || !this.maxYear || !this.year || !this.minYear || !this.maxWeek || !this.week || !this.minWeek) return;
+
     this.years = [];
     this.weeks = [];
 

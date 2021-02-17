@@ -33,8 +33,16 @@
         </div>
       </li>
 
-      <li class="nav-item">
-        <a routerLink="/top" class="nav-link" [skipLocationChange]="true" routerLinkActive="active">Топ</a>
+      <li class="nav-item dropdown">
+        <a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+          class="nav-link dropdown-toggle">
+          Топ
+        </a>
+        <div class="dropdown-menu">
+          <a routerLink="/top/swf" [skipLocationChange]="true" class="dropdown-item" routerLinkActive="active">Только SWF</a>
+          <a routerLink="/top/all" [skipLocationChange]="true" class="dropdown-item" routerLinkActive="active">SWF + NSFW</a>
+          <a routerLink="/top/nsfw" [skipLocationChange]="true" class="dropdown-item" routerLinkActive="active">Только NSFW</a>
+        </div>
       </li>
 
       <li class="nav-item dropdown">
@@ -49,14 +57,9 @@
       </li>
     </ul>
 
-    <form [formGroup]="form" class="form-inline my-2 my-lg-0">
+    <div class="my-2 my-lg-0">
       <a *ngIf="!isAuthorized" routerLink="/auth/login" type="submit" class="btn btn-outline-info mr-sm-2">Вход</a>
       <button *ngIf="isAuthorized" (click)="onLogoutClick()" class="btn btn-outline-warning mr-sm-2">Выход</button>
-
-      <div class="custom-control custom-switch">
-        <input id="nsfw" type="checkbox" formControlName="nsfw" class="custom-control-input" checked>
-        <label for="nsfw" title="Безопасно для работы (убирает эротику и всякое такое)" class="custom-control-label">NSFW</label>
-      </div>
-    </form>
+    </div>
   </div>
 </nav>

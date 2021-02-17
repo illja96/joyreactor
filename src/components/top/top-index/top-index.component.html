@@ -1,12 +1,29 @@
-<div *ngIf="week && year" class="container">
+<div *ngIf="type && year && week" class="container">
   <div class="card border-secondary mb-3">
-    <div class="card-header text-center">
-      <h1>
-        Топ за {{ week }} неделю {{ year }} года
-      </h1>
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1>
+            Топ
+            <span *ngIf="type === topTypes.OnlySWF">
+              SWF
+            </span>
+            <span *ngIf="type === topTypes.All">
+              SWF + NSFW
+            </span>
+            <span *ngIf="type === topTypes.OnlyNSFW">
+              NSFW
+            </span>
+            за {{ week }} неделю
+            {{ year }} года
+          </h1>
+        </div>
 
-      <app-top-pagination [maxYear]="maxYear" [year]="year" [minYear]="minYear" [maxWeek]="maxWeek" [week]="week"
-        [minWeek]="minWeek"></app-top-pagination>
+        <div class="col-12">
+          <app-top-pagination [type]="type" [maxYear]="maxYear" [year]="year" [minYear]="minYear" [maxWeek]="maxWeek" [week]="week"
+            [minWeek]="minWeek"></app-top-pagination>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -21,6 +38,6 @@
 
   <app-post-feed *ngFor="let post of posts" [post]="post"></app-post-feed>
 
-  <app-top-pagination [maxYear]="maxYear" [year]="year" [minYear]="minYear" [maxWeek]="maxWeek" [week]="week"
+  <app-top-pagination [type]="type" [maxYear]="maxYear" [year]="year" [minYear]="minYear" [maxWeek]="maxWeek" [week]="week"
     [minWeek]="minWeek"></app-top-pagination>
 </div>
