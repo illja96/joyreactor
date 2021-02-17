@@ -8,6 +8,7 @@ import { PostIndexComponent } from "./post-index/post-index.component";
 import { PostRoutingModule } from "./post.routing";
 import { PostCommentContentComponent } from "./post-comment-content/post-comment-content.component";
 import { PostIndexShareComponent } from "./post-index-share/post-index-share.component";
+import { PostIndexHeaderComponent } from "./post-index-header/post-index-header.component";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PostIndexShareComponent } from "./post-index-share/post-index-share.com
     PostCommentsComponent,
     PostContentComponent,
     PostIndexComponent,
+    PostIndexHeaderComponent,
     PostIndexShareComponent
   ],
   imports: [

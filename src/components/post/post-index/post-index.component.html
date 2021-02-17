@@ -1,26 +1,6 @@
 <div *ngIf="post" [id]="post.id" class="card border-secondary mb-3">
   <div class="card-header">
-    <div class="row">
-      <div class="col-12">
-        <a routerLink="/user/{{ post.user.id }}">
-          <img src="http://img1.joyreactor.cc/pics/avatar/user/{{ post.user.id }}" [title]="post.user.username"
-            [alt]="post.user.username">
-
-          <span class="ml-2">{{ post.user.username }}</span>
-        </a>
-      </div>
-    </div>
-
-    <hr>
-
-    <div class="row">
-      <div class="col-12">
-        <a *ngFor="let blog of post.blogs" routerLink="/tag/{{ blog.id }}" [skipLocationChange]="true"
-          [title]="blog.name" class="badge badge-pill badge-primary">
-          {{ blog.name }}
-        </a>
-      </div>
-    </div>
+    <app-post-index-header [post]="post"></app-post-index-header>
   </div>
 
   <div class="card-body">
