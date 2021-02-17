@@ -10,23 +10,35 @@
           <img src="http://img1.joyreactor.cc/pics/avatar/user/{{ comment.user.id }}" [title]="post.user.username"
             [alt]="post.user.username" width="29px" height="29px">
 
-          <span>
+          <small>
             {{ comment.user.username }}
-          </span>
+          </small>
         </a>
       </div>
+
       <div class="col-4 text-center">
-        <span>
+        <small>
           {{ comment.createdAt | date: 'short' }}
-        </span>
+        </small>
       </div>
+
       <div class="col-4 text-right">
         <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-outline-success">+</button>
-          <button type="button" disabled class="btn btn-outline-info">
-            {{ comment.rating }}
+          <button type="button" class="btn btn-outline-success">
+            <small>
+              <i class="far fa-smile"></i>
+            </small>
           </button>
-          <button type="button" class="btn btn-outline-danger">-</button>
+          <button type="button" disabled class="btn btn-outline-info">
+            <small>
+              {{ comment.rating }}
+            </small>
+          </button>
+          <button type="button" class="btn btn-outline-danger">
+            <small>
+              <i class="far fa-frown"></i>
+            </small>
+          </button>
         </div>
       </div>
     </div>

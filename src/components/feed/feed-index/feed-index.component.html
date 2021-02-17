@@ -1,7 +1,7 @@
 <div class="container">
   <div *ngIf="!posts && lastPage !== null" class="row">
     <div class="col-12 text-center">
-      <div role="status" class="spinner-border text-info" style="width: 3rem; height: 3rem;">
+      <div role="status" class="spinner-border text-warning" style="width: 3rem; height: 3rem;">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
@@ -11,14 +11,16 @@
   <app-post-index *ngFor="let post of posts" [post]="post"></app-post-index>
 
   <div *ngIf="posts && page && page !== 1" class="row">
-    <button (click)="loadNextPage()" [disabled]="nextPageLoading" class="btn btn-outline-info btn-lg btn-block">
-      <span *ngIf="!nextPageLoading">
-        Загрузить следующую страницу
-      </span>
-      <div *ngIf="nextPageLoading" role="status" class="spinner-border text-info" style="width: 2rem; height: 2rem;">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </button>
+    <div class="col-12">
+      <button (click)="loadNextPage()" [disabled]="nextPageLoading" class="btn btn-outline-info btn-lg btn-block">
+        <span *ngIf="!nextPageLoading">
+          Загрузить следующую страницу
+        </span>
+        <div *ngIf="nextPageLoading" role="status" class="spinner-border text-info" style="width: 2rem; height: 2rem;">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </button>
+    </div>
   </div>
 
   <div *ngIf="posts && lastPage && page">

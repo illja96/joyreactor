@@ -15,8 +15,8 @@
 
     <div class="row">
       <div class="col-12">
-        <a *ngFor="let blog of post.blogs" routerLink="/tag/{{ blog.id }}" [skipLocationChange]="true" [title]="blog.name"
-          class="badge badge-pill badge-primary">
+        <a *ngFor="let blog of post.blogs" routerLink="/tag/{{ blog.id }}" [skipLocationChange]="true"
+          [title]="blog.name" class="badge badge-pill badge-primary">
           {{ blog.name }}
         </a>
       </div>
@@ -34,28 +34,31 @@
       </div>
       <div class="col-6 text-right">
         <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-outline-success">+</button>
+          <button type="button" class="btn btn-outline-success">
+            <i class="far fa-smile"></i>
+          </button>
           <button type="button" disabled class="btn btn-outline-info">
             {{ post.rating }}
           </button>
-          <button type="button" class="btn btn-outline-danger">-</button>
+          <button type="button" class="btn btn-outline-danger">
+            <i class="far fa-frown"></i>
+          </button>
         </div>
-      </div>
-    </div>
-
-    <br>
-
-    <div class="row">
-      <div class="col-12">
-        <button class="btn btn-outline-info btn-sm btn-block">
-          Комментарии ({{ post.commentsCount }})
-        </button>
       </div>
     </div>
 
     <div *ngIf="post.bestComments?.length !== 0">
       <br>
       <app-post-best-comments [post]="post" [comments]="post.bestComments"></app-post-best-comments>
+    </div>
+
+    <br>
+    <div class="row">
+      <div class="col-12">
+        <button class="btn btn-outline-info btn-sm btn-block">
+          Комментарии ({{ post.commentsCount }})
+        </button>
+      </div>
     </div>
   </div>
 </div>
