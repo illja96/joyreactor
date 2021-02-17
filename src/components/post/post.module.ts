@@ -10,6 +10,7 @@ import { PostCommentContentComponent } from "./post-comment-content/post-comment
 import { PostHeaderComponent } from "./post-header/post-header.component";
 import { PostShareButtonComponent } from "./post-share-button/post-share-button.component";
 import { PostRatingFavoriteComponent } from "./post-rating-favorite/post-rating-favorite.component";
+import { PostFeedComponent } from "./post-feed/post-feed.component";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { PostRatingFavoriteComponent } from "./post-rating-favorite/post-rating-
     PostCommentContentComponent,
     PostCommentsComponent,
     PostContentComponent,
+    PostFeedComponent,
     PostHeaderComponent,
     PostIndexComponent,
     PostShareButtonComponent,
@@ -28,7 +30,7 @@ import { PostRatingFavoriteComponent } from "./post-rating-favorite/post-rating-
     PostRoutingModule
   ],
   exports: [
-    PostIndexComponent
+    PostFeedComponent
   ]
 })
 export class PostModule { }

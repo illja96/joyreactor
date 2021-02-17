@@ -8,7 +8,7 @@
     <br><br><br>
   </div>
 
-  <app-post-index *ngFor="let post of posts" [post]="post"></app-post-index>
+  <app-post-feed *ngFor="let post of posts" [post]="post"></app-post-feed>
 
   <div *ngIf="posts && page && page !== 1" class="row">
     <div class="col-12">
