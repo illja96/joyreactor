@@ -52,7 +52,7 @@ export class TagListComponent implements OnInit {
       .pipe(
         filter(t => t.sortBy === null),
         map(() => ({ sortBy: TagSortType.Rating })))
-      .subscribe(t => this.router.navigateByUrl(`/tags/${t.sortBy}`));
+      .subscribe(t => this.router.navigateByUrl(`/tags/${t.sortBy}`, { skipLocationChange: true }));
 
     sortByPageObservable
       .pipe(

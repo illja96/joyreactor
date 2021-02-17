@@ -14,9 +14,9 @@
           Лента
         </a>
         <div class="dropdown-menu">
-          <a routerLink="/feed/all" class="dropdown-item" routerLinkActive="active">Всё</a>
-          <a routerLink="/feed/good" class="dropdown-item" routerLinkActive="active">Хорошее</a>
-          <a routerLink="/feed/best" class="dropdown-item" routerLinkActive="active">Лучшее</a>
+          <a routerLink="/feed/all" [skipLocationChange]="true" class="dropdown-item" routerLinkActive="active">Всё</a>
+          <a routerLink="/feed/good" [skipLocationChange]="true" class="dropdown-item" routerLinkActive="active">Хорошее</a>
+          <a routerLink="/feed/best" [skipLocationChange]="true" class="dropdown-item" routerLinkActive="active">Лучшее</a>
         </div>
       </li>
 
@@ -26,15 +26,15 @@
           Обсуждаемое
         </a>
         <div class="dropdown-menu">
-          <a routerLink="/discussion/all" class="dropdown-item" routerLinkActive="active">Всё</a>
-          <a routerLink="/discussion/good" class="dropdown-item" routerLinkActive="active">Хорошее</a>
-          <a routerLink="/discussion/flame" class="dropdown-item" routerLinkActive="active">Срачи</a>
-          <a routerLink="/discussion/my" class="dropdown-item" routerLinkActive="active">Моё</a>
+          <a routerLink="/discussion/all" [skipLocationChange]="true" class="dropdown-item" routerLinkActive="active">Всё</a>
+          <a routerLink="/discussion/good" [skipLocationChange]="true" class="dropdown-item" routerLinkActive="active">Хорошее</a>
+          <a routerLink="/discussion/flame" [skipLocationChange]="true" class="dropdown-item" routerLinkActive="active">Срачи</a>
+          <a routerLink="/discussion/my" [skipLocationChange]="true" class="dropdown-item" routerLinkActive="active">Моё</a>
         </div>
       </li>
 
       <li class="nav-item">
-        <a routerLink="/top" class="nav-link" routerLinkActive="active">Топ</a>
+        <a routerLink="/top" class="nav-link" [skipLocationChange]="true" routerLinkActive="active">Топ</a>
       </li>
 
       <li class="nav-item dropdown">
@@ -43,8 +43,8 @@
           Теги
         </a>
         <div class="dropdown-menu">
-          <a routerLink="/tags/rating" class="dropdown-item" routerLinkActive="active">По рейтингу</a>
-          <a routerLink="/tags/subscribers" class="dropdown-item" routerLinkActive="active">По подписчикам</a>
+          <a routerLink="/tags/rating" [skipLocationChange]="true" class="dropdown-item" routerLinkActive="active">По рейтингу</a>
+          <a routerLink="/tags/subscribers" [skipLocationChange]="true" class="dropdown-item" routerLinkActive="active">По подписчикам</a>
         </div>
       </li>
     </ul>
