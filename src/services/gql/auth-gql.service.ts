@@ -43,8 +43,7 @@ export class AuthGqlService {
     const profileJson = localStorage.getItem('profile');
     if (profileJson === null) return undefined;
 
-    const profile = JSON.parse(profileJson) as JRProfile;
-    return profile;
+    return JSON.parse(profileJson);
   }
 
   private setProfile(profile: JRProfile): void {

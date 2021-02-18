@@ -30,21 +30,15 @@ export class AttributeMapperService {
 
       case JRAttributeType.YouTube:
         const youtubeUrl = `https://www.youtube.com/embed/${embedAttribute.value}`;
-        const youtubeElement = this.createWrappedIframe(youtubeUrl);
-
-        return youtubeElement;
+        return this.createWrappedIframe(youtubeUrl);
 
       case JRAttributeType.Vimeo:
         const vimeoUrl = `https://player.vimeo.com/video/${embedAttribute.value}`;
-        const vimeoElement = this.createWrappedIframe(vimeoUrl);
-
-        return vimeoElement;
+        return this.createWrappedIframe(vimeoUrl);
 
       case JRAttributeType.Coub:
         const coubUrl = `https://coub.com/embed/${embedAttribute.value}`;
-        const coubElement = this.createWrappedIframe(coubUrl);
-
-        return coubElement;
+        return this.createWrappedIframe(coubUrl);
 
       case JRAttributeType.SoundCloud:
         const soundcloudAttribute = JSON.parse(embedAttribute.value);
@@ -54,20 +48,15 @@ export class AttributeMapperService {
         const soundcloudTrackHeight: number = soundcloudAttribute.height;
 
         const soundcloudUrl = `https://w.soundcloud.com/player/?url=${fullSoundcloudTrackUrl}`;
-        const soundcloudElement = this.createSoundCloudIframe(soundcloudUrl, soundcloudTrackHeight);
-
-        return soundcloudElement;
+        return this.createSoundCloudIframe(soundcloudUrl, soundcloudTrackHeight);
 
       case JRAttributeType.Bandcamp:
         const bandcampAttribute = JSON.parse(embedAttribute.value);
         const bandcampUrl: string = bandcampAttribute.url;
-        const bandcampWidth: number = bandcampAttribute.width;
         const bandcampHeight: number = bandcampAttribute.height;
 
         const fullBandcampUrl = `https://bandcamp.com/EmbeddedPlayer/${bandcampUrl}`;
-        const bandcampElement = this.createBandcampIframe(fullBandcampUrl, bandcampHeight);
-
-        return bandcampElement;
+        return this.createBandcampIframe(fullBandcampUrl, bandcampHeight);
 
       default:
         throw new Error('Invalid attribute type');

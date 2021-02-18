@@ -17,12 +17,10 @@ import { JRImageType } from "../../models/joy-reactor/image-type.enum";
 @Injectable({ providedIn: 'root' })
 export class ParserGqlService {
   public parseProfile(rawProfile: any): JRProfile {
-    const profile: JRProfile = {
+    return {
       token: rawProfile.token,
       user: this.parseUser(rawProfile.user)
     };
-
-    return profile;
   }
 
   public parsePosts(rawPosts: any[]): JRPost[] {
@@ -43,19 +41,17 @@ export class ParserGqlService {
   public parseUser(rawUser: any): JRUser {
     if (!rawUser) return undefined!;
 
-    const user: JRUser = {
+    return {
       id: this.parseId(rawUser.id),
       encodedId: rawUser.id,
       username: rawUser.username
     };
-
-    return user;
   }
 
   public parsePost(rawPost: any): JRPost {
     if (!rawPost) return undefined!;
 
-    const post: JRPost = {
+    return {
       id: this.parseId(rawPost.id),
       encodedId: rawPost.id,
       text: rawPost.text,
@@ -69,8 +65,6 @@ export class ParserGqlService {
       bestComments: this.parseComments(rawPost.bestComments),
       comments: this.parseComments(rawPost.comments)
     };
-
-    return post;
   }
 
   private parsePostAttributes(rawAttributes: any[]): JRPostAttribute[] {
@@ -81,12 +75,12 @@ export class ParserGqlService {
       .filter(a => a !== undefined);
   }
 
-  private parsePostAttribute(rawAttribute: any): JRPostAttribute {
+  private parsePostAttribute(rawAttribute: any): JRPostAttributePicture | JRPostAttributeEmbed {
     if (!rawAttribute) return undefined!;
 
     switch (rawAttribute.__typename) {
       case 'PostAttributePicture':
-        const postAttributePicture: JRPostAttributePicture = {
+        return {
           id: this.parseId(rawAttribute.id),
           encodedId: rawAttribute.id,
           type: <JRAttributeType>rawAttribute.type,
@@ -95,9 +89,8 @@ export class ParserGqlService {
           value: rawAttribute.value,
           post: undefined!
         };
-        return postAttributePicture;
       case 'PostAttributeEmbed':
-        const postAttributeEmbed: JRPostAttributeEmbed = {
+        return {
           id: this.parseId(rawAttribute.id),
           encodedId: rawAttribute.id,
           type: <JRAttributeType>rawAttribute.type,
@@ -106,7 +99,6 @@ export class ParserGqlService {
           value: rawAttribute.value,
           post: undefined!
         };
-        return postAttributeEmbed;
       default:
         throw new Error('Invalid attribute type');
     }
@@ -120,12 +112,12 @@ export class ParserGqlService {
       .filter(a => a !== undefined);
   }
 
-  private parseCommentAttribute(rawAttribute: any): JRCommentAttribute {
+  private parseCommentAttribute(rawAttribute: any): JRCommentAttributePicture | JRCommentAttributeEmbed {
     if (!rawAttribute) return undefined!;
 
     switch (rawAttribute.__typename) {
       case 'CommentAttributePicture':
-        const commentAttributePicture: JRCommentAttributePicture = {
+        return {
           id: this.parseId(rawAttribute.id),
           encodedId: rawAttribute.id,
           type: <JRAttributeType>rawAttribute.type,
@@ -133,9 +125,8 @@ export class ParserGqlService {
           image: this.parseImage(rawAttribute.image),
           comment: undefined!
         };
-        return commentAttributePicture;
       case 'CommentAttributeEmbed':
-        const commentAttributeEmbed: JRCommentAttributeEmbed = {
+        return {
           id: this.parseId(rawAttribute.id),
           encodedId: rawAttribute.id,
           type: <JRAttributeType>rawAttribute.type,
@@ -144,7 +135,6 @@ export class ParserGqlService {
           value: rawAttribute.value,
           comment: undefined!
         };
-        return commentAttributeEmbed;
       default:
         throw new Error('Invalid attribute type');
     }
@@ -153,7 +143,7 @@ export class ParserGqlService {
   private parseImage(rawImage: any): JRImage {
     if (!rawImage) return undefined!;
 
-    const image: JRImage = {
+    return {
       id: this.parseId(rawImage.id),
       encodedId: rawImage.id,
       width: Number.parseInt(rawImage.width),
@@ -162,8 +152,6 @@ export class ParserGqlService {
       type: <JRImageType>rawImage.type,
       hasVideo: rawImage.hasVideo
     };
-
-    return image;
   }
 
   public parseBlogs(rawBlogs: any[]): JRBlog[] {
@@ -177,15 +165,13 @@ export class ParserGqlService {
   public parseBlog(rawBlog: any): JRBlog {
     if (!rawBlog) return undefined!;
 
-    const blog: JRBlog = {
+    return {
       id: this.parseId(rawBlog.id),
       encodedId: rawBlog.id,
       tag: rawBlog.tag,
       name: rawBlog.name,
       synonyms: rawBlog.synonyms
     };
-
-    return blog;
   }
 
   public parseComments(rawComments: any[]): JRComment[] {
@@ -199,7 +185,7 @@ export class ParserGqlService {
   public parseComment(rawComment: any): JRComment {
     if (!rawComment) return undefined!;
 
-    const comment: JRComment = {
+    return {
       id: this.parseId(rawComment.id),
       encodedId: rawComment.id,
       text: rawComment.text,
@@ -211,7 +197,5 @@ export class ParserGqlService {
       user: this.parseUser(rawComment.user),
       attributes: this.parseCommentAttributes(rawComment.attributes)
     };
-
-    return comment;
   }
 }
