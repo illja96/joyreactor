@@ -22,7 +22,7 @@ export class BlogHttpService {
     const feedUrlPart = this.feedTypeMapperService.mapToUrl(type);
     if (feedUrlPart) url += `/${feedUrlPart}`;
 
-    return this.httpClient.get(url, { responseType: 'text' })
+    return this.httpClient.get(url, { responseType: 'text', withCredentials: true })
       .pipe(map(html => this.parserHttpService.parseLastPage(html)));
   }
 
@@ -34,7 +34,7 @@ export class BlogHttpService {
 
     url += `/${page}`;
 
-    return this.httpClient.get(url, { responseType: 'text' })
+    return this.httpClient.get(url, { responseType: 'text', withCredentials: true })
       .pipe(map(html => ({
         page: page,
         lastPage: this.parserHttpService.parseLastPage(html),

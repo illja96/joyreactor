@@ -18,7 +18,7 @@ export class TagHttpService {
     if (sortBy === TagSortType.subscribers) url += '/subscribers';
     if (page > 1) url += `/${page}`;
 
-    return this.httpClient.get(url, { responseType: 'text' })
+    return this.httpClient.get(url, { responseType: 'text', withCredentials: true })
       .pipe(map(html => ({
         page: page,
         lastPage: this.parserHttpService.parseFirstPage(html)!,

@@ -33,7 +33,7 @@ export class FeedHttpService {
 
     url += `/${page}`;
 
-    return this.httpClient.get(url, { responseType: 'text' })
+    return this.httpClient.get(url, { responseType: 'text', withCredentials: true })
       .pipe(map(html => {
         const feedPage: FeedPage = {
           page: page,

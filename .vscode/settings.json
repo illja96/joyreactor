@@ -1,5 +1,6 @@
 {
   "cSpell.words": [
+    "csrf",
     "apollo",
     "bandcamp",
     "bearer",
@@ -29,6 +30,7 @@
     "rating",
     "reactor",
     "sanitizer",
+    "signin",
     "soundcloud",
     "subject",
     "subscribers",
@@ -37,8 +39,8 @@
     "viber",
     "whatsapp",
     "youtube",
-    "срачи",
-    "рукожопости"
+    "рукожопости",
+    "срачи"
   ],
   "cSpell.language": "en,ru"
 }

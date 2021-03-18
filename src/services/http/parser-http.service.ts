@@ -8,6 +8,13 @@ export class ParserHttpService {
     this.domParser = new DOMParser();
   }
 
+  public parseCsrfToken(html: string): string {
+    const dom = this.domParser.parseFromString(html, 'text/html');
+
+    const csrfTokenElement = dom.querySelector('#signin__csrf_token') as HTMLInputElement;
+    return csrfTokenElement.value;
+  }
+
   public parseHeader(html: string): string {
     const dom = this.domParser.parseFromString(html, 'text/html');
 

@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { switchMap } from "rxjs/operators";
+import { AuthHttpService } from "../../../services/http/auth-http.service";
 import { AuthGqlService } from "../../../services/gql/auth-gql.service";
 
 @Component({
@@ -16,6 +18,7 @@ export class AuthLoginComponent {
 
   constructor(
     private readonly authGqlService: AuthGqlService,
+    private readonly authHttpService: AuthHttpService,
     private readonly router: Router) {
     this.form = new FormGroup({
       username: new FormControl('', [Validators.required]),
@@ -28,6 +31,7 @@ export class AuthLoginComponent {
     const password = this.password.value;
 
     this.authGqlService.login(username, password)
+      .pipe(switchMap(() => this.authHttpService.login(username, password)))
       .subscribe(
         () => this.router.navigateByUrl('/'),
         () => this.password.setErrors({ badPassword: true }));
