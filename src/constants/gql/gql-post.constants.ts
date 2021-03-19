@@ -9,6 +9,7 @@ export const gqlPostConstants = {
     }
   }
   ${gqlFragmentsConstants.post}
+  ${gqlFragmentsConstants.postWithoutComments}
   ${gqlFragmentsConstants.user}
   ${gqlFragmentsConstants.blog}
   ${gqlFragmentsConstants.image}

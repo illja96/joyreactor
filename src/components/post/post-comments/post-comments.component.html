@@ -1,1 +1,9 @@
-<p>post-comments works!</p>
+<div *ngIf="topLevelComments" class="row">
+  <div class="col-12">
+    <h3 class="text-warning">
+      Комментарии
+    </h3>
+
+    <app-post-comment *ngFor="let comment of topLevelComments" [comment]="comment" [post]="post" [comments]="comments"></app-post-comment>
+  </div>
+</div>

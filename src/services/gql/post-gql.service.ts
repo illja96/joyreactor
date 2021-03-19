@@ -13,6 +13,18 @@ export class PostGqlService {
     private readonly apollo: Apollo,
     private readonly parserGqlService: ParserGqlService) { }
 
+  public get(id: number): Observable<JRPost> {
+    const encodedId = btoa(`Post:${id}`);
+    const variables = {
+      id: encodedId
+    };
+
+    return this.apollo.query<any>({ query: gqlPostConstants.post, variables: variables })
+      .pipe(
+        map(qr => qr.data['post']),
+        map(post => this.parserGqlService.parsePost(post)));
+  }
+
   public getWithoutComments(id: number): Observable<JRPost> {
     const encodedId = btoa(`Post:${id}`);
     const variables = {
@@ -20,7 +32,9 @@ export class PostGqlService {
     };
 
     return this.apollo.query<any>({ query: gqlPostConstants.postWithoutComments, variables: variables })
-      .pipe(map(qr => this.parserGqlService.parsePost(qr)));
+      .pipe(
+        map(qr => qr.data['post']),
+        map(post => this.parserGqlService.parsePost(post)));
   }
 
   public getAll(ids: number[]): Observable<JRPost[]> {

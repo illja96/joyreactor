@@ -1,9 +1,37 @@
 <div class="container">
-  <div class="row">
-    <div class="col-12">
-      <div class="alert  alert-danger">
-        <strong>Упс!</strong>
-        Эта страница ещё в разработке
+  <div *ngIf="post" [id]="post.id" [class.border-warning]="!post.nsfw" [class.border-danger]="post.nsfw"
+    class="card mb-3">
+    <div class="card-header">
+      <app-post-header [post]="post"></app-post-header>
+    </div>
+
+    <div class="card-body">
+      <app-post-content [post]="post"></app-post-content>
+    </div>
+
+    <div class="card-footer text-muted">
+      <div class="row">
+        <div class="col-4 text-left">
+          {{ post.createdAt | date: 'short' }}
+        </div>
+
+        <div class="col-4 text-center">
+          <app-post-share-button [post]="post"></app-post-share-button>
+        </div>
+
+        <div class="col-4 text-right">
+          <app-post-rating-favorite [post]="post"></app-post-rating-favorite>
+        </div>
+
+        <div *ngIf="post.bestComments?.length !== 0" class="col-12">
+          <hr>
+          <app-post-best-comments [post]="post" [comments]="post.bestComments"></app-post-best-comments>
+        </div>
+
+        <div *ngIf="post.comments?.length !== 0" class="col-12">
+          <hr>
+          <app-post-comments [post]="post" [comments]="post.comments"></app-post-comments>
+        </div>
       </div>
     </div>
   </div>
